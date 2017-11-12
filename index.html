@@ -34,12 +34,12 @@
 		<a class="navbar-brand " href="index.html">
 			<img src="assets/brand/icon.png" width="42" height="42" class="d-inline-block align-top" alt="">
 		</a>
-		<form class="form-inline w-100">
+		<form id="searchForm" class="form-inline w-100">
 			<input  id="searchInput" class="form-control mr-sm-2 w-100" type="search" placeholder="Search" aria-label="Search" onsubmit="search()">
 		</form>
 		<div class="dropdown mr-4" style="min-width: 128px;"> 
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			Options
+				More
 			</a>
 			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 			<a class="dropdown-item" data-toggle="modal" data-target="#databaseModal">Databases</a>
@@ -64,7 +64,7 @@
 				</div>
 				
 				<div class="modal-footer">
-					<button type="button" class="btn btn-link mr-auto">Learn More</button>
+					<a class="mr-auto" href="https://github.com/SorenSaket/scholarly-search-engine/blob/master/README.md#adding-databases" target="_blank"><button type="button" class="btn btn-link ">Learn More</button></a>
 					<button type="button" class="btn btn-danger" data-dismiss="modal">Revert</button>
 					<button type="button" class="btn btn-success" data-dismiss="modal" onclick="saveDatabases()">Save</button>
 				</div>
@@ -74,7 +74,7 @@
 
 	<!-- Search Results -->
 	<div id="resultcontainer" class="container">
-		
+
 	</div>
 	
 	<!-- Footer -->
@@ -89,7 +89,7 @@
 		</div>
 		<div class="footerinfo">
 			<span class="text-muted text-center">
-					Made by <a href="https://twitter.com/sorensaket" target="_blank">@sorensaket</a>
+					Made by <a href="https://twitter.com/sorensaket" target="_blank">@SorenSaket</a> and <a href="https://twitter.com/LokeWalsted" target="_blank">@LokeWalsted</a>
 			</span>
 		</div>
 	</footer>

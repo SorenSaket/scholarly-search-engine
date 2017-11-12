@@ -1,5 +1,5 @@
 var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1ku7WmJuYZ68s-l7fADQDihK3cNVCqcGaAuQeTvtIo98/edit?usp=sharing';
-var allData;
+var allData = [];
 
 window.addEventListener('DOMContentLoaded', init);
 
@@ -8,7 +8,7 @@ function init() {
 }
 
 function saveData(data, tabletop) {
-	allData = data;
+	allData.push(data);
 }
 
 function search(){
@@ -16,7 +16,8 @@ function search(){
 	var searchQuery = document.getElementById("searchInput").value;
 	var foundArticles = findMatchingItemsInDatabase(searchQuery);
 	for (var x = 0; x < foundArticles.length; x++) {
-		document.createElement("elements/search_element.html")
+		var tempdoc = document.getElementById("resultcontainer").innerHTML='<object type="text/html" data="elements/search_elements.html" ></object>';
+		tempdoc.getElementById("title").value = foundArticles[x].name;
 	}
 }
 
@@ -68,3 +69,9 @@ function saveDatabases(){
 	console.log(Cookies.get('databases'));
 	console.log(document.getElementById("databases").value);
 }
+/*
+
+document.getElementById('searchForm').addEventListener('submit', function(e) {
+    search(document.getElementById('searchText'));
+    e.preventDefault();
+}, false);*/
