@@ -1,1 +1,0 @@
-includeJS('https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.2/tabletop.min.js');

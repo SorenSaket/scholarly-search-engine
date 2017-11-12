@@ -4,9 +4,6 @@ var allData;
 window.addEventListener('DOMContentLoaded', init);
 
 function init() {
-	/*Tabletop.init( { key: publicSpreadsheetUrl,
-					callback: saveData,
-					simpleSheet: true } );*/
 	loadDatabases();
 }
 
@@ -48,21 +45,25 @@ function findMatchingItemsInDatabase(searchQuery){
 	return foundArticles;
 }
 
-
-function loadDatabases()
-{
+function loadDatabases(){
 	var databases = Cookies.get('databases');
 	console.log(databases);
 	if(databases == "undefined" || databases == null)
 	{
 		console.log("No database var found");
 		databases = 'https://docs.google.com/spreadsheets/d/1ku7WmJuYZ68s-l7fADQDihK3cNVCqcGaAuQeTvtIo98/edit?usp=sharing';
+		Cookies.set("databases",databases);
 	}
 	document.getElementById("databases").value = databases;
+	databases = databases.split(/\r?\n/);
+	for (let x = 0; x < databases.length; x++) {
+		Tabletop.init( { key: databases[x],
+			callback: saveData,
+			simpleSheet: true } );
+	}
 }
 
-function saveDatabases()
-{
+function saveDatabases(){
 	Cookies.set('databases', document.getElementById("databases").value);
 	console.log(Cookies.get('databases'));
 	console.log(document.getElementById("databases").value);
