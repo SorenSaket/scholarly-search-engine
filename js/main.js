@@ -75,3 +75,14 @@ document.getElementById('searchForm').addEventListener('submit', function(e) {
     search(document.getElementById('searchText'));
     e.preventDefault();
 }, false);*/
+
+function includeHTML(){
+	var html = '<iframe hidden id="templateResult"src="elements/search_element.html" ></iframe>';
+	$('#resultcontainer').append(html);
+	var ifrm = document.getElementById('templateResult');
+	var win = ifrm.contentWindow;
+	var doc = ifrm.contentDocument? ifrm.contentDocument: ifrm.contentWindow.document;
+	var content = doc.getElementById("card").innerhtml;
+	console.log(html);
+	$('#resultcontainer').append(html);
+}
