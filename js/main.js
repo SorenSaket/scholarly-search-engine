@@ -83,11 +83,26 @@ function includeHTML(){
 	$div.load('elements/search_element.html #card', function(){
 		//gets the html and puts it into a variable
 		var html = $(this)
-		html = html["0"]
+		var title = "ATP"
+		var tags = "ATP ENERGI"
+		var description = "ATP er kroppens energi kilde"
+		var open = "https://twitter.com"
+		var opensource = "https://google.com"
+
+		html = html["0"].innerHTML
 
 		//logs the result
 		console.log(html)
 
+		html = html.toString();
+		html = html.replace("Card title",title);
+		html = html.replace("Card tags",tags);
+		html = html.replace("Description text",description);
+		html = html.replace("#",open);
+		html = html.replace("#",opensource);
+		html = $(html);
+		html = html["0"];
+		console.log(html)
 		//inserts the html at [0] of result container
 		document.getElementById("resultcontainer").appendChild(html)
 	});
