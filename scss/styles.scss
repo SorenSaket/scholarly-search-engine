@@ -14,6 +14,23 @@ body {
     margin-bottom: $socialicon-height + $credits-size + ($footer-margin)*3;
 }
 
+
+.dropdown
+{
+    min-width: 88px;
+    margin-right: 16px;
+    
+
+}
+
+.dropdown-menu
+{
+    right: 0;
+    left: -85px;
+}
+
+
+
 .footer {
     position: fixed;
     bottom: 0px;
