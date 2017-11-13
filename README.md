@@ -17,17 +17,23 @@ Databases is the way this software gets its search queries from. We're using goo
 
 ### Creating a new Database
 1. Create a new sheets file in Google Drive
-
+2. Add data with the right formatting
+3. Share it so everyone can find and view the sheets file.
+4. The link would look something like this: https://docs.google.com/spreadsheets/d/1ku7WmJuYZ68s-l7fADQDihK3cNVCqcGaAuQeTvtIo98/edit?usp=sharing
 
 #### Formatting
+
+
+##### Example
 Type | name | tags | link
 ------------ | ------------- | ------------- | -------------
 doc | ATP Cycle | ATP, Glycolysis | https://drive.google.com/open?id=1Tb4ahgFGY_6bfXEArxPRTp-4itXR5Rfi5kwImbGa_f8
+vid | Valence Bond Theory, Hybrid Orbitals, and Molecular Orbital Theory| Orbitals, physics | https://www.youtube.com/watch?v=nTujP4jCbsg
+html | Periodic table | Periodic, table, elements | "/pages/physics/pt.html"
 
-Types:
+##### Types
 * docs
 * wiki
 * vid
 * cal
 * html
-
