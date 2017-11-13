@@ -88,22 +88,25 @@ function includeHTML(){
 		var description = "ATP er kroppens energi kilde"
 		var open = "https://twitter.com"
 		var opensource = "https://google.com"
-
+		//gets the string version of the html
 		html = html["0"].innerHTML
 
-		//logs the result
-		console.log(html)
-
+		//change the values 
 		html = html.toString();
 		html = html.replace("Card title",title);
 		html = html.replace("Card tags",tags);
 		html = html.replace("Description text",description);
 		html = html.replace("#",open);
 		html = html.replace("#",opensource);
+		
+		//make the string int a html obj again
 		html = $(html);
 		html = html["0"];
+
+		//logs the html obj
 		console.log(html)
-		//inserts the html at [0] of result container
+
+		//inserts the html results
 		document.getElementById("resultcontainer").appendChild(html)
 	});
 }
