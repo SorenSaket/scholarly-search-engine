@@ -75,7 +75,7 @@ document.getElementById('searchForm').addEventListener('submit', function(e) {
     search(document.getElementById('searchText'));
     e.preventDefault();
 }, false);*/
-
+/*
 function includeHTML(){
 	var html = '<iframe hidden id="templateResult"src="elements/search_element.html" ></iframe>';
 	$('#resultcontainer').append(html);
@@ -85,4 +85,4 @@ function includeHTML(){
 	var content = doc.getElementById("card").innerhtml;
 	console.log(html);
 	$('#resultcontainer').append(html);
-}
+}*/
