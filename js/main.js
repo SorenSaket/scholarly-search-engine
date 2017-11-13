@@ -35,6 +35,7 @@ function saveDatabases(){
 function search(){
 	//Get serch Query from input
 	var searchQuery = document.getElementById("searchInput").value;
+	document.getElementById("searchInput").value = "";
 	var foundArticles = findMatchingItemsInDatabase(searchQuery);
 	for (var x = 0; x < foundArticles.length; x++) {
 		document.getElementById("resultcontainer").innerHTML = "";
@@ -95,8 +96,3 @@ function addResult(type, name, description, tags, link){
 		document.getElementById("resultcontainer").appendChild(html)
 	});
 }
-
-document.getElementById('searchInput').addEventListener('onsubmit', function(e) {
-    search();
-    e.preventDefault();
-}, false);
