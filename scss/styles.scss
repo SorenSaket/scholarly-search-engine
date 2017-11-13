@@ -4,6 +4,7 @@ $header-height: 68px;
 $socialicon-height: 32px;
 $credits-size: 22px;
 $footer-margin: 8px;
+$footer-height:$socialicon-height + $credits-size + ($footer-margin)*3;
 
 html,body
 {
@@ -12,7 +13,7 @@ html,body
 }
 body {
     margin-top: $header-height;
-    margin-bottom: $socialicon-height + $credits-size + ($footer-margin)*3;
+    margin-bottom: $footer-height;
     overflow: hidden;
 }
 
@@ -31,7 +32,7 @@ body {
     position: fixed;
     bottom: 0px;
     width: 100%;
-    height: $socialicon-height + $credits-size + ($footer-margin)*3;
+    height: $footer-height;
 
     .footerinfo
     {
@@ -57,23 +58,32 @@ body {
 
 #pagecontent
 {
-    display: flex;
-    flex-direction: column;
     height: 100%;
     margin: 32px;
     #resultcontainer
     {
         overflow: auto;
         height: 100%;
-        flex: 1;
     }
     #result
     {
         width: 80%;
     }
-    #contentcontainer
+    /*#contentcontainer
     {
-        flex: 1;
+
+    }*/
+    .row
+    {
+       min-height: 1080px - $header-height - $footer-height;
     }
 }
 
+.card
+{
+    a
+    {
+        float: right;
+    }
+
+}

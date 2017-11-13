@@ -35,17 +35,21 @@ body {
       font-size: 32px; }
 
 #pagecontent {
-  display: flex;
-  flex-direction: column;
   height: 100%;
-  margin: 32px; }
+  margin: 32px;
+    /*#contentcontainer
+    {
+
+    }*/ }
   #pagecontent #resultcontainer {
     overflow: auto;
-    height: 100%;
-    flex: 1; }
+    height: 100%; }
   #pagecontent #result {
     width: 80%; }
-  #pagecontent #contentcontainer {
-    flex: 1; }
+  #pagecontent .row {
+    min-height: 934px; }
+
+.card a {
+  float: right; }
 
 /*# sourceMappingURL=styles.css.map */

@@ -71,7 +71,7 @@ function addResult(type, name, description, tags, link){
 	//sets the div and (div id) soon TM
 	var $div = $("<div>");
 	//loads the html into a object
-	$div.load("elements/search_element.html #card", function(){
+	$div.load("elements/search_element.html #result", function(){
 		//gets the html and puts it into a variable
 		var html = $(this)
 		//gets the string version of the html
@@ -92,7 +92,7 @@ function addResult(type, name, description, tags, link){
 		console.log(html)
 
 		//inserts the html results
-		document.getElementById("resultcontainer").appendChild(html)
+		document.getElementById("resultcontainer").appendChild(html);
 	});
 }
 
