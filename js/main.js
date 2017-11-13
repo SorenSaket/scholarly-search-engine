@@ -8,7 +8,6 @@ function init() {
 
 function loadDatabases(){
 	var databases = Cookies.get('databases');
-	console.log(databases);
 	if(databases == "undefined" || databases == null)
 	{
 		console.log("No database var found");
@@ -16,7 +15,7 @@ function loadDatabases(){
 		Cookies.set("databases",databases);
 	}
 	document.getElementById("databases").value = databases;
-	databases = databases.split(/\r?\n/);
+	databases = databases.split("\n");
 	for (let x = 0; x < databases.length; x++) {
 		Tabletop.init( { key: databases[x],
 			callback: function(data, tabletop){
@@ -24,6 +23,7 @@ function loadDatabases(){
 			},
 			simpleSheet: true } );
 	}
+	console.log(allData);
 }
 
 function saveDatabases(){
@@ -35,11 +35,11 @@ function saveDatabases(){
 function search(){
 	//Get serch Query from input
 	var searchQuery = document.getElementById("searchInput").value;
-	document.getElementById("searchInput").value = "";
+	//document.getElementById("searchInput").value = "";
 	var foundArticles = findMatchingItemsInDatabase(searchQuery);
 	for (var x = 0; x < foundArticles.length; x++) {
 		document.getElementById("resultcontainer").innerHTML = "";
-		addResult(foundArticles[x].type,foundArticles[x].name,foundArticles[x].description,foundArticles[x].tags, foundArticles[x].link);
+		addResult(foundArticles[0][x].type,foundArticles[0][x].name,foundArticles[0][x].description,foundArticles[0][x].tags, foundArticles[0][x].link);
 	}
 }
 
@@ -51,7 +51,7 @@ function findMatchingItemsInDatabase(searchQuery){
 	for (var x = 0; x < allData.length; x++) 
 	{
 		//Gets tags in article
-		var tags = allData[x].tags;
+		var tags = allData[0][x].tags;
 		console.log(tags);
 		tags = tags.split(", ");
 		//Go though all tags
@@ -65,6 +65,7 @@ function findMatchingItemsInDatabase(searchQuery){
 			}
 		}
 	}
+	console.log(foundArticles);
 	return foundArticles;
 }
 
@@ -82,8 +83,8 @@ function addResult(type, name, description, tags, link){
 		html = html.replace("Card title",name);
 		html = html.replace("Card tags",tags);
 		html = html.replace("Description text",description);
-		html = html.replace("#",link);
-		html = html.replace("#",link);
+		html = html.replace("xy",link + ", " + type);
+		html = html.replace("xx",link);
 		
 		//make the string int a html obj again
 		html = $(html);
@@ -95,4 +96,9 @@ function addResult(type, name, description, tags, link){
 		//inserts the html results
 		document.getElementById("resultcontainer").appendChild(html)
 	});
+}
+
+function open(link, type)
+{
+	document.getElementById("contentdisplayer").src = (link + "?embedded=true").toString();
 }
