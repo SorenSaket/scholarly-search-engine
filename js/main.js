@@ -77,11 +77,18 @@ document.getElementById('searchForm').addEventListener('submit', function(e) {
 }, false);*/
 
 function includeHTML(){
+	//sets the div and (div id) soon TM
 	var $div = $('<div>');
+	//loads the html into a object
 	$div.load('elements/search_element.html #card', function(){
+		//gets the html and puts it into a variable
 		var html = $(this)
 		html = html["0"]
+
+		//logs the result
 		console.log(html)
+
+		//inserts the html at [0] of result container
 		document.getElementById("resultcontainer").appendChild(html)
 	});
 }
