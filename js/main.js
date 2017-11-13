@@ -30,8 +30,6 @@ function loadDatabases(){
 
 function saveDatabases(){
 	Cookies.set("databases", document.getElementById("databases").value);
-	console.log(Cookies.get("databases"));
-	console.log(document.getElementById("databases").value);
 }
 
 function search(){
@@ -54,7 +52,6 @@ function findMatchingItemsInDatabase(searchQuery){
 	{
 		//Gets tags in article
 		var tags = allData[x].tags;
-		console.log(tags);
 		tags = tags.split(", ");
 		//Go though all tags
 		for (var y = 0; y < tags.length; y++) 
@@ -67,7 +64,6 @@ function findMatchingItemsInDatabase(searchQuery){
 			}
 		}
 	}
-	console.log(foundArticles);
 	return foundArticles;
 }
 
