@@ -81,7 +81,7 @@ function addResult(type, name, description, tags, link){
 		html = html.replace("Card title",name);
 		html = html.replace("Card tags",tags);
 		html = html.replace("Description text",description);
-		html = html.replace("xy",link + ", " + type);
+		html = html.replace("xy","'" + link + "', '" + type + "'");
 		html = html.replace("xx",link);
 		
 		//make the string int a html obj again
@@ -96,9 +96,10 @@ function addResult(type, name, description, tags, link){
 	});
 }
 
-function open(link, type)
-{
-	document.getElementById("contentdisplayer").src = (link + "?embedded=true").toString();
+function open(link, type){
+	var url = '"' + link + '?embedded=true"';
+	console.log(url);
+	document.getElementById("contentdisplayer").setAttribute("src",url);
 }
 
 document.getElementById('searchForm').addEventListener('submit', function(e) {

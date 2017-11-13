@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-		<!-- Include all of our scripts-->
-		<script type="text/javascript" src='js/includes.js'></script>
+	<!-- Include all of our scripts-->
+	<script type="text/javascript" src='js/includes.js'></script>
 	<!-- Branding -->
 	<title>Scholarly Search Engine</title>
-	<link rel="shortcut icon" type="image/png" href="assets/brand/icon.png"/>
+	<link rel="shortcut icon" type="image/png" href="assets/brand/icon.png" />
 </head>
+
 <body>
-	
+
 	<!-- Navbar -->
 	<nav class="navbar navbar-expand navbar-light bg-light fixed-top">
 		<a class="navbar-brand " href="index.html">
@@ -17,8 +19,9 @@
 		<form id="searchForm" class="form-inline w-100">
 			<input id="searchInput" class="form-control mr-sm-2 w-100" type="search" placeholder="Search" aria-label="Search">
 		</form>
-		<div class="dropdown"> 
-			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		<div class="dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+			 aria-expanded="false">
 				More
 			</a>
 			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -42,44 +45,119 @@
 				<div class="modal-body">
 					<textarea id="databases" class="w-100" rows="16" placeholder="Insert google sheets databases" required></textarea>
 				</div>
-				
+
 				<div class="modal-footer">
-					<a class="mr-auto" href="https://github.com/SorenSaket/scholarly-search-engine/blob/master/README.md#adding-databases" target="_blank"><button type="button" class="btn btn-link ">Learn More</button></a>
+					<a class="mr-auto" href="https://github.com/SorenSaket/scholarly-search-engine/blob/master/README.md#adding-databases" target="_blank">
+						<button type="button" class="btn btn-link ">Learn More</button>
+					</a>
 					<button type="button" class="btn btn-danger" data-dismiss="modal">Revert</button>
 					<button type="button" class="btn btn-success" data-dismiss="modal" onclick="saveDatabases()">Save</button>
 				</div>
 			</div>
 		</div>
 	</div>
+	<div id="pagecontent">
+		<div class="row">
+			<!-- Search Results -->
+			<div id="resultcontainer" class="col-4">
+				<div class="card m-4" id="result">
+					<div class="card-body">
+						<h4 id="title" class="card-title">Card title</h4>
+						<h6 id="tags" class="card-subtitle mb-2 text-muted">Card tags</h6>
+						<p id="description" class="card-text">Description text</p>
+						<button id="open" onclick="open(xy)" class="btn btn-primary">Open</button>
+						<a id="opensource" href="xx" class="card-link">Source Link</a>
+					</div>
+				</div>
+				<div class="card m-4" id="result">
+					<div class="card-body">
+						<h4 id="title" class="card-title">Card title</h4>
+						<h6 id="tags" class="card-subtitle mb-2 text-muted">Card tags</h6>
+						<p id="description" class="card-text">Description text</p>
+						<button id="open" onclick="open(xy)" class="btn btn-primary">Open</button>
+						<a id="opensource" href="xx" class="card-link">Source Link</a>
+					</div>
+				</div>
+				<div class="card m-4" id="result">
+					<div class="card-body">
+						<h4 id="title" class="card-title">Card title</h4>
+						<h6 id="tags" class="card-subtitle mb-2 text-muted">Card tags</h6>
+						<p id="description" class="card-text">Description text</p>
+						<button id="open" onclick="open(xy)" class="btn btn-primary">Open</button>
+						<a id="opensource" href="xx" class="card-link">Source Link</a>
+					</div>
+				</div>
+				<div class="card m-4" id="result">
+					<div class="card-body">
+						<h4 id="title" class="card-title">Card title</h4>
+						<h6 id="tags" class="card-subtitle mb-2 text-muted">Card tags</h6>
+						<p id="description" class="card-text">Description text</p>
+						<button id="open" onclick="open(xy)" class="btn btn-primary">Open</button>
+						<a id="opensource" href="xx" class="card-link">Source Link</a>
+					</div>
+				</div>
+				<div class="card m-4" id="result">
+					<div class="card-body">
+						<h4 id="title" class="card-title">Card title</h4>
+						<h6 id="tags" class="card-subtitle mb-2 text-muted">Card tags</h6>
+						<p id="description" class="card-text">Description text</p>
+						<button id="open" onclick="open(xy)" class="btn btn-primary">Open</button>
+						<a id="opensource" href="xx" class="card-link">Source Link</a>
+					</div>
+				</div>
+				<div class="card m-4" id="result">
+					<div class="card-body">
+						<h4 id="title" class="card-title">Card title</h4>
+						<h6 id="tags" class="card-subtitle mb-2 text-muted">Card tags</h6>
+						<p id="description" class="card-text">Description text</p>
+						<button id="open" onclick="open(xy)" class="btn btn-primary">Open</button>
+						<a id="opensource" href="xx" class="card-link">Source Link</a>
+					</div>
+				</div>
+			</div>
 
-	<!-- Search Results -->
-	<div id="resultcontainer" class="container">
+			<div id="contentcontainer" class="embed-responsive col-8">
+				<iframe id="contentdisplayer" src="https://docs.google.com/document/d/e/2PACX-1vQ6vspGQU9__TdJFhcsRNnmwuNsRn-sO1nMzHFSOdOzPysEBlUK9VieKHuU4mzv0JbXVCaF04dJNI3h/pub?embedded=true"></iframe>
+			</div>
+		</div>
 	</div>
 
-	<div class="embed-responsive">
-		<iframe id="contentdisplayer" class="embed-responsive-item" src=""></iframe>
-	</div>
-	
+
 	<!-- Footer -->
 	<footer class="footer bg-light">
 		<div class="social">
-			<a href="https://github.com/SorenSaket/scholarly-search-engine" target="_blank"><i class="fa fa-github mx-2" 		style="color: #24292E" aria-hidden="true"></i></a>
-			<a href="https://www.google.com" target="_blank"><i class="fa fa-rss mx-2" 			style="color: #ff6600" aria-hidden="true"></i></a>
-			<a href="https://www.google.com" target="_blank"><i class="fa fa-reddit mx-2" 		style="color: #ff4500" aria-hidden="true"></i></a>
-			<a href="https://www.google.com" target="_blank"><i class="fa fa-facebook mx-2" 	style="color: #3b5998" aria-hidden="true"></i></a>
-			<a href="https://www.google.com" target="_blank"><i class="fa fa-twitter mx-2" 		style="color: #00aced" aria-hidden="true"></i></a>
-			<a href="https://www.google.com" target="_blank"><i class="fa fa-youtube-play mx-2" style="color: #ff0000" aria-hidden="true"></i></a>
+			<a href="https://github.com/SorenSaket/scholarly-search-engine" target="_blank">
+				<i class="fa fa-github mx-2" style="color: #24292E" aria-hidden="true"></i>
+			</a>
+			<a href="https://www.google.com" target="_blank">
+				<i class="fa fa-rss mx-2" style="color: #ff6600" aria-hidden="true"></i>
+			</a>
+			<a href="https://www.google.com" target="_blank">
+				<i class="fa fa-reddit mx-2" style="color: #ff4500" aria-hidden="true"></i>
+			</a>
+			<a href="https://www.google.com" target="_blank">
+				<i class="fa fa-facebook mx-2" style="color: #3b5998" aria-hidden="true"></i>
+			</a>
+			<a href="https://www.google.com" target="_blank">
+				<i class="fa fa-twitter mx-2" style="color: #00aced" aria-hidden="true"></i>
+			</a>
+			<a href="https://www.google.com" target="_blank">
+				<i class="fa fa-youtube-play mx-2" style="color: #ff0000" aria-hidden="true"></i>
+			</a>
 		</div>
 		<div class="footerinfo">
 			<span class="text-muted text-center">
-					Made by <a href="https://twitter.com/sorensaket" target="_blank">@SorenSaket</a> and <a href="https://twitter.com/LokeWalsted" target="_blank">@LokeWalsted</a>
+				Made by
+				<a href="https://twitter.com/sorensaket" target="_blank">@SorenSaket</a> and
+				<a href="https://twitter.com/LokeWalsted" target="_blank">@LokeWalsted</a>
 			</span>
 		</div>
 	</footer>
 
 	<script id="includes">
-	
-	
+
+
 	</script>
 </body>
+
 </html>
