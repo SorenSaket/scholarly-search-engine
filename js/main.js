@@ -1,17 +1,17 @@
 var allData = [];
 
-window.addEventListener('DOMContentLoaded', init);
+window.addEventListener("load", init);
 
 function init() {
 	loadDatabases();
 }
 
 function loadDatabases(){
-	var databases = Cookies.get('databases');
+	var databases = Cookies.get("databases");
 	if(databases == "undefined" || databases == null)
 	{
 		console.log("No database var found");
-		databases = 'https://docs.google.com/spreadsheets/d/1ku7WmJuYZ68s-l7fADQDihK3cNVCqcGaAuQeTvtIo98/edit?usp=sharing';
+		databases = "https://docs.google.com/spreadsheets/d/1ku7WmJuYZ68s-l7fADQDihK3cNVCqcGaAuQeTvtIo98/edit?usp=sharing";
 		Cookies.set("databases",databases);
 	}
 	document.getElementById("databases").value = databases;
@@ -19,7 +19,9 @@ function loadDatabases(){
 	for (let x = 0; x < databases.length; x++) {
 		Tabletop.init( { key: databases[x],
 			callback: function(data, tabletop){
-				allData.push(data);
+				for (let y = 0; y < data.length; y++) {
+					allData.push(data[y]);
+				}
 			},
 			simpleSheet: true } );
 	}
@@ -27,8 +29,8 @@ function loadDatabases(){
 }
 
 function saveDatabases(){
-	Cookies.set('databases', document.getElementById("databases").value);
-	console.log(Cookies.get('databases'));
+	Cookies.set("databases", document.getElementById("databases").value);
+	console.log(Cookies.get("databases"));
 	console.log(document.getElementById("databases").value);
 }
 
@@ -39,7 +41,7 @@ function search(){
 	var foundArticles = findMatchingItemsInDatabase(searchQuery);
 	for (var x = 0; x < foundArticles.length; x++) {
 		document.getElementById("resultcontainer").innerHTML = "";
-		addResult(foundArticles[0][x].type,foundArticles[0][x].name,foundArticles[0][x].description,foundArticles[0][x].tags, foundArticles[0][x].link);
+		addResult(foundArticles[x].type,foundArticles[x].name,foundArticles[x].description,foundArticles[x].tags, foundArticles[x].link);
 	}
 }
 
@@ -51,7 +53,7 @@ function findMatchingItemsInDatabase(searchQuery){
 	for (var x = 0; x < allData.length; x++) 
 	{
 		//Gets tags in article
-		var tags = allData[0][x].tags;
+		var tags = allData[x].tags;
 		console.log(tags);
 		tags = tags.split(", ");
 		//Go though all tags
@@ -71,9 +73,9 @@ function findMatchingItemsInDatabase(searchQuery){
 
 function addResult(type, name, description, tags, link){
 	//sets the div and (div id) soon TM
-	var $div = $('<div>');
+	var $div = $("<div>");
 	//loads the html into a object
-	$div.load('elements/search_element.html #card', function(){
+	$div.load("elements/search_element.html #card", function(){
 		//gets the html and puts it into a variable
 		var html = $(this)
 		//gets the string version of the html
@@ -102,3 +104,8 @@ function open(link, type)
 {
 	document.getElementById("contentdisplayer").src = (link + "?embedded=true").toString();
 }
+
+document.getElementById('searchForm').addEventListener('submit', function(e) {
+	e.preventDefault();
+	search();
+}, false);
