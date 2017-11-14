@@ -107,6 +107,6 @@ function includeHTML(){
 		console.log(html)
 
 		//inserts the html results
-		document.getElementById("resultcontainer").appendChild(html)
+		$("#resultcontainer").append(html)
 	});
 }
