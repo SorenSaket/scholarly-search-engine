@@ -83,13 +83,15 @@ function addResult(type, name, description, tags, link){
 		html = html.replace("Description text",description);
 		html = html.replace("xy","'" + link + "', '" + type + "'");
 		html = html.replace("xx",link);
-		
+		var randval = Math.random()*Math.random();
+		html = html.replace("ID",randval);
+		html = html.replace("ID",randval);
 		//make the string int a html obj again
 		html = $(html);
 		html = html["0"];
 
 		//logs the html obj
-		console.log(html)
+		console.log(html);
 
 		//inserts the html results
 		$("#resultcontainer").append(html)
@@ -97,9 +99,7 @@ function addResult(type, name, description, tags, link){
 }
 
 function open(link, type){
-	var url = '"' + link + '?embedded=true"';
-	console.log(url);
-	document.getElementById("contentdisplayer").setAttribute("src",url);
+	document.getElementById("contentdisplayer").setAttribute("src", link);
 }
 
 document.getElementById('searchForm').addEventListener('submit', function(e) {

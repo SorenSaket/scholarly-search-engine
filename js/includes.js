@@ -20,9 +20,10 @@ function includeSS(file)
 }
 
 //libraries
-includeJS("js/jquery-3.2.1.min.js");
+//includeJS("js/jquery-3.2.1.min.js");
 includeJS("js/tabletop.min.js");
 includeJS("js/js.cookie.js");
+includeJS("js/seendrandom.js")
 includeJS("https://use.fontawesome.com/06fa86ec9b.js");
 includeJS("js/bootstrap.bundle.min.js");
 		
