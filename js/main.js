@@ -1,23 +1,45 @@
-var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1ku7WmJuYZ68s-l7fADQDihK3cNVCqcGaAuQeTvtIo98/edit?usp=sharing';
 var allData = [];
 
-window.addEventListener('DOMContentLoaded', init);
+window.addEventListener("load", init);
 
 function init() {
 	loadDatabases();
 }
 
-function saveData(data, tabletop) {
-	allData.push(data);
+function loadDatabases(){
+	var databases = Cookies.get("databases");
+	if(databases == "undefined" || databases == null)
+	{
+		console.log("No database var found");
+		databases = "https://docs.google.com/spreadsheets/d/1ku7WmJuYZ68s-l7fADQDihK3cNVCqcGaAuQeTvtIo98/edit?usp=sharing";
+		Cookies.set("databases",databases);
+	}
+	document.getElementById("databases").value = databases;
+	databases = databases.split("\n");
+	for (let x = 0; x < databases.length; x++) {
+		Tabletop.init( { key: databases[x],
+			callback: function(data, tabletop){
+				for (let y = 0; y < data.length; y++) {
+					allData.push(data[y]);
+				}
+			},
+			simpleSheet: true } );
+	}
+	console.log(allData);
+}
+
+function saveDatabases(){
+	Cookies.set("databases", document.getElementById("databases").value);
 }
 
 function search(){
 	//Get serch Query from input
 	var searchQuery = document.getElementById("searchInput").value;
+	//document.getElementById("searchInput").value = "";
 	var foundArticles = findMatchingItemsInDatabase(searchQuery);
 	for (var x = 0; x < foundArticles.length; x++) {
-		var tempdoc = document.getElementById("resultcontainer").innerHTML='<object type="text/html" data="elements/search_elements.html" ></object>';
-		tempdoc.getElementById("title").value = foundArticles[x].name;
+		document.getElementById("resultcontainer").innerHTML = "";
+		addResult(foundArticles[x].type,foundArticles[x].name,foundArticles[x].description,foundArticles[x].tags, foundArticles[x].link);
 	}
 }
 
@@ -30,7 +52,6 @@ function findMatchingItemsInDatabase(searchQuery){
 	{
 		//Gets tags in article
 		var tags = allData[x].tags;
-		
 		tags = tags.split(", ");
 		//Go though all tags
 		for (var y = 0; y < tags.length; y++) 
@@ -46,58 +67,22 @@ function findMatchingItemsInDatabase(searchQuery){
 	return foundArticles;
 }
 
-function loadDatabases(){
-	var databases = Cookies.get('databases');
-	console.log(databases);
-	if(databases == "undefined" || databases == null)
-	{
-		console.log("No database var found");
-		databases = 'https://docs.google.com/spreadsheets/d/1ku7WmJuYZ68s-l7fADQDihK3cNVCqcGaAuQeTvtIo98/edit?usp=sharing';
-		Cookies.set("databases",databases);
-	}
-	document.getElementById("databases").value = databases;
-	databases = databases.split(/\r?\n/);
-	for (let x = 0; x < databases.length; x++) {
-		Tabletop.init( { key: databases[x],
-			callback: saveData,
-			simpleSheet: true } );
-	}
-}
-
-function saveDatabases(){
-	Cookies.set('databases', document.getElementById("databases").value);
-	console.log(Cookies.get('databases'));
-	console.log(document.getElementById("databases").value);
-}
-/*
-
-document.getElementById('searchForm').addEventListener('submit', function(e) {
-    search(document.getElementById('searchText'));
-    e.preventDefault();
-}, false);*/
-
-function includeHTML(){
+function addResult(type, name, description, tags, link){
 	//sets the div and (div id) soon TM
-	var $div = $('<div>');
+	var $div = $("<div>");
 	//loads the html into a object
-	$div.load('elements/search_element.html #card', function(){
+	$div.load("elements/search_element.html #result", function(){
 		//gets the html and puts it into a variable
 		var html = $(this)
-		var title = "ATP"
-		var tags = "ATP ENERGI"
-		var description = "ATP er kroppens energi kilde"
-		var open = "https://twitter.com"
-		var opensource = "https://google.com"
 		//gets the string version of the html
 		html = html["0"].innerHTML
-
 		//change the values 
 		html = html.toString();
-		html = html.replace("Card title",title);
+		html = html.replace("Card title",name);
 		html = html.replace("Card tags",tags);
 		html = html.replace("Description text",description);
-		html = html.replace("#",open);
-		html = html.replace("#",opensource);
+		html = html.replace("xy","'" + link + "', '" + type + "'");
+		html = html.replace("xx",link);
 		
 		//make the string int a html obj again
 		html = $(html);
@@ -107,6 +92,21 @@ function includeHTML(){
 		console.log(html)
 
 		//inserts the html results
+<<<<<<< HEAD
 		$("#resultcontainer").append(html)
+=======
+		document.getElementById("resultcontainer").appendChild(html);
+>>>>>>> 315acdecd16cec172b7e0fc85c7704d71ba30bdc
 	});
 }
+
+function open(link, type){
+	var url = '"' + link + '?embedded=true"';
+	console.log(url);
+	document.getElementById("contentdisplayer").setAttribute("src",url);
+}
+
+document.getElementById('searchForm').addEventListener('submit', function(e) {
+	e.preventDefault();
+	search();
+}, false);
