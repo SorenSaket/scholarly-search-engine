@@ -2,6 +2,41 @@ var allData = [];
 var currentResults = [];
 var currentPage;
 
+window.addEventListener("load", init);
+
+function init() 
+{
+	loadDatabases();
+}
+
+function loadDatabases(){
+	var databases = Cookies.get("databases");
+	allData = [];
+	if(databases == "undefined" || databases == null)
+	{
+		console.log("No database var found");
+		databases = "https://docs.google.com/spreadsheets/d/1ku7WmJuYZ68s-l7fADQDihK3cNVCqcGaAuQeTvtIo98/edit?usp=sharing";
+		Cookies.set("databases",databases);
+	}
+	document.getElementById("databases").value = databases;
+	databases = databases.split("\n");
+	for (let x = 0; x < databases.length; x++) {
+		Tabletop.init( { key: databases[x],
+			callback: function(data, tabletop){
+				for (let y = 0; y < data.length; y++) {
+					allData.push(data[y]);
+				}
+			},
+			simpleSheet: true } );
+	}
+	console.log(allData);
+}
+
+function saveDatabases(){
+	console.log("Saved Databases");
+	Cookies.set("databases", document.getElementById("databases").value);
+	loadDatabases();
+}
 
 function search(){
 	//Get serch Query from input
@@ -11,9 +46,7 @@ function search(){
 	displayResults(0);
 }
 
-
-function prevPage()
-{
+function prevPage(){
 	currentPage = currentPage-= 1;
 	if(currentPage < 0)
 	{
@@ -22,14 +55,13 @@ function prevPage()
 	displayResults(currentPage);
 }
 
-function nextPage()
-{
+function nextPage(){
 	currentPage = currentPage += 1;
 	displayResults(currentPage);
 }
 
-function displayResults(page)
-{
+function displayResults(page){
+	document.getElementById("navigation0").innerHTML = page +1;
 	currentPage = page;
 	//Find the starting element in the currentResults array
 	var firstResultToDisplay = page*3;
@@ -54,14 +86,13 @@ function displayResults(page)
 	}
 }
 
-function changeResult(resultToChange, data)
-{
+function changeResult(resultToChange, data){
 	if(data != null)
 	{
 		document.getElementById("result" + resultToChange).style.display = "block";
 		document.getElementById("opensource" + resultToChange).href = data.link;
 		document.getElementById("title" + resultToChange).innerText = data.name;
-		document.getElementById("tags" + resultToChange).innerText = data.tags.substring(0, 64) + "...";
+		document.getElementById("tags" + resultToChange).innerText = data.tags.substring(0, 82) + "...";
 		document.getElementById("description" + resultToChange).innerText = data.description;
 	}
 	else
@@ -95,7 +126,8 @@ function findMatchingItemsInDatabase(searchQuery){
 }
 
 function open(resultToOpen){
-	var final = currentPage*3 + resultToOpen
+	var final = ((currentPage*3) + resultToOpen);
+	console.log("Opening: " + currentResults[final].name);
 	document.getElementById("contentdisplayer").setAttribute("src", currentResults[final].link);
 }
 
@@ -104,18 +136,19 @@ document.getElementById('searchForm').addEventListener('submit', function(e) {
 	search();
 }, false);
 
-$('#open0').click(function()
-{ 
+$('#open0').click(function(){ 
 	open(0); 
 	return false; 
 });
-$('#open0').click(function()
-{ 
+$('#open1').click(function(){ 
 	open(1); 
 	return false; 
 });
-$('#open0').click(function()
-{ 
+$('#open2').click(function(){ 
 	open(2); 
 	return false; 
 });
+
+
+$('#prev').click( function(e) {e.preventDefault(); prevPage(); return false; } );
+$('#next').click( function(e) {e.preventDefault(); nextPage(); return false; } );
