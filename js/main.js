@@ -92,11 +92,7 @@ function addResult(type, name, description, tags, link){
 		console.log(html)
 
 		//inserts the html results
-<<<<<<< HEAD
 		$("#resultcontainer").append(html)
-=======
-		document.getElementById("resultcontainer").appendChild(html);
->>>>>>> 315acdecd16cec172b7e0fc85c7704d71ba30bdc
 	});
 }
 
