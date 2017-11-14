@@ -6,14 +6,13 @@ $credits-size: 22px;
 $footer-margin: 8px;
 $footer-height:$socialicon-height + $credits-size + ($footer-margin)*3;
 
-html,body
+html
 {
     height: 100%;
     width: 100%;
 }
 body {
-    margin-top: $header-height;
-    margin-bottom: $footer-height;
+    height: 100%;
     overflow: hidden;
 }
 
@@ -22,7 +21,12 @@ body {
     min-width: 88px;
     margin-right: 16px;
 }
-
+@media (min-width: 992px)
+{
+    .modal-lg {
+        max-width: 920px;
+    }
+}
 .dropdown-menu
 {
     right: 0;
@@ -58,32 +62,38 @@ body {
 
 #pagecontent
 {
-    height: 100%;
-    margin: 32px;
-    #resultcontainer
+    top: $header-height;
+    bottom: $footer-height;
+    position: absolute;
+    width: 100%;
+    #resultdisplayer
     {
-        overflow: auto;
-        height: 100%;
+        width: 100%;
+        height: 90%;
+        overflow-y: auto;
     }
-    #result
+    .result
     {
-        width: 80%;
+        width: 90%;
+        margin: 16px;
+        .card-link
+        {
+            float: right;
+        }
     }
-    /*#contentcontainer
+    #resultnavigation
     {
-
-    }*/
+        margin-top: 16px;
+    }
     .row
     {
-       min-height: 1080px - $header-height - $footer-height;
+        width: 100%;
+        height: 100%;
+        margin: 0;
     }
-}
-
-.card
-{
-    a
+    #contentdisplayer
     {
-        float: right;
-    }
 
+    }
 }
+

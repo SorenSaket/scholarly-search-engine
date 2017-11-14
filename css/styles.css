@@ -1,16 +1,18 @@
-html, body {
+html {
   height: 100%;
   width: 100%; }
 
 body {
-  margin-top: 68px;
-  margin-bottom: 78px;
+  height: 100%;
   overflow: hidden; }
 
 .dropdown {
   min-width: 88px;
   margin-right: 16px; }
 
+@media (min-width: 992px) {
+  .modal-lg {
+    max-width: 920px; } }
 .dropdown-menu {
   right: 0;
   left: -85px; }
@@ -35,21 +37,24 @@ body {
       font-size: 32px; }
 
 #pagecontent {
-  height: 100%;
-  margin: 32px;
-    /*#contentcontainer
-    {
-
-    }*/ }
-  #pagecontent #resultcontainer {
-    overflow: auto;
-    height: 100%; }
-  #pagecontent #result {
-    width: 80%; }
+  top: 68px;
+  bottom: 78px;
+  position: absolute;
+  width: 100%; }
+  #pagecontent #resultdisplayer {
+    width: 100%;
+    height: 90%;
+    overflow-y: auto; }
+  #pagecontent .result {
+    width: 90%;
+    margin: 16px; }
+    #pagecontent .result .card-link {
+      float: right; }
+  #pagecontent #resultnavigation {
+    margin-top: 16px; }
   #pagecontent .row {
-    min-height: 934px; }
-
-.card a {
-  float: right; }
+    width: 100%;
+    height: 100%;
+    margin: 0; }
 
 /*# sourceMappingURL=styles.css.map */

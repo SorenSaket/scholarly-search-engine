@@ -1,45 +1,72 @@
 var allData = [];
+var currentResults = [];
+var currentPage;
 
-window.addEventListener("load", init);
-
-function init() {
-	loadDatabases();
-}
-
-function loadDatabases(){
-	var databases = Cookies.get("databases");
-	if(databases == "undefined" || databases == null)
-	{
-		console.log("No database var found");
-		databases = "https://docs.google.com/spreadsheets/d/1ku7WmJuYZ68s-l7fADQDihK3cNVCqcGaAuQeTvtIo98/edit?usp=sharing";
-		Cookies.set("databases",databases);
-	}
-	document.getElementById("databases").value = databases;
-	databases = databases.split("\n");
-	for (let x = 0; x < databases.length; x++) {
-		Tabletop.init( { key: databases[x],
-			callback: function(data, tabletop){
-				for (let y = 0; y < data.length; y++) {
-					allData.push(data[y]);
-				}
-			},
-			simpleSheet: true } );
-	}
-	console.log(allData);
-}
-
-function saveDatabases(){
-	Cookies.set("databases", document.getElementById("databases").value);
-}
 
 function search(){
 	//Get serch Query from input
 	var searchQuery = document.getElementById("searchInput").value;
 	//document.getElementById("searchInput").value = "";
-	var foundArticles = findMatchingItemsInDatabase(searchQuery);
-	for (var x = 0; x < foundArticles.length; x++) {
-		document.getElementById("resultcontainer").innerHTML = "";
-		addResult(foundArticles[x].type,foundArticles[x].name,foundArticles[x].description,foundArticles[x].tags, foundArticles[x].link);
+	currentResults = findMatchingItemsInDatabase(searchQuery);
+	displayResults(0);
+}
+
+
+function prevPage()
+{
+	currentPage = currentPage-= 1;
+	if(currentPage < 0)
+	{
+		currentPage = 0;
+	}
+	displayResults(currentPage);
+}
+
+function nextPage()
+{
+	currentPage = currentPage += 1;
+	displayResults(currentPage);
+}
+
+function displayResults(page)
+{
+	currentPage = page;
+	//Find the starting element in the currentResults array
+	var firstResultToDisplay = page*3;
+	//needed if there's less than 3 result on the page
+	var cardsToDisplay = currentResults.length;
+
+	if(cardsToDisplay > 3)
+	{
+		cardsToDisplay = 3;
+	}
+
+	for (let index = 0; index < 3; index++) 
+	{
+		if(index > cardsToDisplay)
+		{
+			changeResult(index,null);
+		}
+		else
+		{
+			changeResult(index,currentResults[firstResultToDisplay + index]);
+		}
+	}
+}
+
+function changeResult(resultToChange, data)
+{
+	if(data != null)
+	{
+		document.getElementById("result" + resultToChange).style.display = "block";
+		document.getElementById("opensource" + resultToChange).href = data.link;
+		document.getElementById("title" + resultToChange).innerText = data.name;
+		document.getElementById("tags" + resultToChange).innerText = data.tags.substring(0, 64) + "...";
+		document.getElementById("description" + resultToChange).innerText = data.description;
+	}
+	else
+	{
+		document.getElementById("result" + resultToChange).style.display = "none";
 	}
 }
 
@@ -67,42 +94,28 @@ function findMatchingItemsInDatabase(searchQuery){
 	return foundArticles;
 }
 
-function addResult(type, name, description, tags, link){
-	//sets the div and (div id) soon TM
-	var $div = $("<div>");
-	//loads the html into a object
-	$div.load("elements/search_element.html #result", function(){
-		//gets the html and puts it into a variable
-		var html = $(this)
-		//gets the string version of the html
-		html = html["0"].innerHTML
-		//change the values 
-		html = html.toString();
-		html = html.replace("Card title",name);
-		html = html.replace("Card tags",tags);
-		html = html.replace("Description text",description);
-		html = html.replace("xy","'" + link + "', '" + type + "'");
-		html = html.replace("xx",link);
-		var randval = Math.random()*Math.random();
-		html = html.replace("ID",randval);
-		html = html.replace("ID",randval);
-		//make the string int a html obj again
-		html = $(html);
-		html = html["0"];
-
-		//logs the html obj
-		console.log(html);
-
-		//inserts the html results
-		$("#resultcontainer").append(html)
-	});
-}
-
-function open(link, type){
-	document.getElementById("contentdisplayer").setAttribute("src", link);
+function open(resultToOpen){
+	var final = currentPage*3 + resultToOpen
+	document.getElementById("contentdisplayer").setAttribute("src", currentResults[final].link);
 }
 
 document.getElementById('searchForm').addEventListener('submit', function(e) {
 	e.preventDefault();
 	search();
 }, false);
+
+$('#open0').click(function()
+{ 
+	open(0); 
+	return false; 
+});
+$('#open0').click(function()
+{ 
+	open(1); 
+	return false; 
+});
+$('#open0').click(function()
+{ 
+	open(2); 
+	return false; 
+});
