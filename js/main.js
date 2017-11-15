@@ -52,8 +52,8 @@ function search(){
 	var searchQuery = document.getElementById("searchInput").value;
 	//document.getElementById("searchInput").value = "";
 	if (searchQuery[0] == "/"){
-		var command = strSplit(searchQuery.replace("/", ""))
-		eval(command)
+		var command = strSplit(searchQuery.replace("/", ""));
+		eval(command);
 	}
 	else{
 		currentResults = findMatchingItemsInDatabase(searchQuery);
