@@ -111,32 +111,32 @@ function changeResult(resultToChange, data){
 		document.getElementById("description" + resultToChange).innerText = data.description;
 
 		if (data.type == "doc"){
-			$("#type" + resultToChange).addClass("fa-file-text")
+			document.getElementById("type" + resultToChange).className = "type fa " + "fa-file-text";
 		}
 		else if (data.type == "vid"){
-			$("#type" + resultToChange).addClass("fa-video-camera");		
+			document.getElementById("type" + resultToChange).className = "type fa " + "fa-video-camera";
 		}
 		else if (data.type == "cal"){
-			$("#type" + resultToChange).addClass("fa-calculator");
+			document.getElementById("type" + resultToChange).className = "type fa " + "fa-calculator";
 		}
 		else if (data.type == "html"){
-			$("#type" + resultToChange).addClass("fa-html5");
+			document.getElementById("type" + resultToChange).className = "type fa " + "fa-html5";
 		}
 		else if (data.type == "sheet"){
-			$("#type" + resultToChange).addClass("fa-file-excel-o");
+			document.getElementById("type" + resultToChange).className = "type fa " + "fa-file-excel-o";
 		}
 		else if (data.type == "slide"){
-			$("#type" + resultToChange).addClass("fa-file-powerpoint-o");
+			document.getElementById("type" + resultToChange).className = "type fa " + "fa-file-powerpoint-o";
 		}
 		else if (data.type == "img"){
-			$("#type" + resultToChange).addClass("fa-file-image-o");
+			document.getElementById("type" + resultToChange).className = "type fa " + "fa-file-image-o";
 		}
 		else if (data.type == "pdf"){
-			$("#type" + resultToChange).addClass("fa-file-pdf-o");
+			document.getElementById("type" + resultToChange).className = "type fa " + "fa-file-pdf-o";
 		}
 		else
 		{
-			$("#type" + resultToChange).addClass("fa-file-o");
+			document.getElementById("type" + resultToChange).className = "type fa " + "fa-file-o";
 		}
 	}
 	else
