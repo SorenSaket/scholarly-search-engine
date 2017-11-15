@@ -116,22 +116,22 @@ function changeResult(resultToChange, data){
 		else if (data.type == "vid"){
 			$("#type" + resultToChange).addClass("fa-video-camera");		
 		}
-		else if (data.typ == "cal"){
+		else if (data.type == "cal"){
 			$("#type" + resultToChange).addClass("fa-calculator");
 		}
-		else if (data.typ == "html"){
+		else if (data.type == "html"){
 			$("#type" + resultToChange).addClass("fa-html5");
 		}
-		else if (data.typ == "sheet"){
+		else if (data.type == "sheet"){
 			$("#type" + resultToChange).addClass("fa-file-excel-o");
 		}
-		else if (data.typ == "slide"){
+		else if (data.type == "slide"){
 			$("#type" + resultToChange).addClass("fa-file-powerpoint-o");
 		}
-		else if (data.typ == "img"){
+		else if (data.type == "img"){
 			$("#type" + resultToChange).addClass("fa-file-image-o");
 		}
-		else if (data.typ == "pdf"){
+		else if (data.type == "pdf"){
 			$("#type" + resultToChange).addClass("fa-file-pdf-o");
 		}
 		else
