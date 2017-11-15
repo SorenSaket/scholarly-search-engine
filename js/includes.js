@@ -26,7 +26,6 @@ includeJS("js/js.cookie.js");
 includeJS("js/seedrandom.js")
 includeJS("https://use.fontawesome.com/06fa86ec9b.js");
 includeJS("js/bootstrap.bundle.min.js");
-includeJS("drops/calculators/trigonometry/py.js")
 		
 //just CSS
 includeSS("css/bootstrap.min.css");
@@ -35,3 +34,7 @@ includeSS("css/styles.css");
 //custom scripts
 includeJS("js/main.js");
 includeJS("js/manager.database.js");
+
+//Drops
+includeJS("drops/calculators/trigonometry/py.js");
+includeJS("drops/calculators/trigonometry/trigonometry.js")

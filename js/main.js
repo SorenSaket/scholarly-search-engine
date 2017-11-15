@@ -109,26 +109,34 @@ function changeResult(resultToChange, data){
 		document.getElementById("title" + resultToChange).innerText = data.name;
 		document.getElementById("tags" + resultToChange).innerText = data.tags.substring(0, 82) + "...";
 		document.getElementById("description" + resultToChange).innerText = data.description;
+
 		if (data.type == "doc"){
-			$("#type" + resultToChange).attr('src', 'assets/cardtypes/doc.png');
-			$("#type" + resultToChange).width(38);
-			$("#type" + resultToChange).height(38);
-			$("#type" + resultToChange).css('float','right');
+			$("#type" + resultToChange).addClass("fa-file-text")
 		}
 		else if (data.type == "vid"){
-			$("#type" + resultToChange).attr('src', 'assets/cardtypes/vid.png');
-			$("#type" + resultToChange).width(38);
-			$("#type" + resultToChange).height(38);
-			$("#type" + resultToChange).css('float','right');
+			$("#type" + resultToChange).addClass("fa-video-camera");		
 		}
 		else if (data.typ == "cal"){
-			$("#type" + resultToChange).attr('src', 'assets/cardtypes/cal.png');
-			$("#type" + resultToChange).width(38);
-			$("#type" + resultToChange).height(38);
-			$("#type" + resultToChange).css('float','right');
+			$("#type" + resultToChange).addClass("fa-calculator");
 		}
-		else{
-			console.log("ERROR Unknow type")
+		else if (data.typ == "html"){
+			$("#type" + resultToChange).addClass("fa-html5");
+		}
+		else if (data.typ == "sheet"){
+			$("#type" + resultToChange).addClass("fa-file-excel-o");
+		}
+		else if (data.typ == "slide"){
+			$("#type" + resultToChange).addClass("fa-file-powerpoint-o");
+		}
+		else if (data.typ == "img"){
+			$("#type" + resultToChange).addClass("fa-file-image-o");
+		}
+		else if (data.typ == "pdf"){
+			$("#type" + resultToChange).addClass("fa-file-pdf-o");
+		}
+		else
+		{
+			$("#type" + resultToChange).addClass("fa-file-o");
 		}
 	}
 	else
