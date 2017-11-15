@@ -38,12 +38,27 @@ function saveDatabases(){
 	loadDatabases();
 }
 
+function strSplit(string) {
+    var str = string.replace('(','("')
+    str = str.replace(/,/g,'","')
+    var pos = str.lastIndexOf(')')
+    str = str.substring(0,pos) + '")' + str.substring(pos+1)
+    console.log (str)
+    return str
+}
+
 function search(){
 	//Get serch Query from input
 	var searchQuery = document.getElementById("searchInput").value;
 	//document.getElementById("searchInput").value = "";
-	currentResults = findMatchingItemsInDatabase(searchQuery);
-	displayResults(0);
+	if (searchQuery[0] == "/"){
+		var command = strSplit(searchQuery.replace("/", ""))
+		eval(command)
+	}
+	else{
+		currentResults = findMatchingItemsInDatabase(searchQuery);
+		displayResults(0);
+	}
 }
 
 function prevPage(){
