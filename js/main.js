@@ -109,6 +109,27 @@ function changeResult(resultToChange, data){
 		document.getElementById("title" + resultToChange).innerText = data.name;
 		document.getElementById("tags" + resultToChange).innerText = data.tags.substring(0, 82) + "...";
 		document.getElementById("description" + resultToChange).innerText = data.description;
+		if (data.type == "doc"){
+			$("#type" + resultToChange).attr('src', 'assets/cardtypes/doc.png');
+			$("#type" + resultToChange).width(38);
+			$("#type" + resultToChange).height(38);
+			$("#type" + resultToChange).css('float','right');
+		}
+		else if (data.type == "vid"){
+			$("#type" + resultToChange).attr('src', 'assets/cardtypes/vid.png');
+			$("#type" + resultToChange).width(38);
+			$("#type" + resultToChange).height(38);
+			$("#type" + resultToChange).css('float','right');
+		}
+		else if (data.typ == "cal"){
+			$("#type" + resultToChange).attr('src', 'assets/cardtypes/cal.png');
+			$("#type" + resultToChange).width(38);
+			$("#type" + resultToChange).height(38);
+			$("#type" + resultToChange).css('float','right');
+		}
+		else{
+			console.log("ERROR Unknow type")
+		}
 	}
 	else
 	{
