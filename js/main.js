@@ -1,72 +1,19 @@
 var allData = [];
+var allSearchEngines = [];
 var currentResults = [];
 var currentPage;
 
-window.addEventListener("load", init);
-
-function init() 
-{
-	loadDatabases();
-}
-
-function loadDatabases(){
-	var databases = Cookies.get("databases");
-	allData = [];
-	if(databases == "undefined" || databases == null)
-	{
-		console.log("No database var found");
-		databases = "https://docs.google.com/spreadsheets/d/1ku7WmJuYZ68s-l7fADQDihK3cNVCqcGaAuQeTvtIo98/edit?usp=sharing";
-		Cookies.set("databases",databases);
-	}
-	document.getElementById("databases").value = databases;
-	databases = databases.split("\n");
-	for (let x = 0; x < databases.length; x++) {
-		Tabletop.init( { key: databases[x],
-			callback: function(data, tabletop){
-				for (let y = 0; y < data.length; y++) {
-					allData.push(data[y]);
-				}
-			},
-			simpleSheet: true } );
-	}
-	console.log(allData);
-}
-
-function saveDatabases(){
-	console.log("Saved Databases");
-	Cookies.set("databases", document.getElementById("databases").value);
-	loadDatabases();
-}
-
-function strSplit(string) {
-    var str = string.replace('(','("')
-    str = str.replace(/,/g,'","')
-    var pos = str.lastIndexOf(')')
-    str = str.substring(0,pos) + '")' + str.substring(pos+1)
-    console.log (str)
-    return str
-}
-
-function search(){
-	//Get serch Query from input
-	var searchQuery = document.getElementById("searchInput").value;
-	//document.getElementById("searchInput").value = "";
-	if (searchQuery[0] == "/"){
-		var command = strSplit(searchQuery.replace("/", ""));
-		eval(command);
+document.getElementById('searchForm').addEventListener('submit', function(e) {
+	e.preventDefault();
+	if(document.getElementById('searchInput').value.indexOf("wiki") !== -1){
+		subsearch();
+		console.log("2")
 	}
 	else{
-		currentResults = findMatchingItemsInDatabase(searchQuery);
-		displayResults(0);
+		search();
+		console.log("3")
 	}
-}
-
-function prevPage(){
-	currentPage = currentPage-= 1;
-	if(currentPage < 0)
-	{
-		currentPage = 0;
-	}
+<<<<<<< HEAD
 	displayResults(currentPage);
 }
 
@@ -171,6 +118,8 @@ function open(resultToOpen){
 document.getElementById('searchForm').addEventListener('submit', function(e) {
 	e.preventDefault();
 	search();
+=======
+>>>>>>> ae64767842d13c580d02880d77c650203d90a1ba
 }, false);
 
 $('#open0').click(function(){ 
@@ -185,7 +134,6 @@ $('#open2').click(function(){
 	open(2); 
 	return false; 
 });
-
 
 $('#prev').click( function(e) {e.preventDefault(); prevPage(); return false; } );
 $('#next').click( function(e) {e.preventDefault(); nextPage(); return false; } );

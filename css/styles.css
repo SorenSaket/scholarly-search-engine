@@ -49,7 +49,12 @@ body {
     width: 90%;
     margin: 16px; }
     #pagecontent .result .card-link {
-      float: right; }
+      float: right;
+      font-size: 24px; }
+    #pagecontent .result .type {
+      float: right;
+      font-size: 38px;
+      color: #007bff; }
   #pagecontent #resultnavigation {
     margin-top: 16px; }
   #pagecontent .row {
