@@ -79,13 +79,12 @@ body {
         .card-link
         {
             float: right;
-            font-size: 24px;
         }
-        .type
+        .card-type
         {
-            float: right;
-            font-size: 38px;
-            color: #007bff;
+            float: left;
+            max-height: 10%;
+            max-width: 10%;
         }
     }
     #resultnavigation
@@ -103,3 +102,4 @@ body {
 
     }
 }
+

@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 	<!-- Include all of our scripts-->
-	<script type="text/javascript" src="js/libs/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src='js/includes.js'></script>
 	<!-- Branding -->
 	<title>Scholarly Search Engine</title>
 	<link rel="shortcut icon" type="image/png" href="assets/brand/icon.png" />
 </head>
-
 <body>
 	<!-- Navbar -->
 	<nav class="navbar navbar-expand navbar-light bg-light fixed-top">
@@ -21,7 +19,7 @@
 		</form>
 		<div class="dropdown">
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-			 aria-expanded="false">
+			    aria-expanded="false">
 				More
 			</a>
 			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -43,19 +41,9 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
-					<table class="table">
-						<thead class="thead-light">
-							<tr>
-								<th width="30%" scope="col">Command</th>
-								<th width="70%" scope="col">Search Engine Link</th>
-							</tr>
-						</thead>
-						<tbody id="">
-
-						</tbody>
-					</table>
-					<textarea id="databases" class="w-100" rows="8" placeholder="Insert google sheets databases" required></textarea>
+					<textarea id="databases" class="w-100" rows="16" placeholder="Insert google sheets databases" required></textarea>
 				</div>
+
 				<div class="modal-footer">
 					<a class="mr-auto" href="https://github.com/SorenSaket/scholarly-search-engine/blob/master/README.md#adding-databases" target="_blank">
 						<button type="button" class="btn btn-link ">Learn More</button>
@@ -82,7 +70,7 @@
 							<p id="description0" class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime autem minus voluptatem soluta cum cupiditate, quidem
 								possimus sequi perferendis reiciendis.</p>
 							<button id="open0" class="btn btn-primary" type="button">Open</button>
-							<i id="type0" class="type fa fa-file-o" aria-hidden="true"></i>
+							<img id="type0" class="card-type">
 						</div>
 					</div>
 					<div class="card result" id="result1" style="display:none">
@@ -95,7 +83,7 @@
 							<p id="description1" class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime autem minus voluptatem soluta cum cupiditate, quidem
 								possimus sequi perferendis reiciendis.</p>
 							<button id="open1" class="btn btn-primary" type="button">Open</button>
-							<i id="type1" class="type fa fa-file-o" aria-hidden="true"></i>
+							<img id="type1" class="card-type">
 						</div>
 					</div>
 					<div class="card result" id="result2" style="display:none">
@@ -108,7 +96,7 @@
 							<p id="description2" class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime autem minus voluptatem soluta cum cupiditate, quidem
 								possimus sequi perferendis reiciendis.</p>
 							<button id="open2" class="btn btn-primary" type="button">Open</button>
-							<i id="type2" class="type fa fa-file-o" aria-hidden="true"></i>
+							<img id="type2" class="card-type">
 						</div>
 					</div>
 				</div>
@@ -121,7 +109,7 @@
 							<a id="navigation0" class="page-link">1</a>
 						</li>
 						<li id="next" class="page-item">
-							<a class="page-link" href="">Next</a>
+							<a  class="page-link" href="">Next</a>
 						</li>
 					</ul>
 				</nav>
@@ -164,5 +152,4 @@
 		</div>
 	</footer>
 </body>
-
 </html>
