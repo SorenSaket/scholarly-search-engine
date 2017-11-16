@@ -69,7 +69,6 @@ function subsearch(){
 	if(searchQuery.indexOf("wiki") !== -1){
 		searchQuery = searchQuery.replace("wiki ", "");
 		var link = "https://en.wikipedia.org/w/index.php?title=Special:Search&search=" + searchQuery
-		alert(link);
 		document.getElementById("contentdisplayer").setAttribute("src", link);
 	}
 }
