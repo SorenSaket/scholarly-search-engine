@@ -15,7 +15,6 @@ function saveData()
 
 document.getElementById('searchForm').addEventListener('submit', function(e) {
 	e.preventDefault();
-<<<<<<< HEAD
 	if(document.getElementById('searchInput').value.indexOf("wiki") !== -1){
 		subsearch();
 		console.log("2")
@@ -24,7 +23,6 @@ document.getElementById('searchForm').addEventListener('submit', function(e) {
 		search();
 		console.log("3")
 	}
-<<<<<<< HEAD
 	displayResults(currentPage);
 }
 
@@ -129,11 +127,7 @@ function open(resultToOpen){
 document.getElementById('searchForm').addEventListener('submit', function(e) {
 	e.preventDefault();
 	search();
-=======
->>>>>>> ae64767842d13c580d02880d77c650203d90a1ba
-=======
 	search();
->>>>>>> 3ea7ba1d875fb4f0169570da9ef97c0518b7f2e7
 }, false);
 
 $('#open0').click(function(){ 
