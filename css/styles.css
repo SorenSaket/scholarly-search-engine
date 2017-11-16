@@ -36,12 +36,6 @@ body {
     .footer .social .fa {
       font-size: 32px; }
 
-#searchSettingsModal #addsearchengine {
-  float: right; }
-#searchSettingsModal #setablecontainer {
-  overflow: auto;
-  max-height: 256px; }
-
 #pagecontent {
   top: 68px;
   bottom: 78px;

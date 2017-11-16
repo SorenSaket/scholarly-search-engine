@@ -15,29 +15,41 @@ function search(){
 		var command = strSplit(searchQuery.replace("/", ""));
 		eval(command);
 	}
-	if (searchQuery[0] == "."){
-		var command = searchQuery.replace(".", "");
-		subsearch(command);
-	}
-	else
-	{
+	else{
 		currentResults = findMatchingItemsInDatabase(searchQuery);
 		displayResults(0);
 	}
 }
 
-function subsearch(query)
-{
-	var command = query.substr(0,query.indexOf(' '));
-	var finalquery = query.substr(query.indexOf(' ')+1);
-	for (let index = 0; index < allSearchEngines.length; index++) {
-		if(allSearchEngines[index].command == command)
-		{
-			document.getElementById("contentdisplayer").setAttribute("src", allSearchEngines[index].link + finalquery);
-		}
+function subsearch(){
+	//Get serch Query from input
+	var searchQuery = document.getElementById("searchInput").value;
+	console.log(searchQuery)
+	//document.getElementById("searchInput").value = "";
+	if(searchQuery.indexOf("wiki") !== -1){
+		searchQuery = searchQuery.replace("wiki ", "");
+		var link = "https://en.wikipedia.org/w/index.php?title=Special:Search&search=" + searchQuery
+		document.getElementById("contentdisplayer").setAttribute("src", link);
 	}
 }
 
+function prevPage(){
+	currentPage = currentPage-= 1;
+	if(currentPage < 0)
+	{
+		currentPage = 0;
+	}
+	displayResults(currentPage);
+}
+
+function nextPage(){
+	currentPage = currentPage += 1;
+	if(currentPage > currentResults/3)
+	{
+		currentPage = currentResults/3;
+	}
+	displayResults(currentPage);
+}
 
 function displayResults(page){
 	document.getElementById("navigation0").innerHTML = page +1;
@@ -114,10 +126,10 @@ function findMatchingItemsInDatabase(searchQuery){
 	var foundArticles = [];
 	
 	//For each article in sheetData
-	for (var x = 0; x < allDatabases.length; x++) 
+	for (var x = 0; x < allData.length; x++) 
 	{
 		//Gets tags in article
-		var tags = allDatabases[x].tags;
+		var tags = allData[x].tags;
 		tags = tags.split(", ");
 		//Go though all tags
 		for (var y = 0; y < tags.length; y++) 
@@ -126,7 +138,7 @@ function findMatchingItemsInDatabase(searchQuery){
 			if(searchQuery.toUpperCase() === tags[y].toUpperCase())
 			{
 				//Add the article to the return var foundArticles
-				foundArticles.push(allDatabases[x]);
+				foundArticles.push(allData[x]);
 			}
 		}
 	}
@@ -137,22 +149,4 @@ function open(resultToOpen){
 	var final = ((currentPage*3) + resultToOpen);
 	console.log("Opening: " + currentResults[final].name);
 	document.getElementById("contentdisplayer").setAttribute("src", currentResults[final].link);
-}
-
-function prevPage(){
-	currentPage = currentPage-= 1;
-	if(currentPage < 0)
-	{
-		currentPage = 0;
-	}
-	displayResults(currentPage);
-}
-
-function nextPage(){
-	currentPage = currentPage += 1;
-	if(currentPage > currentResults/3)
-	{
-		currentPage = currentResults/3;
-	}
-	displayResults(currentPage);
 }

@@ -1,5 +1,3 @@
-var allDatabases = [];
-
 window.addEventListener("load", init);
 
 function init() {
@@ -8,7 +6,7 @@ function init() {
 
 function loadDatabases(){
 	var databases = Cookies.get("databases");
-	allDatabases = [];
+	allData = [];
 	if(databases == "undefined" || databases == null)
 	{
         databases = [];
@@ -21,25 +19,18 @@ function loadDatabases(){
             Tabletop.init( { key: databases[x],
                 callback: function(data, tabletop){
                     for (let y = 0; y < data.length; y++) {
-                        allDatabases.push(data[y]);
+                        allData.push(data[y]);
                     }
                 },
                 simpleSheet: true } );
         }
     }
 	
-	console.log(allDatabases);
-}
-
-function revertDatabases(){
-	document.getElementById("databases").value = Cookies.get("databases");
+	console.log(allData);
 }
 
 function saveDatabases(){
-    if(document.getElementById("databases").value != Cookies.get("databases"))
-    {
-        console.log("Saved Databases");
-        Cookies.set("databases", document.getElementById("databases").value);
-        loadDatabases();
-    }
+	console.log("Saved Databases");
+	Cookies.set("databases", document.getElementById("databases").value);
+	loadDatabases();
 }

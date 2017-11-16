@@ -25,7 +25,7 @@
 				More
 			</a>
 			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-				<a class="dropdown-item" data-toggle="modal" data-target="#searchSettingsModal">Search Settings</a>
+				<a class="dropdown-item" data-toggle="modal" data-target="#databaseModal">Databases</a>
 				<a class="dropdown-item" href="#">Settings</a>
 				<div class="dropdown-divider"></div>
 				<a class="dropdown-item" href="https://github.com/SorenSaket/scholarly-search-engine/blob/master/README.md" target="_blank">How to use</a>
@@ -34,41 +34,34 @@
 	</nav>
 
 	<!-- Change Databases Modal -->
-	<div id="searchSettingsModal" class="modal fade" role="dialog">
+	<div id="databaseModal" class="modal fade" role="dialog">
 		<div class="modal-dialog modal-lg">
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Search Settings</h4>
-					<button type="button" class="close" onclick="RevertData()" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Databases</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
-					<h4>Custom Search Engines</h4>
-					<div id="setablecontainer">
-						<table class="table">
-							<thead class="thead-light">
-								<tr>
-									<th width="30%" scope="col">Command</th>
-									<th width="65%" scope="col">Search Engine Link</th>
-									<th width="5%" scope="col"></th>
-								</tr>
-							</thead>
-							<tbody id="searchenginecontainer">
-	
-							</tbody>
-						</table>	
-					</div>
-					<button id="addsearchengine" type="button" class="btn btn-primary m-4">Add Search Engine</button>
-					<hr>
-					<h4>Custom Databases</h4>
+					<table class="table">
+						<thead class="thead-light">
+							<tr>
+								<th width="30%" scope="col">Command</th>
+								<th width="70%" scope="col">Search Engine Link</th>
+							</tr>
+						</thead>
+						<tbody id="">
+
+						</tbody>
+					</table>
 					<textarea id="databases" class="w-100" rows="8" placeholder="Insert google sheets databases" required></textarea>
 				</div>
 				<div class="modal-footer">
 					<a class="mr-auto" href="https://github.com/SorenSaket/scholarly-search-engine/blob/master/README.md#adding-databases" target="_blank">
 						<button type="button" class="btn btn-link ">Learn More</button>
 					</a>
-					<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="RevertData()">Revert</button>
-					<button type="button" class="btn btn-success" data-dismiss="modal" onclick="saveData()">Save</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Revert</button>
+					<button type="button" class="btn btn-success" data-dismiss="modal" onclick="saveDatabases()">Save</button>
 				</div>
 			</div>
 		</div>

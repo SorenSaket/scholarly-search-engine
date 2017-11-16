@@ -29,12 +29,16 @@ includeJS("js/libs/bootstrap.bundle.min.js");
 includeSS("css/bootstrap.min.css");
 
 //just CSS
+
 includeSS("css/styles.css");
+
+//
+includeJS("css/bootstrap-toggle.min.css");
+includeJS("js/libs/bootstrap-toggle.min.js");
 
 //custom scripts
 includeJS("js/main.js");
 includeJS("js/manager.database.js");
-includeJS("js/manager.searchengine.js");
 includeJS("js/manager.search.js");
 
 
