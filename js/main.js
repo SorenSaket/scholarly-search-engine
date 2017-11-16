@@ -1,18 +1,21 @@
-var allData = [];
-var allSearchEngines = [];
 var currentResults = [];
 var currentPage;
 
+function revertData()
+{
+	setSearchEngines();
+	revertDatabases();
+}
+
+function saveData()
+{
+	saveDatabases();
+	saveSearchEngines();
+}
+
 document.getElementById('searchForm').addEventListener('submit', function(e) {
 	e.preventDefault();
-	if(document.getElementById('searchInput').value.indexOf("wiki") !== -1){
-		subsearch();
-		console.log("2")
-	}
-	else{
-		search();
-		console.log("3")
-	}
+	search();
 }, false);
 
 $('#open0').click(function(){ 
