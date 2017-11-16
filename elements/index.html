@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 	<!-- Include all of our scripts-->
-	<script type="text/javascript" src="js/libs/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src='js/includes.js'></script>
 	<!-- Branding -->
 	<title>Scholarly Search Engine</title>
 	<link rel="shortcut icon" type="image/png" href="assets/brand/icon.png" />
 </head>
-
 <body>
 	<!-- Navbar -->
 	<nav class="navbar navbar-expand navbar-light bg-light fixed-top">
@@ -21,7 +19,7 @@
 		</form>
 		<div class="dropdown">
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-			 aria-expanded="false">
+			    aria-expanded="false">
 				More
 			</a>
 			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -45,15 +43,36 @@
 				<div class="modal-body">
 					<table class="table">
 						<thead class="thead-light">
-							<tr>
-								<th width="30%" scope="col">Command</th>
-								<th width="70%" scope="col">Search Engine Link</th>
-							</tr>
+						  <tr>
+							<th scope="col">Command</th>
+							<th scope="col">Search Engine Link</th>
+							<th scope="col">Modifier</th>
+							<th scope="col">Default Modifier</th>
+						  </tr>
 						</thead>
-						<tbody id="">
-
+						<tbody>
+						  <tr>
+							<th scope="row">wiki</th>
+							<td>Mark</td>
+							<td>Otto</td>
+							<td>@mdo</td>
+						  </tr>
+						  <tr>
+							<th scope="row">2</th>
+							<td>Jacob</td>
+							<td>Thornton</td>
+							<td>@fat</td>
+						  </tr>
+						  <tr>
+							<th scope="row">3</th>
+							<td>Larry</td>
+							<td>the Bird</td>
+							<td>@twitter</td>
+						  </tr>
 						</tbody>
-					</table>
+					  </table>
+					
+					
 					<textarea id="databases" class="w-100" rows="8" placeholder="Insert google sheets databases" required></textarea>
 				</div>
 				<div class="modal-footer">
@@ -121,7 +140,7 @@
 							<a id="navigation0" class="page-link">1</a>
 						</li>
 						<li id="next" class="page-item">
-							<a class="page-link" href="">Next</a>
+							<a  class="page-link" href="">Next</a>
 						</li>
 					</ul>
 				</nav>
@@ -164,5 +183,4 @@
 		</div>
 	</footer>
 </body>
-
 </html>

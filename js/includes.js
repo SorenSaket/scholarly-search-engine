@@ -21,19 +21,26 @@ function includeSS(file)
 
 //libraries
 //includeJS("js/jquery-3.2.1.min.js");
-includeJS("js/tabletop.min.js");
-includeJS("js/js.cookie.js");
-includeJS("js/seedrandom.js")
+includeJS("js/libs/tabletop.min.js");
+includeJS("js/libs/js.cookie.js");
+includeJS("js/libs/seedrandom.js")
 includeJS("https://use.fontawesome.com/06fa86ec9b.js");
-includeJS("js/bootstrap.bundle.min.js");
-		
-//just CSS
+includeJS("js/libs/bootstrap.bundle.min.js");
 includeSS("css/bootstrap.min.css");
+
+//just CSS
+
 includeSS("css/styles.css");
+
+//
+includeJS("css/bootstrap-toggle.min.css");
+includeJS("js/libs/bootstrap-toggle.min.js");
 
 //custom scripts
 includeJS("js/main.js");
 includeJS("js/manager.database.js");
+includeJS("js/manager.search.js");
+
 
 //Drops
 includeJS("drops/calculators/trigonometry/py.js");
