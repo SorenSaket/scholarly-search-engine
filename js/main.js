@@ -109,7 +109,7 @@ function changeResult(resultToChange, data){
 		document.getElementById("title" + resultToChange).innerText = data.name;
 		document.getElementById("tags" + resultToChange).innerText = data.tags.substring(0, 82) + "...";
 		document.getElementById("description" + resultToChange).innerText = data.description;
-		console.log(data.type)
+		
 		if (data.type == "docs"){
 			$("#type" + resultToChange).attr('src', 'assets/cardtypes/doc.png');
 			$("#type" + resultToChange).width(38);
