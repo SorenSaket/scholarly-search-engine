@@ -21,6 +21,12 @@ body {
     min-width: 88px;
     margin-right: 16px;
 }
+@media (min-width: 768px)
+{
+    .modal-lg {
+        max-width: 720px;
+    }
+}
 @media (min-width: 992px)
 {
     .modal-lg {
