@@ -1,0 +1,14 @@
+<tr id="searchengine' + index +'">
+    <th>
+        <input id="secommand' + index + '" class="form-control w-100" type="search" placeholder="command" aria-label="Search" value=' + allSearchEngines[index].command + '>
+    </th>
+    <td>
+        <input id="selink'+ index +'" style="display:inline" class="form-control w-100" type="search" placeholder="link" aria-label="Search"
+            value=' + allSearchEngines[index].link + '>
+    </td>
+    <td>
+        <button type="button" class="close" aria-label="Close" onclick="removeSearchEngine('+ index +')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </td>
+</tr>

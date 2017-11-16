@@ -36,6 +36,12 @@ body {
     .footer .social .fa {
       font-size: 32px; }
 
+#searchSettingsModal #addsearchengine {
+  float: right; }
+#searchSettingsModal #setablecontainer {
+  overflow: auto;
+  max-height: 256px; }
+
 #pagecontent {
   top: 68px;
   bottom: 78px;
@@ -49,7 +55,12 @@ body {
     width: 90%;
     margin: 16px; }
     #pagecontent .result .card-link {
-      float: right; }
+      float: right;
+      font-size: 24px; }
+    #pagecontent .result .type {
+      float: right;
+      font-size: 38px;
+      color: #007bff; }
   #pagecontent #resultnavigation {
     margin-top: 16px; }
   #pagecontent .row {
