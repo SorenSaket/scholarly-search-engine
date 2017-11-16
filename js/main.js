@@ -61,6 +61,19 @@ function search(){
 	}
 }
 
+function subsearch(){
+	//Get serch Query from input
+	var searchQuery = document.getElementById("searchInput").value;
+	console.log(searchQuery)
+	//document.getElementById("searchInput").value = "";
+	if(searchQuery.indexOf("wiki") !== -1){
+		searchQuery = searchQuery.replace("wiki ", "");
+		var link = "https://en.wikipedia.org/w/index.php?title=Special:Search&search=" + searchQuery
+		alert(link);
+		document.getElementById("contentdisplayer").setAttribute("src", link);
+	}
+}
+
 function prevPage(){
 	currentPage = currentPage-= 1;
 	if(currentPage < 0)
@@ -108,7 +121,7 @@ function changeResult(resultToChange, data){
 		document.getElementById("opensource" + resultToChange).href = data.link;
 		document.getElementById("title" + resultToChange).innerText = data.name;
 		document.getElementById("tags" + resultToChange).innerText = data.tags.substring(0, 82) + "...";
-		document.getElementById("description" + resultToChange).innerText = data.description;
+		document.getElementById("description" + resultToChange).innerText = data.description.substring(0, 161) + "...";
 
 		if (data.type == "doc"){
 			document.getElementById("type" + resultToChange).className = "type fa " + "fa-file-text";
@@ -177,7 +190,14 @@ function open(resultToOpen){
 
 document.getElementById('searchForm').addEventListener('submit', function(e) {
 	e.preventDefault();
-	search();
+	if(document.getElementById('searchInput').value.indexOf("wiki") !== -1){
+		subsearch();
+		console.log("2")
+	}
+	else{
+		search();
+		console.log("3")
+	}
 }, false);
 
 $('#open0').click(function(){ 
