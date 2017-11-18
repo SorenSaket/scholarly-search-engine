@@ -33,7 +33,7 @@ function subsearch(query)
 	for (let index = 0; index < allSearchEngines.length; index++) {
 		if(allSearchEngines[index].command == command)
 		{
-			document.getElementById("contentdisplayer").setAttribute("src", allSearchEngines[index].link + finalquery);
+			document.getElementById("contentdisplayer").setAttribute("src", "https://crossorigin.me/" + allSearchEngines[index].link + finalquery);
 		}
 	}
 }
