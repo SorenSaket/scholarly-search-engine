@@ -3,7 +3,7 @@ canvas = document.getElementById("maincanvas");
 }
 
 function draw() {
-    ellipse(50, 50, 80, 80);
+    triangle(50, 50, 80, 80);
 }
 
 

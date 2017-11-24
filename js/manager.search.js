@@ -156,3 +156,27 @@ function nextPage(){
 	}
 	displayResults(currentPage);
 }
+
+function fullscreen(state){
+	var resultcontainer = document.getElementsByClassName("col-5")
+	var contentcontainer = document.getElementsByClassName("col-7")
+	if (state == true || state == 1){
+		console.log(resultcontainer)
+		for (var i = 0; i < resultcontainer.length; i++) {
+			resultcontainer[i].style.display = "none";
+		}
+		for (var i = 0; i < contentcontainer.length; i++) {
+			contentcontainer[i].style.flex = "0 0 100%";
+			contentcontainer[i].style.maxWidth = "100%";
+		}
+	}
+	else if (state == false || state == 0){
+		for (var i = 0; i < resultcontainer.length; i++) {
+			resultcontainer[i].style.display = "";
+		}
+		for (var i = 0; i < contentcontainer.length; i++) {
+			contentcontainer[i].style.flex = "0 0 58.333333%";
+			contentcontainer[i].style.maxWidth = "0 0 58.333333%";
+		}
+	}
+}
