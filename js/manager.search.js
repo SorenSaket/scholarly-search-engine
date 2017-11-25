@@ -160,20 +160,23 @@ function nextPage(){
 function fullscreen(state){
 	var resultcontainer = document.getElementsByClassName("col-5")
 	var contentcontainer = document.getElementsByClassName("col-7")
-	if (state == true || state == 1){
-		console.log(resultcontainer)
+	if (state == true || state == 1){		
+		//makes the container invisble and sets the heigth and width to 0%
 		for (var i = 0; i < resultcontainer.length; i++) {
 			resultcontainer[i].style.display = "none";
 		}
+		//makes the content fullscreen
 		for (var i = 0; i < contentcontainer.length; i++) {
 			contentcontainer[i].style.flex = "0 0 100%";
 			contentcontainer[i].style.maxWidth = "100%";
 		}
 	}
+	//makes the container visble and sets the heigth and width to 100%
 	else if (state == false || state == 0){
 		for (var i = 0; i < resultcontainer.length; i++) {
 			resultcontainer[i].style.display = "";
 		}
+		//sets the contet to normal size
 		for (var i = 0; i < contentcontainer.length; i++) {
 			contentcontainer[i].style.flex = "0 0 58.333333%";
 			contentcontainer[i].style.maxWidth = "0 0 58.333333%";
