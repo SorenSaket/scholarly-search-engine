@@ -23,7 +23,7 @@ function includeSS(file)
 //includeJS("js/jquery-3.2.1.min.js");
 includeJS("js/libs/tabletop.min.js");
 includeJS("js/libs/js.cookie.js");
-includeJS("js/libs/seedrandom.js")
+includeJS("js/libs/seedrandom.js");
 includeJS("https://use.fontawesome.com/06fa86ec9b.js");
 includeJS("js/libs/bootstrap.bundle.min.js");
 includeSS("css/bootstrap.min.css");

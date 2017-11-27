@@ -9,12 +9,17 @@ function strSplit(string) {
 
 function autocomplete(){
 	var searchQuery = document.getElementById("searchInput").value;
+	var list = document.getElementById("autocomplete");
 	var url = "https://www.google.dk/complete/search?client=psy-ab&hl=da&gs_rn=64&gs_ri=psy-ab&tok=_1shqUG7h-CR-M65jyAEZQ&cp=3&gs_id=b&q=" + searchQuery+ "&xhr=t";
 	$.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){
-		console.log(data)
 		array = JSON.parse(data.contents);
-		array = JSON.stringify(array[1]);
-		console.log(array);
+		array = array[1];
+		for (i = 0; i < array.length; i++) {
+			string = array[i][0].toString();
+			string = string.replace("<b>","");
+			string = string.replace("</b>","");
+			document.getElementById("a"+ i).value = string;
+		}
 	});
 }
 
@@ -209,3 +214,4 @@ function fullscreen(e){
 }
 
 document.onkeydown = fullscreen;
+document.onkeydown = autocomplete;
