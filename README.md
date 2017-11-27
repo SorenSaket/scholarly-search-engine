@@ -19,7 +19,6 @@ Databases is the way this software gets its search queries from. We're using goo
 1. Create a new sheets file in Google Drive
 2. Add data with the right formatting
 3. Share it so everyone can find and view the sheets file.
-4. The link would look something like this: https://docs.google.com/spreadsheets/d/1ku7WmJuYZ68s-l7fADQDihK3cNVCqcGaAuQeTvtIo98/edit?usp=sharing
 
 #### Formatting
 
