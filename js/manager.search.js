@@ -6,18 +6,39 @@ function strSplit(string) {
     console.log (str)
     return str
 }
+function commands(){
+	var searchEngines = JSON.parse(Cookies.get("searchengines"));
+	console.log(searchEngines);
+	var commandArray = [];
+	for (i = 0; i < searchEngines.length; i++) {
+		commandArray.push(searchEngines[i].command);
+		console.log(commandArray);
+	}
+	return commandArray;
+}
 
 function autocomplete(){
 	var searchQuery = document.getElementById("searchInput").value;
 	var list = document.getElementById("autocomplete");
+	searchFilter = commands();
+	for (i = 0; i < searchFilter.length; i++) {
+		var find = "." + searchFilter[i];
+		var re = new RegExp(find, "");
+		searchQuery = searchQuery.replace(re,"");
+	}
 	var url = "https://www.google.dk/complete/search?client=psy-ab&hl=da&gs_rn=64&gs_ri=psy-ab&tok=_1shqUG7h-CR-M65jyAEZQ&cp=3&gs_id=b&q=" + searchQuery+ "&xhr=t";
+	console.log(searchQuery);
 	$.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){
 		array = JSON.parse(data.contents);
 		array = array[1];
 		for (i = 0; i < array.length; i++) {
 			string = array[i][0].toString();
-			string = string.replace("<b>","");
-			string = string.replace("</b>","");
+			var find = "<b>";
+			var find2 = "</b>";
+			var re = new RegExp(find, "");
+			var re2 = new RegExp(find2, "");
+			string = string.replace(re,"");
+			string = string.replace(re2,"");
 			document.getElementById("a"+ i).value = string;
 		}
 	});
@@ -214,4 +235,4 @@ function fullscreen(e){
 }
 
 document.onkeydown = fullscreen;
-document.onkeydown = autocomplete;
+document.onkeyup = autocomplete;
