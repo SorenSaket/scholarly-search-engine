@@ -3,12 +3,6 @@ function Calculate()
 
 }
 
-function ThrowError(errorText)
-{
-
-}
-
-
 function solveTriangle(a, b, c, A, B, C) {
 	var sides  = (a != null) + (b != null) + (c != null);  // Boolean to integer conversion
 	var angles = (A != null) + (B != null) + (C != null);  // Boolean to integer conversion

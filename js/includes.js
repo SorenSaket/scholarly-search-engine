@@ -19,11 +19,21 @@ function includeSS(file)
   document.getElementsByTagName("head").item(0).appendChild(link);
 }
 
+function DisplayMath(string)
+{
+    var script  = document.createElement('script');
+    script.textContent  = string;
+    script.type = 'math/tex; mode=display';
+    script.id = 'MathJax-Element-1';
+    var bodyList = document.getElementsByTagName('body').item(0);
+    //bodyList.removeChild(bodyList.childNodes[0])
+    bodyList.appendChild(script);
+}
 //libraries
 //includeJS("js/jquery-3.2.1.min.js");
 includeJS("js/libs/tabletop.min.js");
 includeJS("js/libs/js.cookie.js");
-includeJS("js/libs/seedrandom.js")
+includeJS("js/libs/seedrandom.js");
 includeJS("https://use.fontawesome.com/06fa86ec9b.js");
 includeJS("js/libs/bootstrap.bundle.min.js");
 includeSS("css/bootstrap.min.css");

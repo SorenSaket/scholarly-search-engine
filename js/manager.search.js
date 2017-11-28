@@ -6,6 +6,43 @@ function strSplit(string) {
     console.log (str)
     return str
 }
+function commands(){
+	var searchEngines = JSON.parse(Cookies.get("searchengines"));
+	console.log(searchEngines);
+	var commandArray = [];
+	for (i = 0; i < searchEngines.length; i++) {
+		commandArray.push(searchEngines[i].command);
+		console.log(commandArray);
+	}
+	return commandArray;
+}
+
+function autocomplete(){
+	var searchQuery = document.getElementById("searchInput").value;
+	var list = document.getElementById("autocomplete");
+	/*searchFilter = commands();
+	for (i = 0; i < searchFilter.length; i++) {
+		var find = "." + searchFilter[i];
+		var re = new RegExp(find, "");
+		searchQuery = searchQuery.replace(re,"");
+	}*/
+	var url = "https://www.google.dk/complete/search?client=psy-ab&hl=da&gs_rn=64&gs_ri=psy-ab&tok=_1shqUG7g-CR-M65jyAEZQ&cp=3&gs_id=b&q=" + searchQuery+ "&xhr=t";
+	console.log(searchQuery);
+	$.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){
+		array = JSON.parse(data.contents);
+		array = array[1];
+		for (i = 0; i < array.length; i++) {
+			string = array[i][0].toString();
+			var find = "<b>";
+			var find2 = "</b>";
+			var re = new RegExp(find, "");
+			var re2 = new RegExp(find2, "");
+			string = string.replace(re,"");
+			string = string.replace(re2,"");
+			document.getElementById("a"+ i).value = string;
+		}
+	});
+}
 
 function search(){
 	//Get serch Query from input
@@ -156,3 +193,46 @@ function nextPage(){
 	}
 	displayResults(currentPage);
 }
+
+function fullscreen(e){
+	var resultcontainer = document.getElementsByClassName("col-5")
+	var contentcontainer = document.getElementsByClassName("col-7")
+	var evtobj = window.event? event : e
+
+	if (typeof state === "undefined"){
+		state = 1
+	}
+	else if (state == 1){
+		state = 0
+	}
+	else if (state == 0){
+		state = 1
+	}
+	if (evtobj.keyCode == 70 && evtobj.shiftKey){
+		if (state == true || state == 1){		
+			//makes the container invisble and sets the heigth and width to 0%
+			for (var i = 0; i < resultcontainer.length; i++) {
+				resultcontainer[i].style.display = "none";
+			}
+			//makes the content fullscreen
+			for (var i = 0; i < contentcontainer.length; i++) {
+				contentcontainer[i].style.flex = "0 0 100%";
+				contentcontainer[i].style.maxWidth = "100%";
+			}
+		}
+		//makes the container visble and sets the heigth and width to 100%
+		else if (state == false || state == 0){
+			for (var i = 0; i < resultcontainer.length; i++) {
+				resultcontainer[i].style.display = "";
+			}
+			//sets the contet to normal size
+			for (var i = 0; i < contentcontainer.length; i++) {
+				contentcontainer[i].style.flex = "0 0 58.333333%";
+				contentcontainer[i].style.maxWidth = "0 0 58.333333%";
+			}
+		}
+	}
+}
+
+document.onkeydown = fullscreen;
+document.onkeyup = autocomplete;
