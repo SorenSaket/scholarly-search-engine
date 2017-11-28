@@ -20,13 +20,13 @@ function commands(){
 function autocomplete(){
 	var searchQuery = document.getElementById("searchInput").value;
 	var list = document.getElementById("autocomplete");
-	searchFilter = commands();
+	/*searchFilter = commands();
 	for (i = 0; i < searchFilter.length; i++) {
 		var find = "." + searchFilter[i];
 		var re = new RegExp(find, "");
 		searchQuery = searchQuery.replace(re,"");
-	}
-	var url = "https://www.google.dk/complete/search?client=psy-ab&hl=da&gs_rn=64&gs_ri=psy-ab&tok=_1shqUG7h-CR-M65jyAEZQ&cp=3&gs_id=b&q=" + searchQuery+ "&xhr=t";
+	}*/
+	var url = "https://www.google.dk/complete/search?client=psy-ab&hl=da&gs_rn=64&gs_ri=psy-ab&tok=_1shqUG7g-CR-M65jyAEZQ&cp=3&gs_id=b&q=" + searchQuery+ "&xhr=t";
 	console.log(searchQuery);
 	$.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){
 		array = JSON.parse(data.contents);
