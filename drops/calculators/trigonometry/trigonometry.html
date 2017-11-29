@@ -1,18 +1,31 @@
 <html>
-
 <head>
     <script type="text/javascript" src="../../../js/libs/p5/p5.min.js"></script>
     <script type="text/javascript" src="../../../js/libs/p5/addons/p5.dom.min.js"></script>
     <script src="trigonometry.js"></script>
     <script src="trigonometryDraw.js"></script>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <!--<script type="text/javascript" src="../../../js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">-->
 
 </head>
-
 <body>
-<canvas id="maincanvas"></canvas>
-</body>
+    <div class="" id="canvasparent">
 
+    </div>
+    <div id="inputparent">
+        <div id="inputs">
+            <input id="a" type="text" name="a" value="a">
+            <input id="b" type="text" name="b" value="b">
+            <input id="c" type="text" name="c" value="c">
+            <input id="A" type="text" name="A" value="A">
+            <input id="B" type="text" name="B" value="B">
+            <input id="C" type="text" name="C" value="C">
+            <input id="area" type="text" name="area" value="Area" readonly>
+            <input id="circumference" type="text" name="cir" value="Cir" readonly>
+            <button type="button" onclick="Calculate();">Calculate</button>
+        </div>
+        
+    </div>
+</body>
 </html>

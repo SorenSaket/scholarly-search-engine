@@ -8,8 +8,10 @@ var lastOffsetY = 0;
 var lastMousePosX = 0;
 var lastMousePosY = 0;
 var clicked = false;
+
 function setup() {
 	var canvas = createCanvas(canvasSize,canvasSize);
+	canvas.parent("canvasparent");
 	scale = 30;
 	canvas.mouseWheel(changeSize);
 }
