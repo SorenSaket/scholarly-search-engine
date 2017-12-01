@@ -24,7 +24,7 @@ body,html
         width: 100% !important;
     }
 }
-#inputparent
+#inputoutputparent
 {
     height: 100%;
     width: 50%;
@@ -32,8 +32,15 @@ body,html
     top: 0;
     position: absolute;
 }
-
 #inputs
+{
+    margin: 16px;
+    input
+    {
+        margin-bottom: 8px;
+    }
+}
+#outputs
 {
     margin: 16px;
 }

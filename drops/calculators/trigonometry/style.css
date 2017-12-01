@@ -16,7 +16,7 @@ body, html {
     height: 100% !important;
     width: 100% !important; }
 
-#inputparent {
+#inputoutputparent {
   height: 100%;
   width: 50%;
   right: 0;
@@ -24,6 +24,11 @@ body, html {
   position: absolute; }
 
 #inputs {
+  margin: 16px; }
+  #inputs input {
+    margin-bottom: 8px; }
+
+#outputs {
   margin: 16px; }
 
 /*# sourceMappingURL=style.css.map */

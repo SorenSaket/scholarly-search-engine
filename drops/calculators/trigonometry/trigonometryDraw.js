@@ -8,6 +8,7 @@ var lastOffsetY = 0;
 var lastMousePosX = 0;
 var lastMousePosY = 0;
 var clicked = false;
+var triangleToDraw;
 
 function setup() {
 	var canvas = createCanvas(canvasSize,canvasSize);
@@ -20,7 +21,10 @@ function draw()
 {
 	background(255);
 	drawGrid(scale);
-	DrawTriangle(3.54, 7, 6.55, 30.09, 82, 67.91, scale);
+	if(triangleToDraw != null)
+	{
+		DrawTriangle(triangleToDraw.a, triangleToDraw.b, triangleToDraw.c, triangleToDraw.A, triangleToDraw.B, triangleToDraw.C, scale);
+	}
 }
 
 function mouseDragged()
@@ -115,7 +119,7 @@ function DrawTriangle(a,b,c,A,B,C,scale)
 	fill(bColor);
 	ellipse(Bx,By,pointSize,pointSize)
 	text("B = " + B + ascii(176), Bx+textOffset , By)
-	text("b = " + b, (Ax+Cx)/2 - textOffset*3, (Ay+Cy)/2 - textOffset);
+	text("b = " + b, (Ax+Cx)/2 - textOffset*3, (Ay+Cy)/2);
 
 	//C
 
