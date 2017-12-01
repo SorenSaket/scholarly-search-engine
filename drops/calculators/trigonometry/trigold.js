@@ -100,7 +100,6 @@ function solveTriangle(a, b, c, A, B, C)
 		throw "Give exactly 3 pieces of information";
 	else if (sides == 0)
 		throw "Give at least one side length";
-
 	else if (sides == 3) {
 		status = "Side side side (SSS) case";
 		if (a + b <= c || b + c <= a || c + a <= b)
