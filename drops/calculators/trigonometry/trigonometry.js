@@ -16,17 +16,35 @@ function calculate()
 	
 	console.log(tempTri);
 	
-	//Calculates all sides and angles for the triangle
-	tempTri = caluclateTriangle(tempTri);
+	if(!isUnsolvable(tempTri))
+	{
+		document.getElementById("output").innerHTML = "";
+		//Calculates all sides and angles for the triangle
+		tempTri = caluclateTriangle(tempTri);
+		
+		console.log(tempTri);
+		
+		//Sets p5 to draw the triangle
+		triangleToDraw = tempTri;
+		
+		SetInput(tempTri);
 	
-	console.log(tempTri);
-	
-	//Sets p5 to draw the triangle
-	triangleToDraw = tempTri;
-	
-	SetInput(tempTri);
+		MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+	}
+}
 
-	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+function clearInputOutput()
+{
+	document.getElementById("a").value = "";
+	document.getElementById("b").value = "";
+	document.getElementById("c").value = "";
+	document.getElementById("A").value = "";
+	document.getElementById("B").value = "";
+	document.getElementById("C").value = "";
+	document.getElementById("area").value = "";
+	document.getElementById("circumference").value = "";
+	
+	document.getElementById("output").innerHTML = "";
 }
 
 function GetInput()
@@ -70,8 +88,9 @@ function displayError(error) {
 	console.log(error);
 }
 
-function addLine(text) {
-	console.log(text);
+function addLine(text) 
+{
+	//console.log(text);
 	document.getElementById("output").innerHTML += text;
 }
 
@@ -84,12 +103,13 @@ function caluclateTriangle(triangle)
 	var B = triangle.B;
 	var C = triangle.C;
 
-	var sides = (a != null && a != "") + (b != null && b != "") + (c != null && c != "");
-	var angles = (A != null && A != "") + (B != null && B != "") + (C != null && C != "");
+	var sides = (a != null) + (b != null) + (c != null);
+	var angles = (A != null) + (B != null) + (C != null);
 
 	switch (angles) {
 		case 0:
 			//SSS
+
 			A = solveAngle(a,b,c, "A");
 			
 			B = solveAngle(a,b,c, "B");
@@ -103,25 +123,72 @@ function caluclateTriangle(triangle)
 			var knownAngle = GetKnownAngle(A,B,C);
 
 			//Check if the missing side's opposing angle is null
-			if(isOppositeAngleNull(unknownSide))
+			if(isOppositeAngleNull(A,B,C,unknownSide))
 			{
 				//SSA
 				//find Known Angle
 				if(knownAngle == "A")
 				{
 					//Calulate angle nr2 with sin
-					B = Math.asin(degToRad((sinA/a)*b));
+					var x = (Math.sin(degToRad(A))*b)/a;
+					B = radToDeg( Math.asin(x));
+
 					addLine("//Calculate B");
-					addLine("$${{\sin (B)} \over b} = {{\sin (A)} \over a}$$");
-					addLine("$$\sin (B) = {{\sin (A)} \over a}*b$$");
-					addLine("$$B = {\sin ^{ - 1}}({{\sin (A)} \over a}*b)$$");
-					addLine("$$" + B + " = {\sin ^{ - 1}}({{\sin (" + A + ")} \over " + a + "}*" + b + ")$$");
+					addLine
+					(
+						"\\begin{align} " + 
+						"B &= \\sin ^{ - 1} \\left( {{{b*\\sin (A)} \\over a}} \\right) \\\\ " +
+						"&= \\sin ^{ - 1} \\left( {{{" + b + "*\\sin (" + A + ")} \\over " + a + "}} \\right) \\\\ " +
+						"& = \\sin ^{ - 1} \\left( {" + x + "} \\right) \\\\  " +
+						"& = " + B +
+						"\\end{align}"
+					);
 					
 					//Calulate The last angle with 180
 					C = solveAngleWith180(A,B,C);
 				}
+				if(knownAngle == "B")
+				{
+					//Calulate angle nr2 with sin
+					var x = (Math.sin(degToRad(B))*a)/b;
+					A = radToDeg( Math.asin(x));
 
-				
+					addLine("//Calculate A");
+					addLine
+					(
+						"\\begin{align} " + 
+						"A &= \\sin ^{ - 1} \\left( {{{a*\\sin (B)} \\over b}} \\right) \\\\ " +
+						"& = \\sin ^{ - 1} \\left( {{{" + a + "*\\sin (" + B + ")} \\over " + b + "}} \\right) \\\\ " +
+						"& = \\sin ^{ - 1} \\left( {" + x + "} \\right) \\\\  " +
+						"& = " + A +
+						"\\end{align}"
+					);
+					
+					//Calulate The last angle with 180
+					C = solveAngleWith180(A,B,C);
+				}
+				if(knownAngle == "C")
+				{
+					//Calulate angle nr2 with sin
+					var x = (Math.sin(degToRad(B))*a)/b;
+					A = radToDeg( Math.asin(x));
+
+					addLine("//Calculate A");
+					addLine
+					(
+						"\\begin{align} " + 
+						"A &= \\sin ^{ - 1} \\left( {{{a*\\sin (B)} \\over b}} \\right) \\\\ " +
+						"& = \\sin ^{ - 1} \\left( {{{" + a + "*\\sin (" + B + ")} \\over " + b + "}} \\right) \\\\ " +
+						"& = \\sin ^{ - 1} \\left( {" + x + "} \\right) \\\\  " +
+						"& = " + A +
+						"\\end{align}"
+					);
+
+					//Calulate The last angle with 180
+					B = solveAngleWith180(A,B,C);
+				}
+
+
 				//Calulate the missing side with sin
 			}
 			else
@@ -151,7 +218,7 @@ function caluclateTriangle(triangle)
 			var ratio; // side / sin(angle)
 			
 			addLine("//Law Of Sines");
-			addLine("$${a \over {\sin (A)}} = {b \over {\sin (B)}} = {c \over {\sin (C)}}$$");
+			addLine("$${a \\over {\\sin (A)}} = {b \\over {\\sin (B)}} = {c \\over {\\sin (C)}}$$");
 			
 			if (a != null) 
 			{
@@ -160,12 +227,12 @@ function caluclateTriangle(triangle)
 				b = ratio * sinB;
 				c = ratio * sinC;
 				addLine("//Calculate b");
-				addLine("$$b = {a \over {\sin (A)}}*\sin (B)$$");
-				addLine("$$"+ b+ " = {"+ a+" \over {\sin (" + A + ")}}*\sin ("+ B + ")$$");
+				addLine("$$b = {a \\over {\\sin (A)}}*\\sin (B)$$");
+				addLine("$$"+ b+ " = {"+ a+" \\over {\\sin (" + A + ")}}*\\sin ("+ B + ")$$");
 				
 				addLine("//Calculate c");
-				addLine("$$c = {a \over {\sin (A)}}*\sin (C)$$");
-				addLine("$$"+ c+ " = {"+ a+" \over {\sin (" + A + ")}}*\sin ("+ C + ")$$");
+				addLine("$$c = {a \\over {\\sin (A)}}*\\sin (C)$$");
+				addLine("$$"+ c+ " = {"+ a+" \\over {\\sin (" + A + ")}}*\\sin ("+ C + ")$$");
 			}
 			else if (b != null) 
 			{
@@ -174,12 +241,12 @@ function caluclateTriangle(triangle)
 				a = ratio * sinA;
 				c = ratio * sinC;
 				addLine("//Calculate a");
-				addLine("$$a = {b \over {\sin (B)}}*\sin (A)$$");
-				addLine("$$" + a + " = {" + b +" \over {\sin (" + B +")}}*\sin (" + A +")$$");
+				addLine("$$a = {b \\over {\\sin (B)}}*\\sin (A)$$");
+				addLine("$$" + a + " = {" + b +" \\over {\\sin (" + B +")}}*\\sin (" + A +")$$");
 
 				addLine("//Calculate c");
-				addLine("$$c = {b \over {\sin (B)}}*\sin (C)$$");
-				addLine("$$" + c + " = {" + b +" \over {\sin (" + B +")}}*\sin (" + C +")$$");
+				addLine("$$c = {b \\over {\\sin (B)}}*\\sin (C)$$");
+				addLine("$$" + c + " = {" + b +" \\over {\\sin (" + B +")}}*\\sin (" + C +")$$");
 			}
 			else if (c != null) 
 			{
@@ -188,12 +255,12 @@ function caluclateTriangle(triangle)
 				a = ratio * sinA;
 				b = ratio * sinB;
 				addLine("//Calculate a");
-				addLine("$$a = {c \over {\sin (C)}}*\sin (A)$$");
-				addLine("$$" + a + " = {" + c + " \over {\sin (" + C + ")}}*\sin (" + A + ")$$");
+				addLine("$$a = {c \\over {\\sin (C)}}*\\sin (A)$$");
+				addLine("$$" + a + " = {" + c + " \\over {\\sin (" + C + ")}}*\\sin (" + A + ")$$");
 				
 				addLine("//Calculate b");
-				addLine("$$b = {c \over {\sin (C)}}*\sin (B)$$");
-				addLine("$$" + b + " = {" + c + " \over {\sin (" + C + ")}}*\sin (" + B + ")$$");
+				addLine("$$b = {c \\over {\\sin (C)}}*\\sin (B)$$");
+				addLine("$$" + b + " = {" + c + " \\over {\\sin (" + C + ")}}*\\sin (" + B + ")$$");
 			}
 		break;
 		case 3:
@@ -333,18 +400,18 @@ function solveAngle(a, b, c, angleToCalculate)
 	switch (angleToCalculate) {
 		case "A":
 			var A = temp = ( b * b + c * c - a * a) / (2 * b * c);
-			addLine("$$A = {\cos ^{ - 1}}({{{b^2} + {c^2} - {a^2}} \over {2*b*c}})$$");
-			addLine("$$" + radToDeg(Math.acos(A)) + " = {\cos ^{ - 1}}({{{" + b + "^2} + {" + c + "^2} - {" + a + "^2}} \over {2*" + b + "*" + c + "}})$$");
+			addLine("$$A = {\\cos ^{ - 1}}({{{b^2} + {c^2} - {a^2}} \\over {2*b*c}})$$");
+			addLine("$$" + radToDeg(Math.acos(A)) + " = {\\cos ^{ - 1}}({{{" + b + "^2} + {" + c + "^2} - {" + a + "^2}} \\over {2*" + b + "*" + c + "}})$$");
 			break;
 		case "B":
 			var B = temp =  ( c * c + a * a - b * b) / (2 * c * a);
-			addLine("$$B = {\cos ^{ - 1}}({{{c^2} + {a^2} - {b^2}} \over {2*c*a}})$$");
-			addLine("$$" + radToDeg(Math.acos(B)) + " = {\cos ^{ - 1}}({{{" + c + "^2} + {" + a + "^2} - {" + b + "^2}} \over {2*" + c + "*" + a + "}})$$");
+			addLine("$$B = {\\cos ^{ - 1}}({{{c^2} + {a^2} - {b^2}} \\over {2*c*a}})$$");
+			addLine("$$" + radToDeg(Math.acos(B)) + " = {\\cos ^{ - 1}}({{{" + c + "^2} + {" + a + "^2} - {" + b + "^2}} \\over {2*" + c + "*" + a + "}})$$");
 			break;
 		case "C":
 			var C = temp = (a * a + b * b - c * c) / (2 * a * b);
-			addLine("$$C = {\cos ^{ - 1}}({{{a^2} + {b^2} - {c^2}} \over {2*a*b}})$$");
-			addLine("$$" + radToDeg(Math.acos(C)) + " = {\cos ^{ - 1}}({{{" + a + "^2} + {" + b + "^2} - {" + c + "^2}} \over {2*" + a + "*" + b + "}})$$");
+			addLine("$$C = {\\cos ^{ - 1}}({{{a^2} + {b^2} - {c^2}} \\over {2*a*b}})$$");
+			addLine("$$" + radToDeg(Math.acos(C)) + " = {\\cos ^{ - 1}}({{{" + a + "^2} + {" + b + "^2} - {" + c + "^2}} \\over {2*" + a + "*" + b + "}})$$");
 			break;
 		default:
 			break;
@@ -358,24 +425,44 @@ function solveAngleWith180(A,B,C)
 	{
 		A = 180 - B - C;
 		addLine("// --- Calculate A with 180 rule ---");
-		addLine("$$A = 180 - B - C$$");
-		addLine("$$" + A + " = 180 - " + B + " - " + C + "$$");
+		addLine
+		(
+			"\\begin{align} " + 
+			"A & = 180&deg; - B - C \\\\ " +
+			"& = 180&deg; - " + B + "&deg; - " + C + "&deg; \\\\ " + 
+			"& = " + A + "&deg;  \\\\ " +
+			"\\end{align}"
+		);
+
 		return A;
 	} 
 	if (B == null) 
 	{
 		B = 180 - A - C;
 		addLine("// --- Calculate B with 180 rule ---");
-		addLine("$$B = 180 - A - C$$");
-		addLine("$$" + B + " = 180 - " + A + " - " + C + "$$");
+		addLine
+		(
+			"\\begin{align} " + 
+			"B & = 180&deg; - A - C \\\\ " +
+			"& = 180&deg; - " + A + "&deg; - " + C + "&deg; \\\\ " + 
+			"& = " + B + "&deg;  \\\\ " +
+			"\\end{align}"
+		);
+
 		return B;
 	}
 	if (C == null)
 	{
 		C = 180 - A - B;
 		addLine("// --- Calculate C with 180 rule ---");
-		addLine("$$C = 180 - A - B$$");
-		addLine("$$" + C + " = 180 - " + A + " - " + B + "$$");
+		addLine
+		(
+			"\\begin{align} " + 
+			"C & = 180&deg; - A - B \\\\ " +
+			"& = 180&deg; - " + A + "&deg; - " + B + "&deg; \\\\ " + 
+			"& = " + C + "&deg;  \\\\ " +
+			"\\end{align}"
+		);
 		return C;
 	}
 }
@@ -383,16 +470,26 @@ function solveAngleWith180(A,B,C)
 function calculateAreaWithSides(a,b,c)
 {
 	var s = (a + b + c)/2;
-	var area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+	var t = s * (s - a) * (s - b) * (s - c)
+	var area = Math.sqrt(t);
 	
 	addLine("//Calculate Area with Heron's formula")
+	addLine("\\begin{align}");
+	addLine("s & = {{(a + b + c)} \\over 2} \\\\");
+	addLine(s + "& = {{(" + a + " + " + b + " + " + c + ")} \\over 2} \\\\");
+	addLine("\\end{align}");
 
-	addLine("$$s = {{(a + b + c)} \over 2}$$");
-	addLine("$${area = \sqrt {s(s - a)(s - b)(s - c)} }$$");
-	
-	addLine("$$" + s + " = {{(" + a + " + " + b + " + " + c + ")} \over 2}$$");
-	addLine("$${" + area + " = \sqrt {" + s + "(" + s + " - " + a + ")(" + s + " - " + b + ")(" + s + " - " + c + ")} }$$");
-	
+	addLine
+	(
+		"\\begin{align} " + 
+		"area  & = \\sqrt {s(s - a)(s - b)(s - c)} \\\\ " +
+		"& = \\sqrt {" + s + "(" + s + " - " + a + ")(" + s + " - " + b + ")(" + s + " - " + c + ")} \\\\ " + 
+		"& = \\sqrt {" + s + "(" + (s - a) + ")(" + (s - b) + ")(" + (s - c) + ")}  \\\\ " +
+		"& = \\sqrt {" + t + "} \\\\ " + 
+		"& = " + area + " " + 
+		"\\end{align}"
+	);
+
 	return area;
 }
 
@@ -400,8 +497,13 @@ function calculateCircumference(a,b,c)
 {
 	circumference = a + b + c;
 	addLine("//Calculate circumference");
-	addLine("$$circumference = a + b + c$$");
-	addLine("$$" + circumference +" = " + a + " + " + b + " + " + c + "$$");
+	addLine
+	(
+		"\\begin{align} " + 
+		"circumference &= a + b + c \\\\ " +
+		"& = " + circumference +
+		" \\end{align}"
+	);
 	return circumference;
 }
 
