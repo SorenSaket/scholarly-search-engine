@@ -1,4 +1,4 @@
-var canvasSize = 512;
+var canvasSize = 100;
 var canvas;
 var scale = 30;
 var offsetX = 0;
@@ -10,17 +10,24 @@ var lastMousePosY = 0;
 var clicked = false;
 var triangleToDraw;
 
-function setup() {
-	var canvas = createCanvas(canvasSize,canvasSize);
+window.addEventListener('resize', resizeCanvas, false);
+
+function resizeCanvas() {
+	resizeCanvas($('#canvasparent').width() , $('#canvasparent').height());
+}
+
+function setup()
+{
+	var canvas = createCanvas($('#canvasparent').width(),$('#canvasparent').height());
 	canvas.parent("canvasparent");
 	scale = 30;
 	canvas.mouseWheel(changeSize);
 }
 
-function draw() 
+function draw()
 {
-	background(255);
-	drawGrid(scale);
+	clear();
+	background("rgba(0,0,0,0)");
 	if(triangleToDraw != null)
 	{
 		DrawTriangle(triangleToDraw.a, triangleToDraw.b, triangleToDraw.c, triangleToDraw.A, triangleToDraw.B, triangleToDraw.C, scale);
@@ -47,7 +54,6 @@ function mouseClicked()
 	clicked = false;
 }
 
-
 function changeSize(event)
 {
 	if (event.deltaY > 0) {
@@ -55,14 +61,6 @@ function changeSize(event)
 	  } else {
 		scale = scale - 5;
 	  }
-}
-
-function drawGrid(scale)
-{
-	stroke(0,0,0);
-	noFill();
-	strokeWeight(1);
-	ellipse(CenterPosX() + offsetX,CenterPosY() + offsetY,scale*2,scale*2);
 }
 
 function DrawTriangle(a,b,c,A,B,C,scale)
@@ -80,15 +78,28 @@ function DrawTriangle(a,b,c,A,B,C,scale)
 	var By = CenterPosY() + offsetY;
 
 	var cColor = color(40,167,69);
-	var Cx = CenterPosX()+(c*Math.cos(deg2rad(A))*scale)+ offsetX;
-	var Cy = CenterPosY()-(c*Math.sin(deg2rad(A))*scale)+ offsetY;
+	var Cx = CenterPosX()+(c*Math.cos(degToRad(A))*scale)+ offsetX;
+	var Cy = CenterPosY()-(c*Math.sin(degToRad(A))*scale)+ offsetY;
 	
 	// ---- Draw Triangle Background ---- 
 
 	noStroke();
-	fill(color("rgba(233,236,239, 0.6)"));
+	fill(color("rgba(233,236,239, 0.5)"));
 	triangle(Ax,Ay,Cx,Cy,Bx,By);
 
+
+	// ---- Draw Helper Lines ----
+	
+	strokeWeight(1);
+	noFill();
+	stroke(color(0,0,0));
+
+	if(0 == 0)
+	{
+		line(Cx, Cy, Cx, Ay);
+		ellipse(CenterPosX() + offsetX,CenterPosY() + offsetY,scale*2,scale*2);
+	}
+	
 	// ---- Draw sides ---- 
 
 	strokeWeight(2);
@@ -119,7 +130,7 @@ function DrawTriangle(a,b,c,A,B,C,scale)
 	fill(bColor);
 	ellipse(Bx,By,pointSize,pointSize)
 	text("B = " + B + ascii(176), Bx+textOffset , By)
-	text("b = " + b, (Ax+Cx)/2 - textOffset*3, (Ay+Cy)/2);
+	text("b = " + b, (Ax+Cx)/2 - textOffset*6, (Ay+Cy)/2);
 
 	//C
 
@@ -129,6 +140,8 @@ function DrawTriangle(a,b,c,A,B,C,scale)
 	text("c = " + c, (Ax+Bx)/2, (Ay+By)/2 + textOffset*2);
 }
 
+
+
 function CenterPosY()
 {
 	return height/2;
@@ -136,10 +149,6 @@ function CenterPosY()
 function CenterPosX()
 {
 	return width/2;
-}
-
-function deg2rad(valDeg){
-	return ((2*Math.PI)/360*valDeg)
 }
 
 function ascii (a) { return String.fromCharCode(a); }

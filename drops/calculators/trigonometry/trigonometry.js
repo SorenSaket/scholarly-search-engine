@@ -4,15 +4,75 @@
 //
 //
 /*if (c >= a + b || a >= b + c || b >= c + a)
-				displayError("You fucked up");
-			A = solveAngle(a, b, c, "A");
-			B = solveAngle(a, b, c, "B");
-			C = solveAngle(a, b, c, "C");*/
+	displayError("You fucked up");
+A = solveAngle(a, b, c, "A");
+B = solveAngle(a, b, c, "B");
+C = solveAngle(a, b, c, "C");*/
+
 function calculate()
 {
+	//Gets input and sets it to a variable
+	var tempTri = GetInput();
+	
+	console.log(tempTri);
+	
+	//Calculates all sides and angles for the triangle
+	tempTri = caluclateTriangle(tempTri);
+	
+	console.log(tempTri);
+	
+	//Sets p5 to draw the triangle
+	triangleToDraw = tempTri;
+	
+	SetInput(tempTri);
 
+	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+}
 
+function GetInput()
+{	
+	var triangle = {
+		a: parseFloat(document.getElementById("a").value),
+		b: parseFloat(document.getElementById("b").value),
+		c: parseFloat(document.getElementById("c").value),
+		A: parseFloat(document.getElementById("A").value),
+		B: parseFloat(document.getElementById("B").value),
+		C: parseFloat(document.getElementById("C").value)
+	};
+	if(triangle.a == "" || triangle.a == 0 || isNaN(triangle.a))
+		triangle.a = null;
+	if(triangle.b == "" || triangle.b == 0 || isNaN(triangle.b))
+		triangle.b = null;
+	if(triangle.c == "" || triangle.c == 0 || isNaN(triangle.c))
+		triangle.c = null;
+	if(triangle.A == "" || triangle.A == 0 || isNaN(triangle.A))
+		triangle.A = null;
+	if(triangle.B == "" || triangle.B == 0 || isNaN(triangle.B))
+		triangle.B = null;
+	if(triangle.C == "" || triangle.C == 0 || isNaN(triangle.C))
+		triangle.C = null;
+	return triangle;
+}
 
+function SetInput(triangle)
+{
+	document.getElementById("a").value = triangle.a;
+	document.getElementById("b").value = triangle.b;
+	document.getElementById("c").value = triangle.c;
+	document.getElementById("A").value = triangle.A;
+	document.getElementById("B").value = triangle.B;
+	document.getElementById("C").value = triangle.C;
+	document.getElementById("area").value = triangle.area;
+	document.getElementById("circumference").value = triangle.circumference;
+}
+
+function displayError(error) {
+	console.log(error);
+}
+
+function addLine(text) {
+	console.log(text);
+	document.getElementById("output").innerHTML += text;
 }
 
 function caluclateTriangle(triangle)
@@ -24,22 +84,18 @@ function caluclateTriangle(triangle)
 	var B = triangle.B;
 	var C = triangle.C;
 
-	var angles = (A != null) + (B != null) + (C != null); 
-	var sides  = (a != null) + (b != null) + (c != null); 
+	var sides = (a != null && a != "") + (b != null && b != "") + (c != null && c != "");
+	var angles = (A != null && A != "") + (B != null && B != "") + (C != null && C != "");
+
 	switch (angles) {
 		case 0:
 			//SSS
-			addLine("// Law of cosines");
-			addline("$${c^2}\; = {\rm{ }}{a^2}\; + {\rm{ }}{b^2}\; - {\rm{ }}2ab{\rm{ }}cos\left( C \right)$$");
-
-			addLine("// Calculate A");
 			A = solveAngle(a,b,c, "A");
 			
-			addLine("// Calculate B");
 			B = solveAngle(a,b,c, "B");
 			
-			addLine("// Calculate C");
 			C = solveAngleWith180(A,B,null);
+			
 			break;
 		case 1:
 			//Find the missing side
@@ -59,12 +115,12 @@ function caluclateTriangle(triangle)
 					addLine("$${{\sin (B)} \over b} = {{\sin (A)} \over a}$$");
 					addLine("$$\sin (B) = {{\sin (A)} \over a}*b$$");
 					addLine("$$B = {\sin ^{ - 1}}({{\sin (A)} \over a}*b)$$");
-					addLine("$$B = {\sin ^{ - 1}}({{\sin (A)} \over a}*b)$$");
+					addLine("$$" + B + " = {\sin ^{ - 1}}({{\sin (" + A + ")} \over " + a + "}*" + b + ")$$");
 					
 					//Calulate The last angle with 180
 					C = solveAngleWith180(A,B,C);
 				}
-				
+
 				
 				//Calulate the missing side with sin
 			}
@@ -111,7 +167,7 @@ function caluclateTriangle(triangle)
 				addLine("$$c = {a \over {\sin (A)}}*\sin (C)$$");
 				addLine("$$"+ c+ " = {"+ a+" \over {\sin (" + A + ")}}*\sin ("+ C + ")$$");
 			}
-			if (b != null) 
+			else if (b != null) 
 			{
 				ratio = b / sinB;
 				area = b * ratio * sinC * sinA / 2;
@@ -125,7 +181,7 @@ function caluclateTriangle(triangle)
 				addLine("$$c = {b \over {\sin (B)}}*\sin (C)$$");
 				addLine("$$" + c + " = {" + b +" \over {\sin (" + B +")}}*\sin (" + C +")$$");
 			}
-			if (c != null) 
+			else if (c != null) 
 			{
 				ratio = c / sinC;
 				area = c * ratio * sinA * sinB / 2;
@@ -147,17 +203,20 @@ function caluclateTriangle(triangle)
 			break;
 	}
 
+	var tempTriangle =
+	{
+		a: a,
+		b: b,
+		c: c,
+		A: A,
+		B: B,
+		C: C,
+		area: calculateAreaWithSides(a,b,c),
+		circumference: calculateCircumference(a,b,c)
+	}
+
+	return tempTriangle;
 }
-			
-
-function displayError(error) {
-	console.log(error);
-}
-
-function addLine(text) {
-
-}
-
 
 function GetUnknownSide(a,b,c)
 {
@@ -188,6 +247,7 @@ function GetKnownAngle(A,B,C)
 	else
 		return "C"
 }
+
 function isOppositeAngleNull(A, B, C, side)
 {
 	switch (side) {
@@ -210,6 +270,7 @@ function isOppositeAngleNull(A, B, C, side)
 	}
 	return false;
 }
+
 function isOppositeSideNull(a, b, c, angle)
 {
 	switch (angle) {
@@ -268,36 +329,27 @@ function solveSide(a, b, C)
 function solveAngle(a, b, c, angleToCalculate) 
 {
 	var temp;
+	addLine("// --- Calculate " + angleToCalculate +", using law of cosines ---");
 	switch (angleToCalculate) {
 		case "A":
 			var A = temp = ( b * b + c * c - a * a) / (2 * b * c);
 			addLine("$$A = {\cos ^{ - 1}}({{{b^2} + {c^2} - {a^2}} \over {2*b*c}})$$");
-			addLine("$$" + A + " = {\cos ^{ - 1}}({{{" + b + "^2} + {" + c + "^2} - {" + a + "^2}} \over {2*" + b + "*" + c + "}})$$");
+			addLine("$$" + radToDeg(Math.acos(A)) + " = {\cos ^{ - 1}}({{{" + b + "^2} + {" + c + "^2} - {" + a + "^2}} \over {2*" + b + "*" + c + "}})$$");
 			break;
 		case "B":
 			var B = temp =  ( c * c + a * a - b * b) / (2 * c * a);
 			addLine("$$B = {\cos ^{ - 1}}({{{c^2} + {a^2} - {b^2}} \over {2*c*a}})$$");
-			addLine("$$" + B + " = {\cos ^{ - 1}}({{{" + c + "^2} + {" + a + "^2} - {" + b + "^2}} \over {2*" + c + "*" + a + "}})$$");
+			addLine("$$" + radToDeg(Math.acos(B)) + " = {\cos ^{ - 1}}({{{" + c + "^2} + {" + a + "^2} - {" + b + "^2}} \over {2*" + c + "*" + a + "}})$$");
 			break;
 		case "C":
 			var C = temp = (a * a + b * b - c * c) / (2 * a * b);
 			addLine("$$C = {\cos ^{ - 1}}({{{a^2} + {b^2} - {c^2}} \over {2*a*b}})$$");
-			addLine("$$" + C + " = {\cos ^{ - 1}}({{{" + a + "^2} + {" + b + "^2} - {" + c + "^2}} \over {2*" + a + "*" + b + "}})$$");
+			addLine("$$" + radToDeg(Math.acos(C)) + " = {\cos ^{ - 1}}({{{" + a + "^2} + {" + b + "^2} - {" + c + "^2}} \over {2*" + a + "*" + b + "}})$$");
 			break;
 		default:
 			break;
 	}
-	if (-1 <= temp && temp <= 0.9999999)
-	{
-		return radToDeg(Math.acos(temp));
-	}
-	else if (temp <= 1) // Explained in https://www.nayuki.io/page/numerically-stable-law-of-cosines
-	{
-		
-		return radToDeg(Math.sqrt((c * c - (a - b) * (a - b)) / (a * b)));
-	}
-	else
-		displayError("No solution");
+	return radToDeg(Math.acos(temp));
 }
 
 function solveAngleWith180(A,B,C)
@@ -305,7 +357,7 @@ function solveAngleWith180(A,B,C)
 	if (A == null)
 	{
 		A = 180 - B - C;
-		addLine("// Calculate A");
+		addLine("// --- Calculate A with 180 rule ---");
 		addLine("$$A = 180 - B - C$$");
 		addLine("$$" + A + " = 180 - " + B + " - " + C + "$$");
 		return A;
@@ -313,7 +365,7 @@ function solveAngleWith180(A,B,C)
 	if (B == null) 
 	{
 		B = 180 - A - C;
-		addLine("// Calculate B");
+		addLine("// --- Calculate B with 180 rule ---");
 		addLine("$$B = 180 - A - C$$");
 		addLine("$$" + B + " = 180 - " + A + " - " + C + "$$");
 		return B;
@@ -321,9 +373,42 @@ function solveAngleWith180(A,B,C)
 	if (C == null)
 	{
 		C = 180 - A - B;
-		addLine("// Calculate C");
+		addLine("// --- Calculate C with 180 rule ---");
 		addLine("$$C = 180 - A - B$$");
 		addLine("$$" + C + " = 180 - " + A + " - " + B + "$$");
 		return C;
 	}
+}
+
+function calculateAreaWithSides(a,b,c)
+{
+	var s = (a + b + c)/2;
+	var area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+	
+	addLine("//Calculate Area with Heron's formula")
+
+	addLine("$$s = {{(a + b + c)} \over 2}$$");
+	addLine("$${area = \sqrt {s(s - a)(s - b)(s - c)} }$$");
+	
+	addLine("$$" + s + " = {{(" + a + " + " + b + " + " + c + ")} \over 2}$$");
+	addLine("$${" + area + " = \sqrt {" + s + "(" + s + " - " + a + ")(" + s + " - " + b + ")(" + s + " - " + c + ")} }$$");
+	
+	return area;
+}
+
+function calculateCircumference(a,b,c)
+{
+	circumference = a + b + c;
+	addLine("//Calculate circumference");
+	addLine("$$circumference = a + b + c$$");
+	addLine("$$" + circumference +" = " + a + " + " + b + " + " + c + "$$");
+	return circumference;
+}
+
+function radToDeg(valRad) {
+	return (360 / (2 * Math.PI) * valRad)
+}
+
+function degToRad(valDeg) {
+	return ((2 * Math.PI) / 360 * valDeg)
 }
