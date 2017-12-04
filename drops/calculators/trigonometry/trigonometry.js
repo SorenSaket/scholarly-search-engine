@@ -9,6 +9,11 @@ A = solveAngle(a, b, c, "A");
 B = solveAngle(a, b, c, "B");
 C = solveAngle(a, b, c, "C");*/
 
+var calculationOrder = ["a", "b", "c", "A", "B", "C"];
+var sideAlgorithmPreference = ["sin", "cos"];
+var angleAlgorithmPreference = ["180", "sin", "cos"];
+var currentTriangle;
+
 function calculate()
 {
 	//Gets input and sets it to a variable
@@ -283,6 +288,66 @@ function caluclateTriangle(triangle)
 	}
 
 	return tempTriangle;
+}
+
+function caluclateTriangle1(triangle)
+{
+
+
+	for (let x = 0; x < calculationOrder.length; x++) {
+		calculateElement(calculationOrder[x]);
+	}
+	
+	var tempTriangle =
+	{
+		a: a,
+		b: b,
+		c: c,
+		A: A,
+		B: B,
+		C: C,
+		area: calculateAreaWithSides(a,b,c),
+		circumference: calculateCircumference(a,b,c)
+	}
+
+	return tempTriangle;
+}
+
+function calculateElement(triangle, elementToCalculate)
+{
+	var a = triangle.a;
+	var b = triangle.b;
+	var c = triangle.c;
+	var A = triangle.A;
+	var B = triangle.B;
+	var C = triangle.C;
+
+	if(elementToCalculate == "a" && a == null)
+	{
+		//Sin
+		
+
+	}
+	else if(elementToCalculate == "b" && b == null)
+	{
+
+	}
+	else if(elementToCalculate == "c" && c == null)
+	{
+
+	}
+	else if(elementToCalculate == "A" && A == null)
+	{
+
+	}
+	else if(elementToCalculate == "B" && B == null)
+	{
+
+	}
+	else if(elementToCalculate == "C" && C == null)
+	{
+		
+	}
 }
 
 function GetUnknownSide(a,b,c)

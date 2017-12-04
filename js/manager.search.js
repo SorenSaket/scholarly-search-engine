@@ -20,12 +20,6 @@ function commands(){
 function autocomplete(){
 	var searchQuery = document.getElementById("searchInput").value;
 	var list = document.getElementById("autocomplete");
-	/*searchFilter = commands();
-	for (i = 0; i < searchFilter.length; i++) {
-		var find = "." + searchFilter[i];
-		var re = new RegExp(find, "");
-		searchQuery = searchQuery.replace(re,"");
-	}*/
 	var url = "https://www.google.dk/complete/search?client=psy-ab&hl=da&gs_rn=64&gs_ri=psy-ab&tok=_1shqUG7g-CR-M65jyAEZQ&cp=3&gs_id=b&q=" + searchQuery+ "&xhr=t";
 	console.log(searchQuery);
 	$.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){
@@ -47,19 +41,23 @@ function autocomplete(){
 function search(){
 	//Get serch Query from input
 	var searchQuery = document.getElementById("searchInput").value;
+	var command;
 	//document.getElementById("searchInput").value = "";
 	if (searchQuery[0] == "/"){
-		var command = strSplit(searchQuery.replace("/", ""));
+		command = strSplit(searchQuery.replace("/", ""));
 		eval(command);
+		fullscreen(true);
 	}
 	if (searchQuery[0] == "."){
-		var command = searchQuery.replace(".", "");
+		command = searchQuery.replace(".", "");
 		subsearch(command);
+		fullscreen(true);
 	}
 	else
 	{
 		currentResults = findMatchingItemsInDatabase(searchQuery);
 		displayResults(0);
+		fullscreen(false);
 	}
 }
 
@@ -194,45 +192,25 @@ function nextPage(){
 	displayResults(currentPage);
 }
 
-function fullscreen(e){
-	var resultcontainer = document.getElementsByClassName("col-5")
-	var contentcontainer = document.getElementsByClassName("col-7")
-	var evtobj = window.event? event : e
-
-	if (typeof state === "undefined"){
-		state = 1
+function fullscreen(setFullscreen)
+{
+	var resultcontainer = document.getElementById("resultcontainer")
+	var contentcontainer = document.getElementById("contentcontainer")
+	if(setFullscreen)
+	{
+		resultcontainer.style.display = "none";
+		contentcontainer.style.flex = "0 0 100%";
+		contentcontainer.style.maxWidth = "100%";
 	}
-	else if (state == 1){
-		state = 0
-	}
-	else if (state == 0){
-		state = 1
-	}
-	if (evtobj.keyCode == 70 && evtobj.shiftKey){
-		if (state == true || state == 1){		
-			//makes the container invisble and sets the heigth and width to 0%
-			for (var i = 0; i < resultcontainer.length; i++) {
-				resultcontainer[i].style.display = "none";
-			}
-			//makes the content fullscreen
-			for (var i = 0; i < contentcontainer.length; i++) {
-				contentcontainer[i].style.flex = "0 0 100%";
-				contentcontainer[i].style.maxWidth = "100%";
-			}
-		}
-		//makes the container visble and sets the heigth and width to 100%
-		else if (state == false || state == 0){
-			for (var i = 0; i < resultcontainer.length; i++) {
-				resultcontainer[i].style.display = "";
-			}
-			//sets the contet to normal size
-			for (var i = 0; i < contentcontainer.length; i++) {
-				contentcontainer[i].style.flex = "0 0 58.333333%";
-				contentcontainer[i].style.maxWidth = "0 0 58.333333%";
-			}
-		}
+	else
+	{
+		resultcontainer[i].style.display = "initial";
+		contentcontainer[i].style.flex = "0 0 58.333333%";
+		contentcontainer[i].style.maxWidth = "0 0 58.333333%";
 	}
 }
 
-document.onkeydown = fullscreen;
 document.onkeyup = autocomplete;
+$('#searchInput').on('input', function() { 
+    autocomplete();
+});
