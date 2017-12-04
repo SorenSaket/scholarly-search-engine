@@ -13,6 +13,24 @@ function saveData()
 	saveSearchEngines();
 }
 
+function fullscreen(setFullscreen)
+{
+	var resultcontainer = document.getElementById("resultcontainer")
+	var contentcontainer = document.getElementById("contentcontainer")
+	if(setFullscreen)
+	{
+		resultcontainer.style.display = "none";
+		contentcontainer.style.flex = "0 0 100%";
+		contentcontainer.style.maxWidth = "100%";
+	}
+	else
+	{
+		resultcontainer[i].style.display = "initial";
+		contentcontainer[i].style.flex = "0 0 58.333333%";
+		contentcontainer[i].style.maxWidth = "0 0 58.333333%";
+	}
+}
+
 document.getElementById('searchForm').addEventListener('submit', function(e) {
 	e.preventDefault();
 	search();

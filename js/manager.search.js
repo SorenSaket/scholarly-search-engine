@@ -1,11 +1,12 @@
 function strSplit(string) {
-    var str = string.replace('(','("')
-    str = str.replace(/,/g,'","')
-    var pos = str.lastIndexOf(')')
-    str = str.substring(0,pos) + '")' + str.substring(pos+1)
-    console.log (str)
-    return str
+    var str = string.replace('(','("');
+    str = str.replace(/,/g,'","');
+    var pos = str.lastIndexOf(')');
+    str = str.substring(0,pos) + '")' + str.substring(pos+1);
+    console.log (str);
+    return str;
 }
+
 function commands(){
 	var searchEngines = JSON.parse(Cookies.get("searchengines"));
 	console.log(searchEngines);
@@ -61,8 +62,7 @@ function search(){
 	}
 }
 
-function subsearch(query)
-{
+function subsearch(query){
 	var command = query.substr(0,query.indexOf(' '));
 	var finalquery = query.substr(query.indexOf(' ')+1);
 	for (let index = 0; index < allSearchEngines.length; index++) {
@@ -72,7 +72,6 @@ function subsearch(query)
 		}
 	}
 }
-
 
 function displayResults(page){
 	document.getElementById("navigation0").innerHTML = page +1;
@@ -192,25 +191,6 @@ function nextPage(){
 	displayResults(currentPage);
 }
 
-function fullscreen(setFullscreen)
-{
-	var resultcontainer = document.getElementById("resultcontainer")
-	var contentcontainer = document.getElementById("contentcontainer")
-	if(setFullscreen)
-	{
-		resultcontainer.style.display = "none";
-		contentcontainer.style.flex = "0 0 100%";
-		contentcontainer.style.maxWidth = "100%";
-	}
-	else
-	{
-		resultcontainer[i].style.display = "initial";
-		contentcontainer[i].style.flex = "0 0 58.333333%";
-		contentcontainer[i].style.maxWidth = "0 0 58.333333%";
-	}
-}
-
-document.onkeyup = autocomplete;
 $('#searchInput').on('input', function() { 
     autocomplete();
 });
