@@ -258,10 +258,10 @@ function calculateElement(triangle, elementToCalculate){
 	{
 		//Sin
 		var al = determineUsedAlgorithm(triangle, elementToCalculate)
-		
+		/*
 		for (let x = 0; x < al.neededVars.length; x++) {
 			triangle = calculateElement(triangle, al.neededVars[x]);
-		}
+		}*/
 		
 		if(al.algorithm == "sin")
 		{
@@ -270,7 +270,7 @@ function calculateElement(triangle, elementToCalculate){
 		}
 		else if(al.algorithm == "cos")
 		{
-			a = calculateSideCos(/*wip*/);
+			a = calculateSideCos(a,b,c, A);
 		}
 	}
 	else if(elementToCalculate == "b" && b == null)
@@ -283,7 +283,7 @@ function calculateElement(triangle, elementToCalculate){
 	}
 	else if(elementToCalculate == "A" && A == null)
 	{
-
+		//cos(A) =  b2 + c2 − a2 /2bc
 	}
 	else if(elementToCalculate == "B" && B == null)
 	{
@@ -296,28 +296,66 @@ function calculateElement(triangle, elementToCalculate){
 
 	return triangle;
 }
-// Determine the algorithm to use based on preferences and missing elements
+// Determine the algorithm to use based on preferences and missing elements WIP
 function determineUsedAlgorithm(triangle, elementToCalculate){
-	if(sideAlgorithmPreference[0] == "sin")
+	var temp;
+
+	if(elementToCalculate == "a" || elementToCalculate == "b" || elementToCalculate == "c")
 	{
-		if(triangle)
+		if(sideAlgorithmPreference[0] == "sin")
+		{
+			if(canUseSinToCalculateSide(triangle))
+			{
+				temp.algorithm="sin";
+			}
+			else if(canUseCosToCalculateSide(triangle.a,triangle.b,triangle.c, elementToCalculate))
+			{
+				temp.algorithm="cos";
+			}
+			else
+			{
+				// Add Extras
+				temp.algorithm="sin";
+			}
 
-
-
+		}
+		else if(sideAlgorithmPreference[0] == "cos")
+		{
+			if(canUseCosToCalculateSide(triangle.a,triangle.b,triangle.c, elementToCalculate))
+				temp.algorithm="cos";
+			else if(canUseSinToCalculateSide(triangle))
+				temp.algorithm="sin";
+			else
+			{
+				//add Extras
+				temp.algorithm="cos";
+			}
+		}
 	}
-	else
+	else if(elementToCalculate == "A" || elementToCalculate == "B" || elementToCalculate == "C")
 	{
+		if(angleAlgorithmPreference[0] == "180")
+		{
+			var angles = (A != null) + (B != null) + (C != null);
+			if(angles == 2)
+			{
+				temp.algorithm="180";	
+			}
+			else
+			{
 
+			}
+		}
+		else if(angleAlgorithmPreference[0] == "sin")
+		{
+
+
+		}
+		else if(angleAlgorithmPreference[0] == "cos")
+		{
+
+		}
 	}
-
-
-
-	var temp =
-	{
-
-
-	}
-
 	return temp;
 }
 // Returns side c using law of cosines WIP
@@ -328,27 +366,77 @@ function calculateSide(a, b, C) {
 	else // Explained in https://www.nayuki.io/page/numerically-stable-law-of-cosines
 		return Math.sqrt((a - b) * (a - b) + a * b * C * C * (1 - C * C / 12));
 }
-// WIP
-function calculateSideCos(a, b, C) {
-	C = degToRad(C);
-	if (C > 0.001)
-		return Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(C));
-	else // Explained in https://www.nayuki.io/page/numerically-stable-law-of-cosines
-		return Math.sqrt((a - b) * (a - b) + a * b * C * C * (1 - C * C / 12));
+//    Two sides must not be null
+function calculateSideCos(a, b, c, angle) {
+	if(a == null)
+	{
+		//a^2 = b^2 + c^2 - 2bc * cos(A)
+		var x = b*b + c*c - 2*b*c * cos(angle);
+		a = Math.sqrt(x);
+		
+		addLine("//Calculate a");
+		addLine
+		(
+			"\\begin{align} " + 
+			"a &= \\sqrt {{b^2} + {c^2} - 2bc*\cos (A)} \\\\ " +
+			"& = \\sqrt {{" + b +"^2} + {" + c +"^2} - 2 *" + b + " * " + c +" * \\cos (" + angle +"&deg;)} \\\\ " +
+			"& = \\sqrt {" + x + "} \\\\  " +
+			"& = " + a +
+			"\\end{align}"
+		);
+
+		return a;
+	}
+	else if(b == null)
+	{
+		//b^2 = a^2 + c^2 - 2ac * cos(B)
+		var x = a*a + c*c - 2*a*c * cos(angle);
+		b = Math.sqrt(x);
+		
+		addLine("//Calculate a");
+		addLine
+		(
+			"\\begin{align} " + 
+			"b &= \\sqrt {{b^2} + {c^2} - 2bc*\cos (A)} \\\\ " +
+			"& = \\sqrt {{" + a +"^2} + {" + c +"^2} - 2 *" + a + " * " + c +" * \\cos (" + angle +"&deg;)} \\\\ " +
+			"& = \\sqrt {" + x + "} \\\\  " +
+			"& = " + b +
+			"\\end{align}"
+		);
+
+		return b;
+	}
+	else if(c == null)
+	{
+		//c^2 = a^2 + b^2 - 2ab * cos(C)
+		var x = a*a + b*b - 2*a*b * cos(angle);
+		c = Math.sqrt(x);
+		
+		addLine("//Calculate a");
+		addLine
+		(
+			"\\begin{align} " + 
+			"c &= \\sqrt {{b^2} + {c^2} - 2bc*\cos (A)} \\\\ " +
+			"& = \\sqrt {{" + a +"^2} + {" + b +"^2} - 2 *" + a + " * " + b +" * \\cos (" + angle +"&deg;)} \\\\ " +
+			"& = \\sqrt {" + x + "} \\\\  " +
+			"& = " + c +
+			"\\end{align}"
+		);
+		return b;
+	}
 }
 // Returns side with sinus rule WIP
 function calculateSideSin(a,b,c,A,B,C, sideToSolve){
+	
 	var sinA = Math.sin(degToRad(A));
 	var sinB = Math.sin(degToRad(B));
 	var sinC = Math.sin(degToRad(C));
 	
-	// Use law of sines to find sides
 	var ratio; // side / sin(angle)
 	
 	if (a != null) 
 	{
 		ratio = a / sinA;
-		area = a * ratio * sinB * sinC / 2;
 		b = ratio * sinB;
 		c = ratio * sinC;
 		addLine("//Calculate b");
@@ -362,7 +450,6 @@ function calculateSideSin(a,b,c,A,B,C, sideToSolve){
 	else if (b != null) 
 	{
 		ratio = b / sinB;
-		area = b * ratio * sinC * sinA / 2;
 		a = ratio * sinA;
 		c = ratio * sinC;
 		addLine("//Calculate a");
@@ -376,7 +463,6 @@ function calculateSideSin(a,b,c,A,B,C, sideToSolve){
 	else if (c != null) 
 	{
 		ratio = c / sinC;
-		area = c * ratio * sinA * sinB / 2;
 		a = ratio * sinA;
 		b = ratio * sinB;
 		addLine("//Calculate a");
@@ -387,6 +473,10 @@ function calculateSideSin(a,b,c,A,B,C, sideToSolve){
 		addLine("$$b = {c \\over {\\sin (C)}}*\\sin (B)$$");
 		addLine("$$" + b + " = {" + c + " \\over {\\sin (" + C + ")}}*\\sin (" + B + ")$$");
 	}
+}
+function calculateAngleSin()
+{
+
 }
 // Returns angle C using law of cosines
 function calculateAngleCos(a, b, c, angleToCalculate) {
@@ -583,8 +673,52 @@ function isUnsolvable(triangle){
 		return false;
 	}
 }
+
+// -------- Calculator functions --------
+//Converts radians to degrees
+function radToDeg(valRad) {
+	return (360 / (2 * Math.PI) * valRad)
+}
+//Converts degrees to radians
+function degToRad(valDeg) {
+	return ((2 * Math.PI) / 360 * valDeg)
+}
+//WIP
+function sin(inputfloat){
+	//wip
+}
+//WIP
+function arcsin(inputfloat){
+	//wip
+}
+//WIP
+function cos(inputfloat){
+	//wip
+}
+//WIP 
+function arccos(inputfloat){
+	//wip
+}
+
+// -------- Get functions --------
+
+function getValueFromElement(triangle, element){
+	if(element == "a")
+		return triangle.a;
+	else if(element == "b")
+		return triangle.b;
+	else if(element == "c")
+		return triangle.c;
+	else if(element == "A")
+		return triangle.A;
+	else if(element == "B")
+		return triangle.B;
+	else if(element == "C")
+		return triangle.C;
+	else return null;
+}
 //Returns the opposite side of side as a string
-function getOppositSide(angle){
+function getOppositeSide(angle){
 	if(side == "A")
 		return "a";
 	else if(side == "B")
@@ -629,13 +763,13 @@ function getUnknownAngle(A,B,C){
 	}
 }
 //Returns the known side from 3 side as string
-function getKnownSide(A,B,C){
-	if(A)
-		return "A";
-	else if(B)
-		return "B";
-	else if(C)
-		return "C"
+function getKnownSide(a,b,c){
+	if(a)
+		return "a";
+	else if(b)
+		return "b";
+	else if(c)
+		return "c"
 	else
 	{
 		console.log("There are no known sides");
@@ -656,7 +790,75 @@ function getKnownAngle(A,B,C){
 		return null;
 	}
 }
-//Returns a bool if the opposite side of an angle is null
+//Returns the known sides from 3 sides as array of strings
+function getKnownSides(a,b,c){
+	var sides = [];
+	if(a)
+		sides.push("a");
+	if(b)
+		sides.push("b");
+	if(c)
+		sides.push("c");
+	return sides;
+}
+//Returns the known angles from 3 angles as array of strings
+function getKnownAngles(A,B,C){
+	var angles = [];
+	if(A)
+		angles.push("A");
+	if(B)
+		angles.push("B");
+	if(C)
+		angles.push("C");
+	return sides;
+}
+
+function getKnownPairs(triangle){
+	var knownPairs = [];
+	if(triangle.a && triangle.A)
+		knownPairs.push("A");
+	if(triangle.b && triangle.B)
+		knownPairs.push("B");
+	if(triangle.c && triangle.C)
+		knownPairs.push("C");
+	return knownPairs;
+}
+
+// -------- Is functions --------
+
+function isAPairKnown(triangle){
+	if(triangle.a && triangle.A)
+		return true;
+	else if(triangle.b && triangle.B)
+		return true;
+	else if(triangle.c && triangle.C)
+		return true;
+	else
+		return false;
+}
+//Returns 
+function isOtherSidesKnown(a,b,c, side){
+	var sides = getKnownSides(a,b,c);
+	if(side == "a")
+	{
+		if(sides.includes(b) && sides.includes(c))
+		return true;
+	}
+	else if(side == "b")
+	{
+		if(sides.includes(a) && sides.includes(c))
+			return true;
+	}
+	else if(side == "c")
+	{
+		if(sides.includes(a) && sides.includes(b))
+			return true;
+	}else
+	{
+		return false;
+	}	
+}
+//If the opposite side of an angle is null. Returns a bool 
 function isOppositeSideNull(a, b, c, angle){
 	switch (angle) {
 		case "A":
@@ -678,7 +880,7 @@ function isOppositeSideNull(a, b, c, angle){
 	}
 	return false;
 }
-//Returns a bool if the opposite angle of a side is null
+//If the opposite angle of a side is null, Returns a bool i
 function isOppositeAngleNull(A, B, C, side){
 	switch (side) {
 		case "a":
@@ -700,27 +902,20 @@ function isOppositeAngleNull(A, B, C, side){
 	}
 	return false;
 }
-//Converts radians to degrees
-function radToDeg(valRad) {
-	return (360 / (2 * Math.PI) * valRad)
+
+// -------- a --------
+
+function canUseCosToCalculateSide(a,b,c, elementToCalculate){
+	if(getValueFromElement(getOppositeAngle(elementToCalculate)) != null && isOtherSidesKnown(a,b,c, elementToCalculate))
+		 return true;
+	else 
+		return false;
 }
-//Converts degrees to radians
-function degToRad(valDeg) {
-	return ((2 * Math.PI) / 360 * valDeg)
-}
-//WIP
-function sin(inputfloat){
-	//wip
-}
-//WIP
-function arcsin(inputfloat){
-	//wip
-}
-//WIP
-function cos(inputfloat){
-	//wip
-}
-//WIP 
-function arccos(inputfloat){
-	//wip
+
+function canUseSinToCalculateSide(triangle){
+	var knownPairs = getKnownPairs(triangle);
+	if(knownPairs.length > 0)
+		return true;
+	else
+		return false;
 }
