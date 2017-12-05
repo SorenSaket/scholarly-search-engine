@@ -1,5 +1,4 @@
 # Scholarly Search Engine
-An application that help you learn
 
 
 ## Basic Usage
