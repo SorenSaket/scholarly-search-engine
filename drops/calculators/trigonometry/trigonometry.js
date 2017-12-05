@@ -6,6 +6,8 @@ var calculationOrder = ["a", "b", "c", "A", "B", "C"];
 var sideAlgorithmPreference = ["sin", "cos"];
 //The preferred algorithm to use when calculating an angle
 var angleAlgorithmPreference = ["180", "sin", "cos"];
+//The number of decimals to calculate
+var floatingPointprecision = 2;
 //The current triangle to calculate
 var currentTriangle;
 
@@ -15,22 +17,22 @@ var currentTriangle;
 function calculate(){
 	//Gets input and sets it to a variable
 	var tempTri = getInput();
-	
+
 	console.log(tempTri);
-	
+
 	if(!isUnsolvable(tempTri))
 	{
 		document.getElementById("output").innerHTML = "";
 		//Calculates all sides and angles for the triangle
-		tempTri = caluclateTriangle(tempTri);
-		
+		tempTri = caluclateTriangle1(tempTri);
+
 		console.log(tempTri);
-		
+
 		//Sets p5 to draw the triangle
 		triangleToDraw = tempTri;
-		
+
 		setInput(tempTri);
-	
+
 		MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 	}
 }
@@ -41,7 +43,7 @@ function tri(a,b,c,A,B,C){
 
 // ---------------- Calculation Functions ---------------
 
-// The current way of calculation a triangle (Not working)
+// The current way of calculating a triangle (Not working)
 function caluclateTriangle(triangle){
 	var a = triangle.a;
 	var b = triangle.b;
@@ -58,11 +60,11 @@ function caluclateTriangle(triangle){
 			//SSS
 
 			A = calculateAngleCos(a,b,c, "A");
-			
+
 			B = calculateAngleCos(a,b,c, "B");
-			
+
 			C = calculateAngle180(A,B,null);
-			
+
 			break;
 		case 1:
 			//Find the missing side
@@ -83,14 +85,14 @@ function caluclateTriangle(triangle){
 					addLine("//Calculate B");
 					addLine
 					(
-						"\\begin{align} " + 
+						"\\begin{align} " +
 						"B &= \\sin ^{ - 1} \\left( {{{b*\\sin (A)} \\over a}} \\right) \\\\ " +
 						"&= \\sin ^{ - 1} \\left( {{{" + b + "*\\sin (" + A + ")} \\over " + a + "}} \\right) \\\\ " +
 						"& = \\sin ^{ - 1} \\left( {" + x + "} \\right) \\\\  " +
 						"& = " + B +
 						"\\end{align}"
 					);
-					
+
 					//Calulate The last angle with 180
 					C = calculateAngle180(A,B,C);
 				}
@@ -103,14 +105,14 @@ function caluclateTriangle(triangle){
 					addLine("//Calculate A");
 					addLine
 					(
-						"\\begin{align} " + 
+						"\\begin{align} " +
 						"A &= \\sin ^{ - 1} \\left( {{{a*\\sin (B)} \\over b}} \\right) \\\\ " +
 						"& = \\sin ^{ - 1} \\left( {{{" + a + "*\\sin (" + B + ")} \\over " + b + "}} \\right) \\\\ " +
 						"& = \\sin ^{ - 1} \\left( {" + x + "} \\right) \\\\  " +
 						"& = " + A +
 						"\\end{align}"
 					);
-					
+
 					//Calulate The last angle with 180
 					C = calculateAngle180(A,B,C);
 				}
@@ -123,7 +125,7 @@ function caluclateTriangle(triangle){
 					addLine("//Calculate A");
 					addLine
 					(
-						"\\begin{align} " + 
+						"\\begin{align} " +
 						"A &= \\sin ^{ - 1} \\left( {{{a*\\sin (B)} \\over b}} \\right) \\\\ " +
 						"& = \\sin ^{ - 1} \\left( {{{" + a + "*\\sin (" + B + ")} \\over " + b + "}} \\right) \\\\ " +
 						"& = \\sin ^{ - 1} \\left( {" + x + "} \\right) \\\\  " +
@@ -149,25 +151,25 @@ function caluclateTriangle(triangle){
 		case 2:
 			if (A == null)
 				A = calculateAngle180(A,B,C);
-			if (B == null) 
+			if (B == null)
 				B = calculateAngle180(A,B,C);
 			if (C == null)
 				C = calculateAngle180(A,B,C);
 
 			if (A <= 0 || B <= 0 || C <= 0)
 				displayError("No solution");
-			
+
 			var sinA = Math.sin(degToRad(A));
 			var sinB = Math.sin(degToRad(B));
 			var sinC = Math.sin(degToRad(C));
-			
+
 			// Use law of sines to find sides
 			var ratio; // side / sin(angle)
-			
+
 			addLine("//Law Of Sines");
 			addLine("$${a \\over {\\sin (A)}} = {b \\over {\\sin (B)}} = {c \\over {\\sin (C)}}$$");
-			
-			if (a != null) 
+
+			if (a != null)
 			{
 				ratio = a / sinA;
 				area = a * ratio * sinB * sinC / 2;
@@ -176,12 +178,12 @@ function caluclateTriangle(triangle){
 				addLine("//Calculate b");
 				addLine("$$b = {a \\over {\\sin (A)}}*\\sin (B)$$");
 				addLine("$$"+ b+ " = {"+ a+" \\over {\\sin (" + A + ")}}*\\sin ("+ B + ")$$");
-				
+
 				addLine("//Calculate c");
 				addLine("$$c = {a \\over {\\sin (A)}}*\\sin (C)$$");
 				addLine("$$"+ c+ " = {"+ a+" \\over {\\sin (" + A + ")}}*\\sin ("+ C + ")$$");
 			}
-			else if (b != null) 
+			else if (b != null)
 			{
 				ratio = b / sinB;
 				area = b * ratio * sinC * sinA / 2;
@@ -195,7 +197,7 @@ function caluclateTriangle(triangle){
 				addLine("$$c = {b \\over {\\sin (B)}}*\\sin (C)$$");
 				addLine("$$" + c + " = {" + b +" \\over {\\sin (" + B +")}}*\\sin (" + C +")$$");
 			}
-			else if (c != null) 
+			else if (c != null)
 			{
 				ratio = c / sinC;
 				area = c * ratio * sinA * sinB / 2;
@@ -204,7 +206,7 @@ function caluclateTriangle(triangle){
 				addLine("//Calculate a");
 				addLine("$$a = {c \\over {\\sin (C)}}*\\sin (A)$$");
 				addLine("$$" + a + " = {" + c + " \\over {\\sin (" + C + ")}}*\\sin (" + A + ")$$");
-				
+
 				addLine("//Calculate b");
 				addLine("$$b = {c \\over {\\sin (C)}}*\\sin (B)$$");
 				addLine("$$" + b + " = {" + c + " \\over {\\sin (" + C + ")}}*\\sin (" + B + ")$$");
@@ -231,75 +233,130 @@ function caluclateTriangle(triangle){
 
 	return tempTriangle;
 }
-// The NEW way of calculation a triangle (Not working either)
-function caluclateTriangle1(triangle){	
+// The NEW way of calculating a triangle (Not working either)
+function caluclateTriangle1(triangle){
 	for (let x = 0; x < calculationOrder.length; x++) {
-		triangle = calculateElement(triangle, calculationOrder[x]);
-	}
-	
-	var tempTriangle =
-	{
-		a: a,
-		b: b,
-		c: c,
-		A: A,
-		B: B,
-		C: C,
-		area: calculateAreaHeron(a,b,c),
-		circumference: calculateCircumference(a,b,c)
+		if(getValueFromElement(triangle, calculationOrder[x]) == null)
+			triangle = calculateElement(triangle, calculationOrder[x]);
 	}
 
-	return tempTriangle;
+	triangle.area = calculateAreaHeron(triangle.a,triangle.b,triangle.c);
+	triangle.circumference= calculateCircumference(triangle.a,triangle.b,triangle.c);
+
+	return triangle;
 }
 //WIP
 function calculateElement(triangle, elementToCalculate){
-
-	if(elementToCalculate == "a" && triangle.a == null)
+	console.log("Calculating: " + elementToCalculate);
+	var al = determineUsedAlgorithm(triangle, elementToCalculate)
+	for (let x = 0; x < al.neededVars.length; x++) {
+		triangle = calculateElement(triangle, al.neededVars[x]);
+	}
+	/*
+	if((elementToCalculate == "a" || elementToCalculate == "b" || elementToCalculate == "c") && getValueFromElement(triangle,elementToCalculate) != null)
 	{
-		//Sin
-		var al = determineUsedAlgorithm(triangle, elementToCalculate)
-		/*
-		for (let x = 0; x < al.neededVars.length; x++) {
-			triangle = calculateElement(triangle, al.neededVars[x]);
-		}*/
-		
+
+	}*/
+
+	if(elementToCalculate == "a")
+	{
 		if(al.algorithm == "sin")
 		{
-			//Use b/sin(B) or c/sin(C)
-			//solveSideSin(a,b,c,A,B,C, "a");
+			//Use b/sin(B) or c/sin(C)??
+			var pair = getPairWithE(triangle, elementToCalculate);
+
+			triangle.a = calculateSideSin(getValueFromElement(triangle, pair),getValueFromElement(triangle, pair.toUpperCase()), getValueFromElement(getOppositeAngle(elementToCalculate)), elementToCalculate, pair)
 		}
 		else if(al.algorithm == "cos")
 		{
-			a = calculateSideCos(a,b,c, A);
+			
+			triangle.a = calculateSideCos(triangle.a,triangle.b,triangle.c, triangle.A);
 		}
 	}
-	else if(elementToCalculate == "b" && b == null)
+	else if(elementToCalculate == "b")
 	{
+		if(al.algorithm == "sin")
+		{
+			//Use b/sin(B) or c/sin(C)??
+			var pair = getPairWithE(triangle, elementToCalculate);
 
+			triangle.b = calculateSideSin(getValueFromElement(triangle, pair),getValueFromElement(triangle, pair.toUpperCase()), getValueFromElement(getOppositeAngle(elementToCalculate)), elementToCalculate, pair)
+		}
+		else if(al.algorithm == "cos")
+		{
+			triangle.b = calculateSideCos(triangle.a,triangle.b,triangle.c, triangle.B);
+		}
 	}
-	else if(elementToCalculate == "c" && c == null)
+	else if(elementToCalculate == "c")
 	{
+		if(al.algorithm == "sin")
+		{
+			//Use b/sin(B) or c/sin(C)??
+			var pair = getPairWithE(triangle, elementToCalculate);
 
+			triangle.c = calculateSideSin(getValueFromElement(triangle, pair),getValueFromElement(triangle, pair.toUpperCase()), getValueFromElement(getOppositeAngle(elementToCalculate)), elementToCalculate, pair)
+		}
+		else if(al.algorithm == "cos")
+		{
+			triangle.c = calculateSideCos(triangle.a,triangle.b,triangle.c, triangle.C);
+		}
 	}
-	else if(elementToCalculate == "A" && A == null)
+	else if(elementToCalculate == "A")
 	{
-		//cos(A) =  b2 + c2 − a2 /2bc
+		if(al.algorithm == "180")
+		{
+			triangle.A = calculateAngle180(triangle.A,triangle.B,triangle.C);
+		}else if (al.algorithm == "sin")
+		{
+			var pair = getPairWithE(triangle, elementToCalculate);
+			triangle.A = calculateAngleSin(getValueFromElement(triangle, pair),getValueFromElement(triangle, pair.toUpperCase()), getValueFromElement(triangle, getOppositeSide(elementToCalculate)), elementToCalculate, pair);
+		}else if(al.algorithm == "cos")
+		{
+			triangle.A = calculateAngleCos(triangle.a,triangle.b,triangle.c, "A");
+		}
 	}
-	else if(elementToCalculate == "B" && B == null)
+	else if(elementToCalculate == "B")
 	{
-
+		if(al.algorithm == "180")
+		{
+			triangle.B = calculateAngle180(triangle.A,triangle.B,triangle.C);
+		}else if (al.algorithm == "sin")
+		{
+			console.log("AAAAAAAAAAAA");
+			var pair = getPairWithE(triangle, elementToCalculate);
+			console.log(pair);
+			console.log(getOppositeSide(elementToCalculate));
+			triangle.B = calculateAngleSin(getValueFromElement(triangle, pair), getValueFromElement(triangle, pair.toUpperCase()), getValueFromElement(triangle, getOppositeSide(elementToCalculate)), elementToCalculate, pair);
+			console.log(triangle.B);
+		}
+		else if(al.algorithm == "cos")
+		{
+			triangle.B = calculateAngleCos(triangle.a,triangle.b,triangle.c, "B");
+		}
 	}
-	else if(elementToCalculate == "C" && C == null)
+	else if(elementToCalculate == "C")
 	{
-		
+		if(al.algorithm == "180")
+		{
+			triangle.C = calculateAngle180(triangle.A,triangle.B,triangle.C);
+		}else if (al.algorithm == "sin")
+		{
+			var pair = getPairWithE(triangle, elementToCalculate);
+			triangle.C = calculateAngleSin(getValueFromElement(triangle, pair),getValueFromElement(triangle, pair.toUpperCase()), getValueFromElement(triangle,getOppositeSide(elementToCalculate)), elementToCalculate, pair);
+		}else if(al.algorithm == "cos")
+		{
+			triangle.C = calculateAngleCos(triangle.a,triangle.b,triangle.c, "C");
+		}
 	}
 
 	return triangle;
 }
 // Determine the algorithm to use based on preferences and missing elements WIP
 function determineUsedAlgorithm(triangle, elementToCalculate){
-	var temp;
-
+	console.log("Determining algorithm for: " + elementToCalculate);
+	
+	var temp = {};
+	temp.neededVars = [];
 	if(elementToCalculate == "a" || elementToCalculate == "b" || elementToCalculate == "c")
 	{
 		if(sideAlgorithmPreference[0] == "sin")
@@ -314,10 +371,9 @@ function determineUsedAlgorithm(triangle, elementToCalculate){
 			}
 			else
 			{
-				// Add Extras
+				temp.neededVars = getPairsToCalculate(triangle, elementToCalculate);
 				temp.algorithm="sin";
 			}
-
 		}
 		else if(sideAlgorithmPreference[0] == "cos")
 		{
@@ -327,7 +383,8 @@ function determineUsedAlgorithm(triangle, elementToCalculate){
 				temp.algorithm="sin";
 			else
 			{
-				//add Extras
+				temp.neededVars = getUnknownSides(triangle.a,triangle.b,triangle.c);
+				temp.neededVars.push(getOppositeAngle(elementToCalculate));
 				temp.algorithm="cos";
 			}
 		}
@@ -336,26 +393,60 @@ function determineUsedAlgorithm(triangle, elementToCalculate){
 	{
 		if(angleAlgorithmPreference[0] == "180")
 		{
-			var angles = (A != null) + (B != null) + (C != null);
-			if(angles == 2)
+			if(canUse180ToCalcuateAngle(triangle.A,triangle.B,triangle.C))
+				temp.algorithm="180";
+			else if(angleAlgorithmPreference[1] == "sin" && canUseSinToCalculateAngle(triangle))
+				temp.algorithm="sin";
+			else if(angleAlgorithmPreference[1] == "cos" && canUseCosToCalculateAngle(triangle.a,triangle.b,triangle.c))
+				temp.algorithm = "cos"		
+			else if(angleAlgorithmPreference[2] == "sin" && canUseSinToCalculateAngle(triangle))
+				temp.algorithm="sin";
+			else if(angleAlgorithmPreference[2] == "cos" && canUseCosToCalculateAngle(triangle.a,triangle.b,triangle.c))
+				temp.algorithm = "cos";
+			/*else (angleAlgorithmPreference[1] == "cos")
 			{
-				temp.algorithm="180";	
-			}
-			else
-			{
-
-			}
+				temp.neededVars = getUnknownSides(triangle.a,triangle.b,triangle.c);
+				temp.algorithm = "cos";
+			}*/
 		}
 		else if(angleAlgorithmPreference[0] == "sin")
 		{
-
-
+			if(canUseSinToCalculateAngle(triangle))
+				temp.algorithm = "sin";
+			else if(angleAlgorithmPreference[1] == "180" && canUse180ToCalcuateAngle(triangle.A,triangle.B,triangle.C))
+				temp.algorithm = "180";
+			else if(angleAlgorithmPreference[1] == "cos" && canUseCosToCalculateAngle(triangle.a,triangle.b,triangle.c))
+				temp.algorithm = "cos";
+			else if(angleAlgorithmPreference[2] == "180" && canUse180ToCalcuateAngle(triangle.A,triangle.B,triangle.C))
+				temp.algorithm = "180";
+			else if(angleAlgorithmPreference[2] == "cos" && canUseCosToCalculateAngle(triangle.a,triangle.b,triangle.c))
+				temp.algorithm = "cos";
+			else
+			{
+				temp.neededVars = getPairsToCalculate(triangle, elementToCalculate);
+				temp.algorithm = "sin";
+			}
 		}
 		else if(angleAlgorithmPreference[0] == "cos")
 		{
-
+			if(canUseCosToCalculateAngle(triangle.a,triangle.b,triangle.c))
+				temp.algorithm = "cos";
+			else if(angleAlgorithmPreference[1] == "180" && canUse180ToCalcuateAngle(triangle.A,triangle.B,triangle.C))
+				temp.algorithm = "180";
+			else if(angleAlgorithmPreference[1] == "sin" && canUseSinToCalculateAngle(triangle))
+				temp.algorithm = "sin";
+			else if(angleAlgorithmPreference[2] == "180" && canUse180ToCalcuateAngle(triangle.A,triangle.B,triangle.C))
+				temp.algorithm = "180";
+			else if(angleAlgorithmPreference[2] == "sin" && canUseSinToCalculateAngle(triangle))
+				temp.algorithm = "sin";
+			else
+			{
+				temp.neededVars = getUnknownSides(triangle.a,triangle.b,triangle.c);
+				temp.algorithm = "cos";
+			}
 		}
 	}
+	console.log(temp);
 	return temp;
 }
 // Returns side c using law of cosines WIP
@@ -371,13 +462,13 @@ function calculateSideCos(a, b, c, angle) {
 	if(a == null)
 	{
 		//a^2 = b^2 + c^2 - 2bc * cos(A)
-		var x = b*b + c*c - 2*b*c * cos(angle);
+		var x = b*b + c*c - 2*b*c * customCos(angle);
 		a = Math.sqrt(x);
-		
+
 		addLine("//Calculate a");
 		addLine
 		(
-			"\\begin{align} " + 
+			"\\begin{align} " +
 			"a &= \\sqrt {{b^2} + {c^2} - 2bc*\cos (A)} \\\\ " +
 			"& = \\sqrt {{" + b +"^2} + {" + c +"^2} - 2 *" + b + " * " + c +" * \\cos (" + angle +"&deg;)} \\\\ " +
 			"& = \\sqrt {" + x + "} \\\\  " +
@@ -390,13 +481,13 @@ function calculateSideCos(a, b, c, angle) {
 	else if(b == null)
 	{
 		//b^2 = a^2 + c^2 - 2ac * cos(B)
-		var x = a*a + c*c - 2*a*c * cos(angle);
+		var x = a*a + c*c - 2*a*c * customCos(angle);
 		b = Math.sqrt(x);
-		
+
 		addLine("//Calculate a");
 		addLine
 		(
-			"\\begin{align} " + 
+			"\\begin{align} " +
 			"b &= \\sqrt {{b^2} + {c^2} - 2bc*\cos (A)} \\\\ " +
 			"& = \\sqrt {{" + a +"^2} + {" + c +"^2} - 2 *" + a + " * " + c +" * \\cos (" + angle +"&deg;)} \\\\ " +
 			"& = \\sqrt {" + x + "} \\\\  " +
@@ -409,13 +500,13 @@ function calculateSideCos(a, b, c, angle) {
 	else if(c == null)
 	{
 		//c^2 = a^2 + b^2 - 2ab * cos(C)
-		var x = a*a + b*b - 2*a*b * cos(angle);
+		var x = a*a + b*b - 2*a*b * customCos(angle);
 		c = Math.sqrt(x);
-		
+
 		addLine("//Calculate a");
 		addLine
 		(
-			"\\begin{align} " + 
+			"\\begin{align} " +
 			"c &= \\sqrt {{b^2} + {c^2} - 2bc*\cos (A)} \\\\ " +
 			"& = \\sqrt {{" + a +"^2} + {" + b +"^2} - 2 *" + a + " * " + b +" * \\cos (" + angle +"&deg;)} \\\\ " +
 			"& = \\sqrt {" + x + "} \\\\  " +
@@ -426,15 +517,15 @@ function calculateSideCos(a, b, c, angle) {
 	}
 }
 // Returns side with sinus rule WIP
-function calculateSideSin(a,b,c,A,B,C, sideToSolve){
-	
+function calculateSideSinOLD(a,b,c,A,B,C, sideToSolve){
+
 	var sinA = Math.sin(degToRad(A));
 	var sinB = Math.sin(degToRad(B));
 	var sinC = Math.sin(degToRad(C));
-	
+
 	var ratio; // side / sin(angle)
-	
-	if (a != null) 
+
+	if (a != null)
 	{
 		ratio = a / sinA;
 		b = ratio * sinB;
@@ -442,12 +533,12 @@ function calculateSideSin(a,b,c,A,B,C, sideToSolve){
 		addLine("//Calculate b");
 		addLine("$$b = {a \\over {\\sin (A)}}*\\sin (B)$$");
 		addLine("$$"+ b+ " = {"+ a+" \\over {\\sin (" + A + ")}}*\\sin ("+ B + ")$$");
-		
+
 		addLine("//Calculate c");
 		addLine("$$c = {a \\over {\\sin (A)}}*\\sin (C)$$");
 		addLine("$$"+ c+ " = {"+ a+" \\over {\\sin (" + A + ")}}*\\sin ("+ C + ")$$");
 	}
-	else if (b != null) 
+	else if (b != null)
 	{
 		ratio = b / sinB;
 		a = ratio * sinA;
@@ -460,7 +551,7 @@ function calculateSideSin(a,b,c,A,B,C, sideToSolve){
 		addLine("$$c = {b \\over {\\sin (B)}}*\\sin (C)$$");
 		addLine("$$" + c + " = {" + b +" \\over {\\sin (" + B +")}}*\\sin (" + C +")$$");
 	}
-	else if (c != null) 
+	else if (c != null)
 	{
 		ratio = c / sinC;
 		a = ratio * sinA;
@@ -468,15 +559,54 @@ function calculateSideSin(a,b,c,A,B,C, sideToSolve){
 		addLine("//Calculate a");
 		addLine("$$a = {c \\over {\\sin (C)}}*\\sin (A)$$");
 		addLine("$$" + a + " = {" + c + " \\over {\\sin (" + C + ")}}*\\sin (" + A + ")$$");
-		
+
 		addLine("//Calculate b");
 		addLine("$$b = {c \\over {\\sin (C)}}*\\sin (B)$$");
 		addLine("$$" + b + " = {" + c + " \\over {\\sin (" + C + ")}}*\\sin (" + B + ")$$");
 	}
 }
-function calculateAngleSin()
-{
+function calculateSideSin(pairSide, pairAngle, oppositeAngle, sideToSolve, knownPair){
+	if(sideToSolve == "a")
+	{
+		a = (pairSide/customSin(pairAngle))* customSin(oppositeAngle);
+		
+		return a;
+	}
+	else if(sideToSolve == "b")
+	{
+		b = (pairSide/customSin(pairAngle))* customSin(oppositeAngle);
+		
+		return b;
+	}
+	else if(sideToSolve == "c")
+	{
+		c = (pairSide/customSin(pairAngle))* customSin(oppositeAngle);
+		
+		return c;
+	}
+}
 
+function calculateAngleSin(pairSide, pairAngle, oppositeSide, angleToSolve, knownPair)
+{
+	console.log(pairSide, pairAngle, oppositeSide, angleToSolve, knownPair);
+	if(angleToSolve == "A")
+	{
+		A = customArcsin((customSin(pairAngle)/pairSide)* oppositeSide);
+		console.log("Calculated A with sin: " + A);
+		return A;
+	}
+	else if(angleToSolve == "B")
+	{
+		B = customArcsin((customSin(pairAngle)/pairSide)* oppositeSide);
+		console.log("Calculated B with sin: " + B);
+		return B;
+	}
+	else if(angleToSolve == "C")
+	{
+		C = customArcsin((customSin(pairAngle)/pairSide)* oppositeSide);
+		console.log("Calculated C with sin: " + C);
+		return C;
+	}
 }
 // Returns angle C using law of cosines
 function calculateAngleCos(a, b, c, angleToCalculate) {
@@ -511,24 +641,24 @@ function calculateAngle180(A,B,C){
 		addLine("// --- Calculate A with 180 rule ---");
 		addLine
 		(
-			"\\begin{align} " + 
+			"\\begin{align} " +
 			"A & = 180&deg; - B - C \\\\ " +
-			"& = 180&deg; - " + B + "&deg; - " + C + "&deg; \\\\ " + 
+			"& = 180&deg; - " + B + "&deg; - " + C + "&deg; \\\\ " +
 			"& = " + A + "&deg;  \\\\ " +
 			"\\end{align}"
 		);
 
 		return A;
-	} 
-	if (B == null) 
+	}
+	if (B == null)
 	{
 		B = 180 - A - C;
 		addLine("// --- Calculate B with 180 rule ---");
 		addLine
 		(
-			"\\begin{align} " + 
+			"\\begin{align} " +
 			"B & = 180&deg; - A - C \\\\ " +
-			"& = 180&deg; - " + A + "&deg; - " + C + "&deg; \\\\ " + 
+			"& = 180&deg; - " + A + "&deg; - " + C + "&deg; \\\\ " +
 			"& = " + B + "&deg;  \\\\ " +
 			"\\end{align}"
 		);
@@ -541,9 +671,9 @@ function calculateAngle180(A,B,C){
 		addLine("// --- Calculate C with 180 rule ---");
 		addLine
 		(
-			"\\begin{align} " + 
+			"\\begin{align} " +
 			"C & = 180&deg; - A - B \\\\ " +
-			"& = 180&deg; - " + A + "&deg; - " + B + "&deg; \\\\ " + 
+			"& = 180&deg; - " + A + "&deg; - " + B + "&deg; \\\\ " +
 			"& = " + C + "&deg;  \\\\ " +
 			"\\end{align}"
 		);
@@ -555,7 +685,7 @@ function calculateAreaHeron(a,b,c){
 	var s = (a + b + c)/2;
 	var t = s * (s - a) * (s - b) * (s - c)
 	var area = Math.sqrt(t);
-	
+
 	addLine("//Calculate Area with Heron's formula")
 	addLine("\\begin{align}");
 	addLine("s & = {{(a + b + c)} \\over 2} \\\\");
@@ -564,12 +694,12 @@ function calculateAreaHeron(a,b,c){
 
 	addLine
 	(
-		"\\begin{align} " + 
+		"\\begin{align} " +
 		"area  & = \\sqrt {s(s - a)(s - b)(s - c)} \\\\ " +
-		"& = \\sqrt {" + s + "(" + s + " - " + a + ")(" + s + " - " + b + ")(" + s + " - " + c + ")} \\\\ " + 
+		"& = \\sqrt {" + s + "(" + s + " - " + a + ")(" + s + " - " + b + ")(" + s + " - " + c + ")} \\\\ " +
 		"& = \\sqrt {" + s + "(" + (s - a) + ")(" + (s - b) + ")(" + (s - c) + ")}  \\\\ " +
-		"& = \\sqrt {" + t + "} \\\\ " + 
-		"& = " + area + " " + 
+		"& = \\sqrt {" + t + "} \\\\ " +
+		"& = " + area + " " +
 		"\\end{align}"
 	);
 
@@ -581,7 +711,7 @@ function calculateCircumference(a,b,c){
 	addLine("//Calculate circumference");
 	addLine
 	(
-		"\\begin{align} " + 
+		"\\begin{align} " +
 		"circumference &= a + b + c \\\\ " +
 		"& = " + circumference +
 		" \\end{align}"
@@ -602,10 +732,10 @@ function clearInputOutput(){
 	document.getElementById("C").value = "";
 	document.getElementById("area").value = "";
 	document.getElementById("circumference").value = "";
-	
+
 	//Clear ouputs
 	document.getElementById("output").innerHTML = "";
-	
+
 	triangleToDraw = null;
 }
 // Returns a triangle from input
@@ -684,22 +814,31 @@ function degToRad(valDeg) {
 	return ((2 * Math.PI) / 360 * valDeg)
 }
 //WIP
-function sin(inputfloat){
-	//wip
+function customSin(inputfloat){
+	var float = Math.sin(degToRad(inputfloat));
+	
+	return roundNumber(float);
 }
 //WIP
-function arcsin(inputfloat){
-	//wip
+function customArcsin(inputfloat){
+	var float = radToDeg(Math.asin(inputfloat));
+
+	return roundNumber(float);
+}
+//WIPs
+function customCos(inputfloat){
+	var float = Math.cos(degToRad(inputfloat));
+	return roundNumber(float);
 }
 //WIP
-function cos(inputfloat){
-	//wip
-}
-//WIP 
-function arccos(inputfloat){
-	//wip
+function customArccos(inputfloat){
+	var float = radToDeg(Math.acos(inputfloat));
+	return roundNumber(float);
 }
 
+function roundNumber(num, scale) {
+	return +(Math.round(num + "e+2")  + "e-2");
+}
 // -------- Get functions --------
 
 function getValueFromElement(triangle, element){
@@ -719,14 +858,17 @@ function getValueFromElement(triangle, element){
 }
 //Returns the opposite side of side as a string
 function getOppositeSide(angle){
-	if(side == "A")
+	if(angle == "A")
 		return "a";
-	else if(side == "B")
+	else if(angle == "B")
 		return "b";
-	else if(side == "C")
+	else if(angle == "C")
 		return "c";
 	else
+	{
+		console.log("Cannot return the opposite side of: " + angle);
 		return null;
+	}	
 }
 //Returns the opposite angle of side as a string
 function getOppositeAngle(side){
@@ -762,6 +904,41 @@ function getUnknownAngle(A,B,C){
 		return null;
 	}
 }
+
+function getUnknownSides(a,b,c){
+	var unknownSides = [];
+	if(!a)
+		unknownSides.push("a");
+	if(!b)
+		unknownSides.push("b");
+	if(!c)
+		unknownSides.push("c");
+	return unknownSides;
+}
+
+function getUnknownAngles(A,B,C){
+	var unknownAngles = [];
+	if(!A)
+		unknownAngles.push("A");
+	if(!B)
+		unknownAngles.push("B");
+	if(!C)
+		unknownAngles.push("C");
+	return unknownAngles;
+}
+
+function getUnknownAnglesWithE(A,B,C, angleToExclude){
+	var unknownAngles = [];
+	if(!A && angleToExclude != "A")
+		unknownAngles.push("A");
+	if(!B && angleToExclude != "B")
+		unknownAngles.push("B");
+	if(!C && angleToExclude != "C")
+		unknownAngles.push("C");
+	console.log(unknownAngles);
+	return unknownAngles;
+}
+
 //Returns the known side from 3 side as string
 function getKnownSide(a,b,c){
 	if(a)
@@ -812,7 +989,7 @@ function getKnownAngles(A,B,C){
 		angles.push("C");
 	return sides;
 }
-
+//
 function getKnownPairs(triangle){
 	var knownPairs = [];
 	if(triangle.a && triangle.A)
@@ -822,6 +999,48 @@ function getKnownPairs(triangle){
 	if(triangle.c && triangle.C)
 		knownPairs.push("C");
 	return knownPairs;
+}
+
+function getPairWithE(triangle, pairToExclude){
+	if((triangle.a && triangle.A) && (pairToExclude != "a" || pairToExclude != "A"))
+		return "a";
+	if((triangle.b && triangle.B) && (pairToExclude != "b" || pairToExclude != "B"))
+		return "b";
+	if((triangle.c && triangle.C) && (pairToExclude != "c" || pairToExclude != "C"))
+		return "c";
+}
+
+//
+function getPairsToCalculate(triangle, elementToExclude){
+	var neededElements = [];
+	if(triangle.a != null && elementToExclude != "A")
+		neededElements.push("A");
+	else if(triangle.b != null && elementToExclude != "B")
+		neededElements.push("B");
+	else if(triangle.c != null && elementToExclude != "C")
+		neededElements.push("C");
+	else if(triangle.A != null && elementToExclude != "a")
+		neededElements.push("a");
+	else if(triangle.B != null && elementToExclude != "b")
+		neededElements.push("b");
+	else if(triangle.C != null && elementToExclude != "c")
+		neededElements.push("c");
+	else if(elementToExclude != "a" && elementToExclude != "A")
+	{
+		neededElements.push("a");
+		neededElements.push("A");
+	}
+	else if(elementToExclude != "b" && elementToExclude != "B")
+	{
+		neededElements.push("b");
+		neededElements.push("B");
+	}
+	else if(elementToExclude != "c" && elementToExclude != "C")
+	{
+		neededElements.push("c");
+		neededElements.push("C");
+	}
+	return neededElements;
 }
 
 // -------- Is functions --------
@@ -836,7 +1055,7 @@ function isAPairKnown(triangle){
 	else
 		return false;
 }
-//Returns 
+//Returns
 function isOtherSidesKnown(a,b,c, side){
 	var sides = getKnownSides(a,b,c);
 	if(side == "a")
@@ -856,9 +1075,9 @@ function isOtherSidesKnown(a,b,c, side){
 	}else
 	{
 		return false;
-	}	
+	}
 }
-//If the opposite side of an angle is null. Returns a bool 
+//If the opposite side of an angle is null. Returns a bool
 function isOppositeSideNull(a, b, c, angle){
 	switch (angle) {
 		case "A":
@@ -903,12 +1122,12 @@ function isOppositeAngleNull(A, B, C, side){
 	return false;
 }
 
-// -------- a --------
+// -------- Can Use --------
 
 function canUseCosToCalculateSide(a,b,c, elementToCalculate){
 	if(getValueFromElement(getOppositeAngle(elementToCalculate)) != null && isOtherSidesKnown(a,b,c, elementToCalculate))
 		 return true;
-	else 
+	else
 		return false;
 }
 
@@ -917,5 +1136,27 @@ function canUseSinToCalculateSide(triangle){
 	if(knownPairs.length > 0)
 		return true;
 	else
+		return false;
+}
+
+function canUseSinToCalculateAngle(triangle){
+	if(isAPairKnown(triangle))
+		 return true;
+	else
+		return false;
+}
+
+function canUseCosToCalculateAngle(a,b,c){
+	if(getKnownSides(a,b,c).length == 3)
+		 return true;
+	else
+		return false;
+}
+
+function canUse180ToCalcuateAngle(A,B,C){
+	var angles = (A != null) + (B != null) + (C != null);
+	if(angles == 2)
+		return true;
+	else 
 		return false;
 }
