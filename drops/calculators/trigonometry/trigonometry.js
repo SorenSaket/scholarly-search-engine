@@ -471,7 +471,7 @@ function calculateAreaHeron(a,b,c){
 	var t = s * (s - a) * (s - b) * (s - c)
 	var area = Math.sqrt(t);
 
-	addLine("//Calculate Area with Heron's formula")
+	addLine("// --- Calculate Area with Heron's formula ---")
 	addLine("\\begin{align}");
 	addLine("s & = {{(a + b + c)} \\over 2} \\\\");
 	addLine(s + "& = {{(" + a + " + " + b + " + " + c + ")} \\over 2} \\\\");
@@ -493,7 +493,7 @@ function calculateAreaHeron(a,b,c){
 //Returns the cirumfrence of a triangle
 function calculateCircumference(a,b,c){
 	circumference = a + b + c;
-	addLine("//Calculate circumference");
+	addLine("// --- Calculate circumference ---");
 	addLine
 	(
 		"\\begin{align} " +

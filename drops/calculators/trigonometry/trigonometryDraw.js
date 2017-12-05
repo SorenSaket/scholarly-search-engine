@@ -57,9 +57,9 @@ function mouseClicked()
 function changeSize(event)
 {
 	if (event.deltaY > 0) {
-		scale = scale + 5;
-	  } else {
 		scale = scale - 5;
+	  } else {
+		scale = scale + 5;
 	  }
 }
 
@@ -96,7 +96,7 @@ function DrawTriangle(a,b,c,A,B,C,scale)
 
 	if(0 == 0)
 	{
-		line(Cx, Cy, Cx, Ay);
+		line(Bx, By, Bx, Ay);
 		ellipse(CenterPosX() + offsetX,CenterPosY() + offsetY,scale*2,scale*2);
 	}
 	
