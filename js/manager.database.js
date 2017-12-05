@@ -8,12 +8,15 @@ function init() {
 
 function loadDatabases(){
 	var databases = Cookies.get("databases");
-	allDatabases = [];
+    allDatabases = [];
+    addDefaultDatabase();
+    
 	if(databases == "undefined" || databases == null)
 	{
         databases = [];
         console.log("No database var found");
-    }else
+    }
+    else
     {
         document.getElementById("databases").value = databases;
         databases = databases.split("\n");
@@ -29,6 +32,15 @@ function loadDatabases(){
     }
 	
 	console.log(allDatabases);
+}
+
+function addDefaultDatabase()
+{
+    $.getJSON('/drops/drops.json', function(data) {
+        for (let index = 0; index < data.length; index++) {
+            allDatabases.push(data[index]);
+        }
+    });
 }
 
 function revertDatabases(){

@@ -25,9 +25,9 @@ function fullscreen(setFullscreen)
 	}
 	else
 	{
-		resultcontainer[i].style.display = "initial";
-		contentcontainer[i].style.flex = "0 0 58.333333%";
-		contentcontainer[i].style.maxWidth = "0 0 58.333333%";
+		resultcontainer.style.display = "initial";
+		contentcontainer.style.flex = "0 0 58.333333%";
+		contentcontainer.style.maxWidth = "0 0 58.333333%";
 	}
 }
 

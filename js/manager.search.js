@@ -40,6 +40,7 @@ function autocomplete(){
 }
 
 function search(){
+	console.log("Searching...");
 	//Get serch Query from input
 	var searchQuery = document.getElementById("searchInput").value;
 	var command;
