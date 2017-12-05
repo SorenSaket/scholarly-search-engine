@@ -78,7 +78,7 @@ function calculateElement(triangle, elementToCalculate){
 		else if(al.algorithm == "cos")
 		{
 			
-			triangle.a = calculateSideCos(triangle.a,triangle.b,triangle.c, triangle.A);
+			triangle.a = calculateSideCos(null,triangle.b,triangle.c, triangle.A);
 		}
 	}
 	else if(elementToCalculate == "b")
@@ -90,7 +90,7 @@ function calculateElement(triangle, elementToCalculate){
 		}
 		else if(al.algorithm == "cos")
 		{
-			triangle.b = calculateSideCos(triangle.a,triangle.b,triangle.c, triangle.B);
+			triangle.b = calculateSideCos(triangle.a,null,triangle.c, triangle.B);
 		}
 	}
 	else if(elementToCalculate == "c")
@@ -104,7 +104,7 @@ function calculateElement(triangle, elementToCalculate){
 		}
 		else if(al.algorithm == "cos")
 		{
-			triangle.c = calculateSideCos(triangle.a,triangle.b,triangle.c, triangle.C);
+			triangle.c = calculateSideCos(triangle.a,triangle.b,null, triangle.C);
 		}
 	}
 	else if(elementToCalculate == "A")
@@ -170,13 +170,16 @@ function determineUsedAlgorithm(triangle, elementToCalculate){
 			if(canUseSinToCalculateSide(triangle, getValueFromElement(triangle, getOppositeAngle(elementToCalculate))))
 			{
 				temp.algorithm="sin";
+				console.log("stuff");
 			}
-			else if(canUseCosToCalculateSide(triangle.a,triangle.b,triangle.c, elementToCalculate))
+			else if(canUseCosToCalculateSide(triangle, elementToCalculate))
 			{
 				temp.algorithm="cos";
+				console.log("2stuff");
 			}
 			else
 			{
+				console.log("3stuff");
 				temp.neededVars = getPairsToCalculate(triangle, elementToCalculate);
 				temp.neededVars.push(getOppositeAngle(elementToCalculate));
 				temp.algorithm="sin";
@@ -184,7 +187,7 @@ function determineUsedAlgorithm(triangle, elementToCalculate){
 		}
 		else if(sideAlgorithmPreference[0] == "cos")
 		{
-			if(canUseCosToCalculateSide(triangle.a,triangle.b,triangle.c, elementToCalculate))
+			if(canUseCosToCalculateSide(triangle, elementToCalculate))
 				temp.algorithm="cos";
 			else if(canUseSinToCalculateSide(triangle, getValueFromElement(triangle, getOppositeAngle(elementToCalculate))))
 				temp.algorithm="sin";
@@ -259,22 +262,22 @@ function determineUsedAlgorithm(triangle, elementToCalculate){
 
 // -------- Sides --------
 
-// Calculate a side using law of cosines. Two sides must not be null
+// Calculate a side using law of cosines. Two sides must not be null. 
 function calculateSideCos(a, b, c, angle) {
 	if(a == null)
 	{
 		//a^2 = b^2 + c^2 - 2bc * cos(A)
 		var x = b*b + c*c - 2*b*c * customCos(angle);
-		a = Math.sqrt(x);
+		a = roundNumber( Math.sqrt(x));
 
-		addLine("//Calculate a");
+		addLine("// --- Calculate a, using law of cosines ---");
 		addLine
 		(
 			"\\begin{align} " +
 			"a &= \\sqrt {{b^2} + {c^2} - 2bc*\cos (A)} \\\\ " +
 			"& = \\sqrt {{" + b +"^2} + {" + c +"^2} - 2 *" + b + " * " + c +" * \\cos (" + angle +"&deg;)} \\\\ " +
 			"& = \\sqrt {" + x + "} \\\\  " +
-			"& = " + a +
+			"& \\approx " + a +
 			"\\end{align}"
 		);
 
@@ -284,16 +287,16 @@ function calculateSideCos(a, b, c, angle) {
 	{
 		//b^2 = a^2 + c^2 - 2ac * cos(B)
 		var x = a*a + c*c - 2*a*c * customCos(angle);
-		b = Math.sqrt(x);
+		b = roundNumber(Math.sqrt(x));
 
-		addLine("//Calculate a");
+		addLine("// --- Calculate b, using law of cosines ---");
 		addLine
 		(
 			"\\begin{align} " +
-			"b &= \\sqrt {{b^2} + {c^2} - 2bc*\cos (A)} \\\\ " +
+			"b &= \\sqrt {{a^2} + {c^2} - 2ac*\cos (B)} \\\\ " +
 			"& = \\sqrt {{" + a +"^2} + {" + c +"^2} - 2 *" + a + " * " + c +" * \\cos (" + angle +"&deg;)} \\\\ " +
 			"& = \\sqrt {" + x + "} \\\\  " +
-			"& = " + b +
+			"& \\approx " + b +
 			"\\end{align}"
 		);
 
@@ -303,19 +306,19 @@ function calculateSideCos(a, b, c, angle) {
 	{
 		//c^2 = a^2 + b^2 - 2ab * cos(C)
 		var x = a*a + b*b - 2*a*b * customCos(angle);
-		c = Math.sqrt(x);
+		c = roundNumber(Math.sqrt(x));
 
-		addLine("//Calculate a");
+		addLine("// --- Calculate c, using law of cosines ---");
 		addLine
 		(
 			"\\begin{align} " +
-			"c &= \\sqrt {{b^2} + {c^2} - 2bc*\cos (A)} \\\\ " +
+			"c &= \\sqrt {{a^2} + {b^2} - 2ab*\cos (C)} \\\\ " +
 			"& = \\sqrt {{" + a +"^2} + {" + b +"^2} - 2 *" + a + " * " + b +" * \\cos (" + angle +"&deg;)} \\\\ " +
 			"& = \\sqrt {" + x + "} \\\\  " +
-			"& = " + c +
+			"& \\approx " + c +
 			"\\end{align}"
 		);
-		return b;
+		return c;
 	}
 }
 // Calculate a side using law of sines. 
@@ -418,7 +421,7 @@ function calculateAngleCos(a, b, c, angleToCalculate) {
 function calculateAngle180(A,B,C){
 	if (A == null)
 	{
-		A = 180 - B - C;
+		A = roundNumber(180 - B - C);
 		addLine("// --- Calculate A with 180 rule ---");
 		addLine
 		(
@@ -433,7 +436,7 @@ function calculateAngle180(A,B,C){
 	}
 	if (B == null)
 	{
-		B = 180 - A - C;
+		B = roundNumber(180 - A - C);
 		addLine("// --- Calculate B with 180 rule ---");
 		addLine
 		(
@@ -448,7 +451,7 @@ function calculateAngle180(A,B,C){
 	}
 	if (C == null)
 	{
-		C = 180 - A - B;
+		C = roundNumber(180 - A - B);
 		addLine("// --- Calculate C with 180 rule ---");
 		addLine
 		(
@@ -845,17 +848,17 @@ function isOtherSidesKnown(a,b,c, side){
 	var sides = getKnownSides(a,b,c);
 	if(side == "a")
 	{
-		if(sides.includes(b) && sides.includes(c))
-		return true;
+		if(sides.includes("b") && sides.includes("c"))
+			return true;
 	}
 	else if(side == "b")
 	{
-		if(sides.includes(a) && sides.includes(c))
+		if(sides.includes("a") && sides.includes("c"))
 			return true;
 	}
 	else if(side == "c")
 	{
-		if(sides.includes(a) && sides.includes(b))
+		if(sides.includes("a") && sides.includes("b"))
 			return true;
 	}else
 	{
@@ -909,8 +912,8 @@ function isOppositeAngleNull(A, B, C, side){
 
 // -------- Can Use --------
 
-function canUseCosToCalculateSide(a,b,c, elementToCalculate){
-	if(getValueFromElement(getOppositeAngle(elementToCalculate)) != null && isOtherSidesKnown(a,b,c, elementToCalculate))
+function canUseCosToCalculateSide(triangle, sideToCalculate){
+	if(getValueFromElement(triangle, getOppositeAngle(sideToCalculate)) != null && isOtherSidesKnown(triangle.a,triangle.b,triangle.c, sideToCalculate))
 		 return true;
 	else
 		return false;

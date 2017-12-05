@@ -74,12 +74,12 @@ function DrawTriangle(a,b,c,A,B,C,scale)
 	var Ay = CenterPosY()+ offsetY;
 	
 	var bColor = color(0,123,255);
-	var Bx = CenterPosX() + scale*b + offsetX;
-	var By = CenterPosY() + offsetY;
+	var Bx = CenterPosX()+(c*Math.cos(degToRad(A))*scale)+ offsetX;
+	var By = CenterPosY()-(c*Math.sin(degToRad(A))*scale)+ offsetY;
 
 	var cColor = color(40,167,69);
-	var Cx = CenterPosX()+(c*Math.cos(degToRad(A))*scale)+ offsetX;
-	var Cy = CenterPosY()-(c*Math.sin(degToRad(A))*scale)+ offsetY;
+	var Cx = CenterPosX() + scale*b + offsetX;
+	var Cy = CenterPosY() + offsetY;
 	
 	// ---- Draw Triangle Background ---- 
 
@@ -129,17 +129,16 @@ function DrawTriangle(a,b,c,A,B,C,scale)
 	
 	fill(bColor);
 	ellipse(Bx,By,pointSize,pointSize)
-	text("B = " + B + ascii(176), Bx+textOffset , By)
-	text("b = " + b, (Ax+Cx)/2 - textOffset*6, (Ay+Cy)/2);
+	text("B = " + B + ascii(176), Bx , By-textOffset)
+	text("b = " + b, (Ax+Cx)/2, (Ay+Cy)/2 + textOffset*2);
 
 	//C
 
 	fill(cColor);
 	ellipse(Cx,Cy,pointSize,pointSize);
-	text("C = " + C + ascii(176), Cx , Cy-textOffset)	
-	text("c = " + c, (Ax+Bx)/2, (Ay+By)/2 + textOffset*2);
+	text("C = " + C + ascii(176), Cx+textOffset , Cy)	
+	text("c = " + c, (Ax+Bx)/2 - textOffset*6, (Ay+By)/2);
 }
-
 
 
 function CenterPosY()
