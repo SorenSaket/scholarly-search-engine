@@ -464,7 +464,7 @@ function calculateAngle180(A,B,C){
 
 //Returns the area of a triangle with Heron's formula
 function calculateAreaHeron(a,b,c){
-	var s = (a + b + c)/2;
+	var s = roundNumber((a + b + c)/2);
 	var t = s * (s - a) * (s - b) * (s - c)
 	var area = Math.sqrt(t);
 
@@ -489,7 +489,7 @@ function calculateAreaHeron(a,b,c){
 }
 //Returns the cirumfrence of a triangle
 function calculateCircumference(a,b,c){
-	circumference = a + b + c;
+	circumference = roundNumber(a + b + c);
 	addLine("// --- Calculate circumference ---");
 	addLine
 	(
