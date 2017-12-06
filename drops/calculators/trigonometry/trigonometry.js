@@ -170,16 +170,13 @@ function determineUsedAlgorithm(triangle, elementToCalculate){
 			if(canUseSinToCalculateSide(triangle, getValueFromElement(triangle, getOppositeAngle(elementToCalculate))))
 			{
 				temp.algorithm="sin";
-				console.log("stuff");
 			}
 			else if(canUseCosToCalculateSide(triangle, elementToCalculate))
 			{
 				temp.algorithm="cos";
-				console.log("2stuff");
 			}
 			else
 			{
-				console.log("3stuff");
 				temp.neededVars = getPairsToCalculate(triangle, elementToCalculate);
 				temp.neededVars.push(getOppositeAngle(elementToCalculate));
 				temp.algorithm="sin";
