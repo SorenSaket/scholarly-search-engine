@@ -1,0 +1,16 @@
+#canvasparent
+{
+    width: 88%;
+    height: 100%;
+    position: absolute;
+    right: 0;
+}
+#controls
+{
+    left: 0;
+    position: absolute;
+    width: 12%;
+    height: 100%;
+    background-color: darkgray;
+    padding: 16px;
+}
