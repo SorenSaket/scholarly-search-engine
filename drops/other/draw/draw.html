@@ -14,27 +14,58 @@
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <div class="" id="controls">
-            <div class="" id="color">
-                Primary Color:
-                <input type="color">
-                Secondary Color:
-                <input type="color">
-            </div>
-            <div class="" id="size">
-                Size:
-                <input type="range" min="1" max="50" value="2" class="slider" id="sizeSlider" onchange="changeSize(this.value)">
-                Outline Size:
-                <input type="range" min="1" max="50" value="0" class="slider" id="outlineSizeSlider" onchange="changeOutlineSize(this.value)">
-            </div>
-            <div class="export">
-                <button type="button">Export</button>
-            </div>
-        </div>
-
-
         <div id="canvasparent">
-            
+                
+        </div>
+        <div class="" id="controls">
+            <div class="controlparent" id="color">
+                Primary Color:
+                <input type="color" value="#000000" onchange="changeColor(this.value)">
+                Secondary Color:
+                <input type="color" value="#ffffff" onchange="changeAlternativeColor(this.value)">
+                <hr>
+            </div>
+            <div class="controlparent" id="brushSettings">
+                <h1>Bush settings</h1>
+                Size - <p id="brushSizeValue">2</p> :
+                <input type="range" min="1" max="50" value="2" class="slider" id="sizeSlider" oninput="changeSize(this.value)">
+                Outline Size - <p id="outlineSizeValue">0</p> :
+                <input type="range" min="0" max="50" value="0" class="slider" id="outlineSizeSlider" oninput="changeOutlineSize(this.value)">
+                Scatter - <p id="scatterValue">0</p> :
+                <input type="range" min="0" max="50" value="0" class="slider" id="" oninput="changeScatter(this.value)">
+                <hr>
+            </div>
+            <div class="controlparent" id="tools">
+                <h1>Tools</h1>
+                <img class="toolicon" src="assets/icons/brush.png">
+                <img class="toolicon" src="assets/icons/line.png">
+                <img class="toolicon" src="assets/icons/curve.png">
+                <img class="toolicon" src="assets/icons/square.png">
+                <img class="toolicon" src="assets/icons/circle.png">
+                <img class="toolicon" src="assets/icons/triangle.png">
+                <hr>
+            </div>
+            <div class="controlparent" id="documentSetting">
+                <h1>Document Settings</h1>
+                Background Color:
+                <input type="color" value="#ffffff" onchange="changeBackgroundColor(this.value)">
+                <button type="button" onclick="clearDocument()">Clear</button>
+                <hr>
+            </div>
+            <div class="controlparent">
+                <h1>Export Settings</h1>
+
+                File Name:
+                <input type="text" placeholder="my image">
+
+                File Type:
+                <select onchange="changeFiletype(this.value)">
+                    <option value="png">PNG</option>
+                    <option value="jpg">JPG</option>
+                </select>
+               
+                <button type="button" onclick="exportCanvas()">Export</button>
+            </div>
         </div>
 
     </body>

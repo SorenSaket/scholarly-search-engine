@@ -1,8 +1,12 @@
 var currentDrawSize = 2;
 var currentOutlineSize = 0;
+var currentScatterValue = 0;
+var currentBackgroundColor;
 var currentColor;
 var currentAlternativeColor;
 var canvas;
+var currentTool = "brush";
+var currentFiletype = "png";
 
 var elements = [];
 
@@ -18,12 +22,13 @@ function setup()
     canvas.parent("canvasparent");
     currentColor = color(0,0,0);
     currentAlternativeColor = color(255,255,255);
+    currentBackgroundColor = color(255,255,255);
 }
 
 function draw()
 {
     clear();
-    background(255);
+    background(currentBackgroundColor);
    
     drawElements();
 
@@ -37,7 +42,7 @@ function drawElements()
     for (let z = 0; z < elements.length; z++) {
         if(elements[z].outlineSize > 0)
         {
-            stroke(elements[z].color);
+            stroke(elements[z].outlineColor);
             strokeWeight(elements[z].outlineSize);
         }else
         {
@@ -72,19 +77,34 @@ function mousePressed()
 
 }
 
+function mouseClicked() {
+
+}
+
+/*
 function mouseDragged() 
 {
-    var el = 
-    {
-        x: mouseX,
-        y: mouseY,
-        size: currentDrawSize,
-        outlineSize: currentOutlineSize,
-        color: currentColor,
-        outline: currentOutlineSize
+    switch (currentTool) {
+        case "brush":
+            var el = 
+            {
+                x: mouseX + random(-currentScatterValue,currentScatterValue),
+                y: mouseY + random(-currentScatterValue,currentScatterValue),
+                size: currentDrawSize,
+                outlineSize: currentOutlineSize,
+                color: currentColor,
+                outlineColor: currentAlternativeColor
+            }
+            elements.push(el);
+            break;
+        case "curve":
+
+            break;
+        default:
+            break;
     }
-    elements.push(el);
-}
+}*/
+
 
 function mouseWheel(event)
 {
@@ -98,15 +118,54 @@ function mouseWheel(event)
     }
 }
 
-
-
-function changeSize(val)
+function clearDocument()
 {
-    currentDrawSize = val;
-    console.log(val);
+    elements = [];3
 }
 
-function changeOutlineSize(val)
+function exportCanvas()
 {
-    outlineSize = val;
+    saveCanvas(canvas,"cool pic",currentFiletype)
+}
+
+// ---------------- Helper functions  ----------------
+
+function random(min,max)
+{
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// ---------------- UI input function stuff  ----------------
+
+function changeSize(value){
+    currentDrawSize = parseFloat(value);
+    document.getElementById("brushSizeValue").innerText = value;
+}
+
+function changeOutlineSize(value){
+    currentOutlineSize = parseFloat(value);
+    document.getElementById("outlineSizeValue").innerText = value;
+}
+
+function changeScatter(value){
+    currentScatterValue = parseFloat(value);
+    document.getElementById("scatterValue").innerText = value;
+}
+
+
+function changeColor(value){
+    currentColor = value;
+}
+
+function changeAlternativeColor(value){
+    currentAlternativeColor = value;
+}
+
+function changeBackgroundColor(value){
+    currentBackgroundColor = value;
+}
+
+function changeFiletype(value)
+{
+    currentFiletype = value;
 }

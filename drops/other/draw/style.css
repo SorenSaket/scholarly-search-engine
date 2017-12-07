@@ -1,16 +1,53 @@
+h1
+{
+    font-size: 16px;
+}
+p
+{
+    display: inline-block;
+}
+
 #canvasparent
 {
     width: 88%;
     height: 100%;
+    display: flex;
+    flex: 1;
     position: absolute;
     right: 0;
 }
 #controls
 {
     left: 0;
+    display: flex;
     position: absolute;
-    width: 12%;
+    width: 200px;
     height: 100%;
     background-color: darkgray;
+    text-align: center;
+    flex-direction: column;
     padding: 16px;
 }
+
+.toolicon
+{
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+}
+
+.toolicon:hover
+{
+    box-shadow: 0 0 0 2px black;
+}
+
+.selected
+{
+    box-shadow: 0 0 0 2px black;
+}
+/*
+.controlparent
+{
+    margin-left: 16px;
+    margin-right: 16px;
+}*/
