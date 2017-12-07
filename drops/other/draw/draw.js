@@ -7,7 +7,7 @@ var currentAlternativeColor;
 var canvas;
 var currentTool = "brush";
 var currentFiletype = "png";
-
+var isDrawing = false;
 var elements = [];
 
 window.addEventListener('resize', resizeCanvas, false);
@@ -40,6 +40,13 @@ function draw()
 function drawElements()
 {
     for (let z = 0; z < elements.length; z++) {
+        if(elements[z].isStart)
+        {
+            beginShape();
+        }
+            
+        
+        //Color
         if(elements[z].outlineSize > 0)
         {
             stroke(elements[z].outlineColor);
@@ -48,10 +55,28 @@ function drawElements()
         {
             noStroke();
         }
-
         fill(elements[z].color);
 
-        ellipse(elements[z].x,elements[z].y,elements[z].size,elements[z].size);
+        //Elements
+        switch (elements[z].type) {
+            case "brush":
+                ellipse(elements[z].x,elements[z].y,elements[z].size,elements[z].size);
+                break;
+            case "line":
+                curveVertex(elements[z].x,elements[z].y);
+                break;
+            case "curve":
+                curveVertex(elements[z].x,elements[z].y);
+                break;
+            default:
+                break;
+        }
+        
+
+        if(elements[z].isEnd)
+        {
+            endShape();
+        }  
     }
 }
 
@@ -77,33 +102,50 @@ function mousePressed()
 
 }
 
-function mouseClicked() {
-
+function mouseClicked() 
+{
+    var isStart = false;
+    var isEnd = false;
+    if(!isDrawing)
+    {
+        isStart = true;
+        isDrawing = true;
+    }
+    else
+    {
+        isEnd = true;
+        isDrawing = false;
+    }
+    var el = 
+    {
+        x: mouseX + random(-currentScatterValue,currentScatterValue),
+        y: mouseY + random(-currentScatterValue,currentScatterValue),
+        size: currentDrawSize,
+        outlineSize: currentOutlineSize,
+        color: currentColor,
+        outlineColor: currentAlternativeColor,
+        type: currentTool,
+        isStart: isStart,
+        isEnd: isEnd
+    }
+    elements.push(el);
 }
 
-/*
+
 function mouseDragged() 
 {
-    switch (currentTool) {
-        case "brush":
-            var el = 
-            {
-                x: mouseX + random(-currentScatterValue,currentScatterValue),
-                y: mouseY + random(-currentScatterValue,currentScatterValue),
-                size: currentDrawSize,
-                outlineSize: currentOutlineSize,
-                color: currentColor,
-                outlineColor: currentAlternativeColor
-            }
-            elements.push(el);
-            break;
-        case "curve":
-
-            break;
-        default:
-            break;
+    var el = 
+    {
+        x: mouseX + random(-currentScatterValue,currentScatterValue),
+        y: mouseY + random(-currentScatterValue,currentScatterValue),
+        size: currentDrawSize,
+        outlineSize: currentOutlineSize,
+        color: currentColor,
+        outlineColor: currentAlternativeColor,
+        type: currentTool
     }
-}*/
+    elements.push(el);
+}
 
 
 function mouseWheel(event)
@@ -120,7 +162,7 @@ function mouseWheel(event)
 
 function clearDocument()
 {
-    elements = [];3
+    elements = [];
 }
 
 function exportCanvas()
@@ -168,4 +210,10 @@ function changeBackgroundColor(value){
 function changeFiletype(value)
 {
     currentFiletype = value;
+}
+
+function changeTool(tool)
+{
+    currentTool = tool;
+    console.log("Changed tool to: " + tool);
 }
