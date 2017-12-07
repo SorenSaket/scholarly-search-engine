@@ -40,7 +40,7 @@ function draw()
 function drawElements()
 {
     for (let z = 0; z < elements.length; z++) {
-        if(elements[z].isStart)
+        if(elements[z].isStart && elements[z].type == "curve")
         {
             beginShape();
         }
@@ -63,9 +63,13 @@ function drawElements()
                 ellipse(elements[z].x,elements[z].y,elements[z].size,elements[z].size);
                 break;
             case "line":
-                curveVertex(elements[z].x,elements[z].y);
+                verte(elements[z].x,elements[z].y);
                 break;
             case "curve":
+                console.log("das");
+                noFill();
+                stroke(elements[z].color);
+                strokeWeight(elements[z].size);
                 curveVertex(elements[z].x,elements[z].y);
                 break;
             default:
