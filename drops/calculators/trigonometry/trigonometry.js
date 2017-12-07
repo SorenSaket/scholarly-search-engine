@@ -202,23 +202,23 @@ function determineUsedAlgorithm(triangle, elementToCalculate){
 		{
 			if(canUse180ToCalcuateAngle(triangle.A,triangle.B,triangle.C))
 				temp.algorithm="180";
-			else if(angleAlgorithmPreference[1] == "sin" && canUseSinToCalculateAngle(triangle))
+			else if(angleAlgorithmPreference[1] == "sin" && canUseSinToCalculateAngle(triangle, getOppositeSide(elementToCalculate)))
 				temp.algorithm="sin";
 			else if(angleAlgorithmPreference[1] == "cos" && canUseCosToCalculateAngle(triangle.a,triangle.b,triangle.c))
 				temp.algorithm = "cos"		
-			else if(angleAlgorithmPreference[2] == "sin" && canUseSinToCalculateAngle(triangle))
+			else if(angleAlgorithmPreference[2] == "sin" && canUseSinToCalculateAngle(triangle, getOppositeSide(elementToCalculate)))
 				temp.algorithm="sin";
 			else if(angleAlgorithmPreference[2] == "cos" && canUseCosToCalculateAngle(triangle.a,triangle.b,triangle.c))
 				temp.algorithm = "cos";
-			/*else (angleAlgorithmPreference[1] == "cos")
+			else
 			{
-				temp.neededVars = getUnknownSides(triangle.a,triangle.b,triangle.c);
-				temp.algorithm = "cos";
-			}*/
+				temp.neededVars = getUnknownAnglesWithE(triangle.A,triangle.B,triangle.C,"C");
+				temp.algorithm = "180";
+			}
 		}
 		else if(angleAlgorithmPreference[0] == "sin")
 		{
-			if(canUseSinToCalculateAngle(triangle))
+			if(canUseSinToCalculateAngle(triangle, getOppositeSide(elementToCalculate)))
 				temp.algorithm = "sin";
 			else if(angleAlgorithmPreference[1] == "180" && canUse180ToCalcuateAngle(triangle.A,triangle.B,triangle.C))
 				temp.algorithm = "180";
@@ -240,11 +240,11 @@ function determineUsedAlgorithm(triangle, elementToCalculate){
 				temp.algorithm = "cos";
 			else if(angleAlgorithmPreference[1] == "180" && canUse180ToCalcuateAngle(triangle.A,triangle.B,triangle.C))
 				temp.algorithm = "180";
-			else if(angleAlgorithmPreference[1] == "sin" && canUseSinToCalculateAngle(triangle))
+			else if(angleAlgorithmPreference[1] == "sin" && canUseSinToCalculateAngle(triangle, getOppositeSide(elementToCalculate)))
 				temp.algorithm = "sin";
 			else if(angleAlgorithmPreference[2] == "180" && canUse180ToCalcuateAngle(triangle.A,triangle.B,triangle.C))
 				temp.algorithm = "180";
-			else if(angleAlgorithmPreference[2] == "sin" && canUseSinToCalculateAngle(triangle))
+			else if(angleAlgorithmPreference[2] == "sin" && canUseSinToCalculateAngle(triangle, getOppositeSide(elementToCalculate)))
 				temp.algorithm = "sin";
 			else
 			{
@@ -795,20 +795,20 @@ function getPairWithE(triangle, pairToExclude){
 		return "c";
 }
 
-//
+//Return elements to calculate to find a pair
 function getPairsToCalculate(triangle, elementToExclude){
 	var neededElements = [];
-	if(triangle.a != null && elementToExclude != "A")
+	if(triangle.a != null && triangle.A == null && elementToExclude != "A")
 		neededElements.push("A");
-	else if(triangle.b != null && elementToExclude != "B")
+	else if(triangle.b != null && triangle.B == null && elementToExclude != "B")
 		neededElements.push("B");
-	else if(triangle.c != null && elementToExclude != "C")
+	else if(triangle.c != null && triangle.C == null && elementToExclude != "C")
 		neededElements.push("C");
-	else if(triangle.A != null && elementToExclude != "a")
+	else if(triangle.A != null && triangle.a == null && elementToExclude != "a")
 		neededElements.push("a");
-	else if(triangle.B != null && elementToExclude != "b")
+	else if(triangle.B != null && triangle.b == null && elementToExclude != "b")
 		neededElements.push("b");
-	else if(triangle.C != null && elementToExclude != "c")
+	else if(triangle.C != null && triangle.c == null && elementToExclude != "c")
 		neededElements.push("c");
 	else if(elementToExclude != "a" && elementToExclude != "A")
 	{
@@ -917,15 +917,14 @@ function canUseCosToCalculateSide(triangle, sideToCalculate){
 }
 
 function canUseSinToCalculateSide(triangle, oppositeAngle){
-	var knownPairs = getKnownPairs(triangle);
-	if(knownPairs.length > 0 && oppositeAngle != null)
+	if(isAPairKnown(triangle) && oppositeAngle != null)
 		return true;
 	else
 		return false;
 }
 
-function canUseSinToCalculateAngle(triangle){
-	if(isAPairKnown(triangle))
+function canUseSinToCalculateAngle(triangle, oppositeSide){
+	if(isAPairKnown(triangle) && oppositeSide != null)
 		 return true;
 	else
 		return false;

@@ -35,5 +35,12 @@ body, html {
       background-color: white; }
     #content #inputoutputparent #inputs input {
       margin-bottom: 8px; }
+    #content #inputoutputparent #inputs #settingsIcon {
+      height: 32px;
+      width: 32px;
+      position: relative;
+      top: 3; }
+    #content #inputoutputparent #inputs #settingsIcon:hover {
+      filter: saturate(3); }
 
 /*# sourceMappingURL=style.css.map */

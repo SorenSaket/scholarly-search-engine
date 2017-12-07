@@ -57,6 +57,18 @@ body,html
             {
                 margin-bottom: 8px;
             }
+
+            #settingsIcon
+            {
+                height: 32px;
+                width: 32px;
+                position: relative;
+                top: 3;
+            }
+            #settingsIcon:hover
+            {
+                filter: saturate(3);
+            }
         }
     }
 }
