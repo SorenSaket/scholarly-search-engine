@@ -1,0 +1,17 @@
+body
+{
+    margin: 0px;
+}
+
+#canvasparent
+{
+    
+    height: 100%;
+    right: 0;
+}
+#sidepanel
+{
+    width: 128px;
+    height: 100%;
+    background-color: lightgray;
+}
