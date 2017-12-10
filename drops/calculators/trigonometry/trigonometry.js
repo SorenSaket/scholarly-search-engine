@@ -8,6 +8,8 @@ var sideAlgorithmPreference = ["sin", "cos"];
 var angleAlgorithmPreference = ["180", "sin", "cos"];
 //The number of decimals to calculate
 var floatingPointprecision = 2;
+//The unit to use for calcualtions of angles. deg or rad
+var angleUnit = "deg";
 //The current triangle to calculate
 var currentTriangle;
 
@@ -565,6 +567,7 @@ function setInput(triangle){
 // Displays an error (just console.logs for now)
 function displayError(error) {
 	console.log(error);
+	document.getElementById("output").innerHTML += error;
 }
 // Adds a line to the output
 function addLine(text) {
@@ -602,26 +605,40 @@ function radToDeg(valRad) {
 function degToRad(valDeg) {
 	return ((2 * Math.PI) / 360 * valDeg)
 }
-//WIP
+//Custom sin function
 function customSin(inputfloat){
-	var float = Math.sin(degToRad(inputfloat));
-	
+	var float;
+	if(angleUnit = "deg")
+		float = Math.sin(degToRad(inputfloat));
+	else
+		float = Math.sin(inputfloat);
 	return float;
 }
-//WIP
+//Custom asin function
 function customArcsin(inputfloat){
-	var float = radToDeg(Math.asin(inputfloat));
-
+	var float;
+	if(angleUnit = "deg")
+		float = radToDeg(Math.asin(inputfloat));
+	else
+		float = Math.asin(inputfloat);
 	return float;
 }
-//WIPs
+//Custom cos function
 function customCos(inputfloat){
-	var float = Math.cos(degToRad(inputfloat));
+	var float;
+	if(angleUnit = "deg")
+		float = Math.cos(degToRad(inputfloat));
+	else
+		float = Math.cos(inputfloat);
 	return float;
 }
-//WIP
+//Custom acos function
 function customArccos(inputfloat){
-	var float = radToDeg(Math.acos(inputfloat));
+	var float;
+	if(angleUnit = "deg")
+		float = radToDeg(Math.acos(inputfloat));
+	else
+		float = Math.acos(inputfloat);
 	return float;
 }
 //Rounds number to floatingPointprecision decimals
