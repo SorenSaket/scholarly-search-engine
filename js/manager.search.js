@@ -108,35 +108,7 @@ function changeResult(resultToChange, data){
 		document.getElementById("title" + resultToChange).innerText = data.name;
 		document.getElementById("tags" + resultToChange).innerText = data.tags.substring(0, 82) + "...";
 		document.getElementById("description" + resultToChange).innerText = data.description.substring(0, 161) + "...";
-
-		if (data.type == "doc"){
-			document.getElementById("type" + resultToChange).className = "type fa " + "fa-file-text";
-		}
-		else if (data.type == "vid"){
-			document.getElementById("type" + resultToChange).className = "type fa " + "fa-video-camera";
-		}
-		else if (data.type == "cal"){
-			document.getElementById("type" + resultToChange).className = "type fa " + "fa-calculator";
-		}
-		else if (data.type == "html"){
-			document.getElementById("type" + resultToChange).className = "type fa " + "fa-html5";
-		}
-		else if (data.type == "sheet"){
-			document.getElementById("type" + resultToChange).className = "type fa " + "fa-file-excel-o";
-		}
-		else if (data.type == "slide"){
-			document.getElementById("type" + resultToChange).className = "type fa " + "fa-file-powerpoint-o";
-		}
-		else if (data.type == "img"){
-			document.getElementById("type" + resultToChange).className = "type fa " + "fa-file-image-o";
-		}
-		else if (data.type == "pdf"){
-			document.getElementById("type" + resultToChange).className = "type fa " + "fa-file-pdf-o";
-		}
-		else
-		{
-			document.getElementById("type" + resultToChange).className = "type fa " + "fa-file-o";
-		}
+		document.getElementById("type" + resultToChange).className = "type fa " + getFACode(data.type);
 	}
 	else
 	{
@@ -191,6 +163,50 @@ function nextPage(){
 	}
 	displayResults(currentPage);
 }
+
+function getFACode(type){
+	var faCode;	
+	switch (type) {
+		case "audio":
+			faCode = "fa-file-audio-o";
+			break;
+		case "cal":
+			faCode = "fa-calculator";
+			break;
+		case "code":
+			faCode = "fa-file-code-o";
+			break;
+		case "doc":
+			faCode = "fa-file-text-o";
+			break;
+		case "html":
+			faCode = "fa-html5";
+			break;
+		case "img":
+			faCode = "fa-file-image-o";
+			break;
+		case "vid":
+			faCode = "fa-file-video-o";
+			break;
+		case "pdf":
+			faCode = "fa-file-pdf-o";
+			break;
+		case "sheet":
+			faCode = "fa-file-excel-o";
+			break;
+		case "slide":
+			faCode = "fa-file-powerpoint-o";
+			break;
+		case "zip":
+			faCode = "fa-file-zip-o";
+			break;
+		default:
+			faCode = "fa-file-o";
+			break;
+	}
+	return faCode;
+}
+
 
 $('#searchInput').on('input', function() { 
     autocomplete();
