@@ -15,6 +15,10 @@ var currentTriangle;
 
 // The function that the calculate button calls
 function calculate(){
+	/*var milisecondsUsed = 0;
+	var interval = setInterval(function() {
+		milisecondsUsed += 1;
+	}, 1);*/
 	//Gets input and sets it to a variable
 	var tempTri = getInput();
 
@@ -35,6 +39,8 @@ function calculate(){
 
 		MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 	}
+	/*console.log("Calculated triangle in: " + milisecondsUsed + " miliseconds");
+	clearInterval(interval);*/
 }
 // The function that you can call from SSE
 function tri(a,b,c,A,B,C){
@@ -154,7 +160,7 @@ function calculateElement(triangle, elementToCalculate){
 			triangle.C = calculateAngleCos(triangle.a,triangle.b,triangle.c, "C");
 		}
 	}
-
+	
 	return triangle;
 }
 // Determine the algorithm to use based on preferences and missing elements WIP
@@ -618,11 +624,20 @@ function customArccos(inputfloat){
 	var float = radToDeg(Math.acos(inputfloat));
 	return float;
 }
-
+//Rounds number to floatingPointprecision decimals
 function roundNumber(num) {
-	return Math.round(num*100)/100;
+	scale = floatingPointprecision;
+	if(!("" + num).includes("e")) {
+	  return +(Math.round(num + "e+" + scale)  + "e-" + scale);
+	} else {
+	  var arr = ("" + num).split("e");
+	  var sig = ""
+	  if(+arr[1] + scale > 0) {
+		sig = "+";
+	  }
+	  return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + scale)) + "e-" + scale);
+	}
 }
-
 
 // -------- Get functions --------
 
