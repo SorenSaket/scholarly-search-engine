@@ -721,7 +721,7 @@ function getUnknownAngle(A,B,C){
 		return null;
 	}
 }
-
+//
 function getUnknownSides(a,b,c){
 	var unknownSides = [];
 	if(!a)
@@ -732,7 +732,7 @@ function getUnknownSides(a,b,c){
 		unknownSides.push("c");
 	return unknownSides;
 }
-
+//
 function getUnknownAngles(A,B,C){
 	var unknownAngles = [];
 	if(!A)
@@ -743,7 +743,7 @@ function getUnknownAngles(A,B,C){
 		unknownAngles.push("C");
 	return unknownAngles;
 }
-
+//
 function getUnknownAnglesWithE(A,B,C, angleToExclude){
 	var unknownAngles = [];
 	if(!A && angleToExclude != "A")
@@ -755,7 +755,6 @@ function getUnknownAnglesWithE(A,B,C, angleToExclude){
 
 	return unknownAngles;
 }
-
 //Returns the known side from 3 side as string
 function getKnownSide(a,b,c){
 	if(a)
@@ -817,7 +816,7 @@ function getKnownPairs(triangle){
 		knownPairs.push("C");
 	return knownPairs;
 }
-
+//
 function getPairWithE(triangle, pairToExclude){
 	if((triangle.a && triangle.A) && (pairToExclude != "a" || pairToExclude != "A"))
 		return "a";
