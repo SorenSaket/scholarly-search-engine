@@ -1,0 +1,43 @@
+<html>
+
+<head>
+    <script src="vector.js"></script>
+
+    <script type="text/javascript" src="../../../js/libs/three.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <div id="input">
+        <input id="a" class="form-control" type="text" name="a" placeholder="vector2 1x">
+        <input id="b" class="form-control" type="text" name="b" placeholder="vector2 1y">
+        <input id="c" class="form-control" type="text" name="c" placeholder="vector2 2x">
+        <input id="d" class="form-control" type="text" name="d" placeholder="vector2 2y">
+        <button class="btn btn-primary" onclick="calculate()">Calculate</button>
+        <div id="output">
+                
+        </div>
+    </div>
+    
+
+    <script>
+        function calculate()
+        {
+            a = new THREE.Vector2(document.getElementById("a").value, document.getElementById("b").value);
+            b = new THREE.Vector2(document.getElementById("c").value, document.getElementById("d").value);
+            var d = a.distanceTo( b );
+            document.getElementById("output").innerHTML = d;
+        }
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
