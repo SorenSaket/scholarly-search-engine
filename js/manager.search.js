@@ -44,17 +44,17 @@ function search(){
 	//Get serch Query from input
 	var searchQuery = document.getElementById("searchInput").value;
 	var command;
-	//document.getElementById("searchInput").value = "";
+	//If is command
 	if (searchQuery[0] == "/"){
 		command = strSplit(searchQuery.replace("/", ""));
 		eval(command);
 		fullscreen(true);
-	}
-	if (searchQuery[0] == "."){
+	}//If is subsearch
+	else if (searchQuery[0] == "."){
 		command = searchQuery.replace(".", "");
 		subsearch(command);
 		fullscreen(true);
-	}
+	}//Else seach in database
 	else
 	{
 		currentResults = findMatchingItemsInDatabase(searchQuery);

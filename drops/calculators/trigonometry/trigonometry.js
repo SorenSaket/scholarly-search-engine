@@ -46,7 +46,7 @@ function calculate(){
 }
 // The function that you can call from SSE
 function tri(a,b,c,A,B,C){
-	//wip
+	
 }
 
 // ---------------- Calculation Functions ---------------
