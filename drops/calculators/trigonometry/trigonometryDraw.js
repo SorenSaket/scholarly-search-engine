@@ -16,26 +16,25 @@ function resizeCanvas() {
 	resizeCanvas($('#canvasparent').width() , $('#canvasparent').height());
 }
 
-function setup()
-{
+function setup(){
 	var canvas = createCanvas($('#canvasparent').width(),$('#canvasparent').height());
 	canvas.parent("canvasparent");
 	scale = 30;
 	canvas.mouseWheel(changeSize);
 }
 
-function draw()
-{
+function draw(){
 	clear();
 	background("rgba(0,0,0,0)");
+	textSize(16);
 	if(triangleToDraw != null)
 	{
 		DrawTriangle(triangleToDraw.a, triangleToDraw.b, triangleToDraw.c, triangleToDraw.A, triangleToDraw.B, triangleToDraw.C, scale);
 	}
+	DrawGuides();
 }
 
-function mouseDragged()
-{
+function mouseDragged(){
 	if(!clicked)
 	{
 		lastMousePosX = mouseX;
@@ -49,13 +48,11 @@ function mouseDragged()
 	offsetY = lastOffsetY + (mouseY - lastMousePosY);
 }
 
-function mouseClicked() 
-{
+function mouseClicked() {
 	clicked = false;
 }
 
-function changeSize(event)
-{
+function changeSize(event){
 	if (event.deltaY > 0) {
 		scale = scale - 5;
 	  } else {
@@ -63,11 +60,10 @@ function changeSize(event)
 	  }
 }
 
-function DrawTriangle(a,b,c,A,B,C,scale)
-{
+function DrawTriangle(a,b,c,A,B,C,scale){
 	var textOffset = 10;
 	var pointSize = 8;
-	textSize(16);
+	
 
 	var aColor = color(220,53,69);
 	var Ax = CenterPosX() + offsetX;
@@ -94,7 +90,7 @@ function DrawTriangle(a,b,c,A,B,C,scale)
 	noFill();
 	stroke(color(0,0,0));
 
-	if(0 == 0)
+	if(true)
 	{
 		line(Bx, By, Bx, Ay);
 		ellipse(CenterPosX() + offsetX,CenterPosY() + offsetY,scale*2,scale*2);
@@ -140,13 +136,18 @@ function DrawTriangle(a,b,c,A,B,C,scale)
 	text("c = " + c, (Ax+Bx)/2 - textOffset*6, (Ay+By)/2);
 }
 
-
-function CenterPosY()
+function DrawGuides()
 {
+	color(0, 0, 0);
+	fill(0, 0, 0);
+	text(offsetX + ", " + offsetY + ". Zoom: " + scale, width-200, height);
+}
+
+//Helper functions
+function CenterPosY(){
 	return height/2;
 }
-function CenterPosX()
-{
+function CenterPosX(){
 	return width/2;
 }
 
