@@ -337,7 +337,7 @@ function calculateSideSin(pairSide, pairAngle, oppositeAngle, sideToSolve, known
 		"&= {{" + pairSide + "} \\over {\\sin (" + pairAngle + ")}}*\\sin (" + oppositeAngle + ") \\\\ " +
 		"&= {{" + pairSide + "} \\over {" + customSin(pairAngle) + "}}*" + customSin(oppositeAngle)  + ") \\\\ " +
 		"&= " + pairSide/customSin(pairAngle) + "*" + customSin(oppositeAngle) + " \\\\ " +
-		"& \\approx " + val + "&deg; " +
+		"& \\approx " + val +
 		"\\end{align}"
 	);
 	return val;
