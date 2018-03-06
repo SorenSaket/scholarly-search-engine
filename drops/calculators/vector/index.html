@@ -10,34 +10,37 @@
 
 <body>
     <div id="input">
-        <input id="a" class="form-control" type="text" name="a" placeholder="vector2 1x">
+     <!--   <input id="a" class="form-control" type="text" name="a" placeholder="vector2 1x">
         <input id="b" class="form-control" type="text" name="b" placeholder="vector2 1y">
         <input id="c" class="form-control" type="text" name="c" placeholder="vector2 2x">
         <input id="d" class="form-control" type="text" name="d" placeholder="vector2 2y">
-        <button class="btn btn-primary" onclick="calculate()">Calculate</button>
-        <button class="btn btn-primary" onclick="calculateSum()">Calculate Distance between points</button>
+    -->
+        <div id="setablecontainer">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th width="47.5%" scope="col">X</th>
+                        <th width="47.5%" scope="col">Y</th>
+                        <th width="5%" scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody id="vectorcontainer">
+
+                </tbody>
+            </table>	
+        </div>
+        
+        <button id="addvector" type="button" class="btn btn-primary m-4" onclick="addVector()">Add Vector</button>
+        <hr>
+        
+        <button class="btn btn-primary" onclick="calculateAverage()">Calculate Average</button>
         <button class="btn btn-primary" onclick="calculateSum()">Calculate Sum</button>
+        
+        
         <div id="output">
         </div>
-    </div>
-    
-
-    <script>
-        function calculate()
-        {
-            a = new THREE.Vector2(document.getElementById("a").value, document.getElementById("b").value);
-            b = new THREE.Vector2(document.getElementById("c").value, document.getElementById("d").value);
-            var d = a.distanceTo( b );
-            document.getElementById("output").innerHTML = d;
-        }
         
-        function calculateSum()
-        {
-            a = parseFloat(document.getElementById("a").value) + parseFloat(document.getElementById("b").value);
-            b = parseFloat(document.getElementById("c").value) + parseFloat(document.getElementById("d").value);
-            document.getElementById("output").innerHTML = a + ", " + b;
-        }
-    </script>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
