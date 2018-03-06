@@ -29,7 +29,8 @@ function calculateAverage()
         sum.x += vectors[i].x;
         sum.y += vectors[i].y;
     }
-    sum = sum/vectors.length;
+    sum.x = sum.x/vectors.length;
+    sum.y = sum.y/vectors.length;
     document.getElementById("output").innerHTML = sum.x +", " +sum.y;
 }
 
