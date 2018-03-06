@@ -15,8 +15,9 @@
         <input id="c" class="form-control" type="text" name="c" placeholder="vector2 2x">
         <input id="d" class="form-control" type="text" name="d" placeholder="vector2 2y">
         <button class="btn btn-primary" onclick="calculate()">Calculate</button>
+        <button class="btn btn-primary" onclick="calculateSum()">Calculate Distance between points</button>
+        <button class="btn btn-primary" onclick="calculateSum()">Calculate Sum</button>
         <div id="output">
-                
         </div>
     </div>
     
@@ -29,7 +30,13 @@
             var d = a.distanceTo( b );
             document.getElementById("output").innerHTML = d;
         }
-
+        
+        function calculateSum()
+        {
+            a = parseFloat(document.getElementById("a").value) + parseFloat(document.getElementById("b").value);
+            b = parseFloat(document.getElementById("c").value) + parseFloat(document.getElementById("d").value);
+            document.getElementById("output").innerHTML = a + ", " + b;
+        }
     </script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
