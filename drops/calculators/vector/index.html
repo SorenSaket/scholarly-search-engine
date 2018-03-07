@@ -1,20 +1,21 @@
 <html>
 
 <head>
-    <script src="vector.js"></script>
+    <script type="text/javascript" src="../../../js/libs/p5/p5.min.js"></script>
+    <script type="text/javascript" src="../../../js/libs/p5/addons/p5.dom.min.js"></script>
 
     <script type="text/javascript" src="../../../js/libs/three.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
+    
+    <script src="vector.js"></script>
+    <script src="vectorDraw.js"></script>
 </head>
 
 <body>
     <div id="input">
-     <!--   <input id="a" class="form-control" type="text" name="a" placeholder="vector2 1x">
-        <input id="b" class="form-control" type="text" name="b" placeholder="vector2 1y">
-        <input id="c" class="form-control" type="text" name="c" placeholder="vector2 2x">
-        <input id="d" class="form-control" type="text" name="d" placeholder="vector2 2y">
-    -->
+        <h3>Vector Calculator</h3>
+        <hr>
         <div id="setablecontainer">
             <table class="table">
                 <thead class="thead-light">
@@ -25,21 +26,32 @@
                     </tr>
                 </thead>
                 <tbody id="vectorcontainer">
-
+                    
                 </tbody>
             </table>	
         </div>
-        
-        <button id="addvector" type="button" class="btn btn-primary m-4" onclick="addVector()">Add Vector</button>
-        <hr>
-        
-        <button class="btn btn-primary" onclick="calculateAverage()">Calculate Average</button>
-        <button class="btn btn-primary" onclick="calculateSum()">Calculate Sum</button>
-        
-        
-        <div id="output">
+        <div>
+            <button id="addvector" type="button" class="btn btn-primary m-4" onclick="addVector()">Add Vector</button>
+            <button id="removevector" type="button" class="btn btn-danger m-4" onclick="addVector()">Remove Empty</button>
         </div>
+        <hr>
+        <div>
+            <button class="btn btn-primary" onclick="calculate()">Calculate</button>
+            <p id="credits">created by @sorensaket</p>   
+        </div>
+
+        <!--<button class="btn btn-primary" onclick="calculateAverage()">Calculate Average</button>
+        <button class="btn btn-primary" onclick="calculateSum()">Calculate Sum</button>-->
         
+    </div>
+
+    <div id="output">
+        <div id="canvasparent">
+
+        </div>
+        <div>
+                This is where the data will be
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

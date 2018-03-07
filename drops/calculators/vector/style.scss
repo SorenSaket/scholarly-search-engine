@@ -1,0 +1,51 @@
+body
+{
+    background-color: lightgray;
+}
+
+#input, #output
+{
+    position: absolute;
+    height: 100%;
+    width: 50%;
+    padding: 32px;
+}
+
+#input
+{
+    #addvector, #removevector
+    {
+        display: inline-block;
+        margin: 8px !important;
+    }
+    #setablecontainer
+    {
+        overflow-y: scroll;
+        height: 420px;
+        background-color: #e9ecef;
+    }
+    td,input
+    {
+        border: 0px;
+        border-width: 0px !important;
+        border-top-width: 0px;
+    }
+    #credits
+    {
+        display: inline-block;
+    }
+}
+#output
+{
+    right: 0px;
+    
+    #outputcanvas
+    {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+
+
+
