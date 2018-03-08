@@ -3,6 +3,8 @@ var parent ;
 var centerX;
 var centerY;
 var pxPerUnit = 32;
+var isDrawingPoints = false;
+var isDrawingVectors = false;
 
 function resizeCanvas() {
 	resizeCanvas(parent.offsetWidth,parent.offsetWidth);
@@ -12,57 +14,86 @@ function resizeCanvas() {
 
 function setup() {
     parent = document.getElementById("canvasparent");
-    console.log(parent.offsetWidth);
     var canvas = createCanvas(parent.offsetWidth,parent.offsetWidth);
     canvas.parent("canvasparent");
     centerX = width/2;
     centerY = height/2;
-    reDraw();
+    reDraw(false, false);
 }
 
-
-
-function reDraw()
+function reDraw(points, vectors)
 {
+    isDrawingPoints = points;
+    isDrawingVectors = vectors;
     background(240);
     drawGrid();
-    //drawPoints();
-    drawVectors();
+    if(points)
+        drawPoints();
+    if(vectors)
+        drawVectors();
 }
 
 function drawPoints()
 {
-    print("Drawing points");
     for (let i = 0; i < allVectors.length; i++) 
     {
         fill(colors[i]);
         noStroke();
-        ellipse(centerX + (allVectors[i].x*pxPerUnit), centerY - (allVectors[i].y*pxPerUnit), pxPerUnit/4, pxPerUnit/4);
+        ellipse(
+            centerX + (allVectors[i].x*pxPerUnit), 
+            centerY - (allVectors[i].y*pxPerUnit), pxPerUnit/4, pxPerUnit/4);
     }
 }
 
 function drawVectors()
 {
+    // Draw vectors
     for (let i = 0; i < allVectors.length; i++) 
-    {
-        fill(colors[i]);
-        stroke(colors[i]);
-        strokeWeight(3)
-        var x = centerX + (allVectors[i].x*pxPerUnit);
-        var y = centerY - (allVectors[i].y*pxPerUnit);
-        var offset = 8;
-        //line(centerX,centerY,x,y)
-        noStroke();
-        var angle = atan2(x, y); //gets the angle of the line
-        translate(x, y); //translates to the destination vertex
+        drawVector(centerX,centerY,centerX+allVectors[i].x*pxPerUnit,centerY-allVectors[i].y*pxPerUnit, colors[i])
+    if(allVectors.length > 1)
+        drawVectorSum();
+}
 
-        rotate(angle+HALF_PI);
-        triangle(
-            0, 0, 
-            -offset, offset/2, 
-            -offset, -offset/2);
+function drawVectorSum()
+{
+    var x = centerX;
+    var y = centerY;
+    var x2;
+    var y2;
+    // Draw Vector sum
+    for (let i = 0; i < allVectors.length; i++) {
+        x2 = x + (allVectors[i].x*pxPerUnit);
+        y2 = y - (allVectors[i].y*pxPerUnit);
+        drawVector(x,y, x2, y2, colors[i])
+        x = x2;
+        y = y2;
     }
 }
+
+// input in pixels
+function drawVector(x1,y1,x2,y2, color)
+{
+    var offset = 8;
+    
+    // Draw Line
+    fill(color);
+    stroke(color);
+    strokeWeight(3);
+    line(x1,y1,x2,y2);
+
+    //Draw arrow
+    push();
+    noStroke();
+    var angle = atan2(y1 - y2, x1 - x2); //gets the angle of the line
+    translate(x2, y2); //translates to the destination vertex
+    rotate(angle-PI);
+    triangle(
+        0, 0, 
+        -offset, offset/2, 
+        -offset, -offset/2);
+    pop();
+}
+
 
 function drawGrid()
 {

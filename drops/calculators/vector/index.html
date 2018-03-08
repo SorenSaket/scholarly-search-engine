@@ -31,12 +31,13 @@
             </table>	
         </div>
         <div>
-            <button id="addvector" type="button" class="btn btn-primary m-4" onclick="addVector()">Add Vector</button>
-            <button id="removevector" type="button" class="btn btn-danger m-4" onclick="addVector()">Remove Empty</button>
+            <button id="addvector" type="button" class="btn btn-primary m-4" onclick="addVector(0,0)">Add Vector</button>
         </div>
         <hr>
         <div>
-            <button class="btn btn-primary" onclick="calculate()">Calculate</button>
+            <p>Calculate As:</p>
+            <button class="btn btn-primary" onclick="calculate(true,false)">Points</button>
+            <button class="btn btn-primary" onclick="calculate(false,true)">Vectors</button>
             <p id="credits">created by @sorensaket</p>   
         </div>
 
