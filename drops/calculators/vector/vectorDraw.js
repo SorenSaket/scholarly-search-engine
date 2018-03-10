@@ -6,16 +6,21 @@ var pxPerUnit = 32;
 var isDrawingPoints = false;
 var isDrawingVectors = false;
 
+
+window.addEventListener('resize', resizeCanvas, false);
 function resizeCanvas() {
-	resizeCanvas(parent.offsetWidth,parent.offsetWidth);
+	resizeCanvas(parent.offsetWidth,parent.offsetHeight);
     centerX = width/2;
     centerY = height/2; 
+    reDraw(isDrawingPoints, isDrawingVectors);
 }
 
 function setup() {
+    //Canvas Setup
     parent = document.getElementById("canvasparent");
-    var canvas = createCanvas(parent.offsetWidth,parent.offsetWidth);
+    var canvas = createCanvas(parent.offsetWidth,parent.offsetHeight);
     canvas.parent("canvasparent");
+
     centerX = width/2;
     centerY = height/2;
     reDraw(false, false);
@@ -25,24 +30,38 @@ function reDraw(points, vectors)
 {
     isDrawingPoints = points;
     isDrawingVectors = vectors;
+    pxPerUnit = calcualteZoom();
+    
     background(240);
     drawGrid();
     if(points)
+    {
         drawPoints();
+        if(allVectors.length > 1)
+        {
+            var average = calculateAverage();
+            drawX(centerX + average.x*pxPerUnit,centerY - average.y*pxPerUnit,"#343a40");
+        }
+    }
     if(vectors)
+    {
         drawVectors();
+        if(allVectors.length > 1)
+        {
+            var sum = calculateSum();
+            drawX(centerX + sum.x*pxPerUnit,centerY - sum.y*pxPerUnit,"#343a40");
+
+        }
+    }
 }
 
 function drawPoints()
 {
     for (let i = 0; i < allVectors.length; i++) 
     {
-        fill(colors[i]);
-        noStroke();
-        ellipse(
-            centerX + (allVectors[i].x*pxPerUnit), 
-            centerY - (allVectors[i].y*pxPerUnit), pxPerUnit/4, pxPerUnit/4);
+        drawPoint(centerX + (allVectors[i].x*pxPerUnit), centerY - (allVectors[i].y*pxPerUnit), colors[i])
     }
+
 }
 
 function drawVectors()
@@ -50,8 +69,6 @@ function drawVectors()
     // Draw vectors
     for (let i = 0; i < allVectors.length; i++) 
         drawVector(centerX,centerY,centerX+allVectors[i].x*pxPerUnit,centerY-allVectors[i].y*pxPerUnit, colors[i])
-    if(allVectors.length > 1)
-        drawVectorSum();
 }
 
 function drawVectorSum()
@@ -70,7 +87,7 @@ function drawVectorSum()
     }
 }
 
-// input in pixels
+
 function drawVector(x1,y1,x2,y2, color)
 {
     var offset = 8;
@@ -93,7 +110,22 @@ function drawVector(x1,y1,x2,y2, color)
         -offset, -offset/2);
     pop();
 }
-
+function drawPoint(x,y,color)
+{
+    var size = pxPerUnit/4;
+    fill(color);
+    noStroke();
+    ellipse(x, y, size, size);
+}
+function drawX(x,y,color)
+{
+    var size = pxPerUnit/4;
+    fill(color);
+    strokeWeight(size/2);
+    stroke(color);
+    line(x-size/2, y-size/2, x+size/2, y+size/2);
+    line(x+size/2, y-size/2, x-size/2, y+size/2);
+}
 
 function drawGrid()
 {
@@ -136,4 +168,9 @@ function drawGrid()
         
         line(0, i*pxPerUnit, width, i*pxPerUnit);
     }
+}
+
+function calcualteZoom()
+{
+    return 32;
 }
