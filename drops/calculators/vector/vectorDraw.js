@@ -45,12 +45,16 @@ function reDraw(points, vectors)
     }
     if(vectors)
     {
+        if(allVectors.length > 2)
+        {
+            drawVectorSum();                
+        }
         drawVectors();
         if(allVectors.length > 1)
         {
+            
             var sum = calculateSum();
             drawX(centerX + sum.x*pxPerUnit,centerY - sum.y*pxPerUnit,"#343a40");
-
         }
     }
 }
@@ -81,7 +85,7 @@ function drawVectorSum()
     for (let i = 0; i < allVectors.length; i++) {
         x2 = x + (allVectors[i].x*pxPerUnit);
         y2 = y - (allVectors[i].y*pxPerUnit);
-        drawVector(x,y, x2, y2, colors[i])
+        drawVector(x,y, x2, y2, "#343a40"/*colors[i]*/)
         x = x2;
         y = y2;
     }
