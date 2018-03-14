@@ -27,8 +27,7 @@ function setup() {
     reDraw(false, false);
 }
 
-function reDraw(points, vectors)
-{
+function reDraw(points, vectors){
     isDrawingPoints = points;
     isDrawingVectors = vectors;
     pxPerUnit = calcualteZoom();
@@ -37,7 +36,8 @@ function reDraw(points, vectors)
     drawGrid();
     if(points)
     {
-        drawPoints();
+        for (let i = 0; i < allVectors.length; i++) 
+            drawPoint(centerX + (allVectors[i].x*pxPerUnit), centerY - (allVectors[i].y*pxPerUnit), colors[i])
         if(allVectors.length > 1)
         {
             var average = calculateAverage();
@@ -46,32 +46,19 @@ function reDraw(points, vectors)
     }
     if(vectors)
     {
-        if(allVectors.length > 2)
+        /*if(allVectors.length > 2)
         {
             drawVectorSum();                
-        }
-        drawVectors();
+        }*/
+        for (let i = 0; i < allVectors.length; i++)
+            if(allVectors[i].x != 0 ||allVectors[i].y != 0)
+                drawVector(centerX,centerY,centerX+allVectors[i].x*pxPerUnit,centerY-allVectors[i].y*pxPerUnit, colors[i]);
         if(allVectors.length > 1)
         {
             var sum = calculateSum();
             drawX(centerX + sum.x*pxPerUnit,centerY - sum.y*pxPerUnit,"#343a40");
         }
     }
-}
-
-function drawPoints()
-{
-    for (let i = 0; i < allVectors.length; i++) 
-    {
-        drawPoint(centerX + (allVectors[i].x*pxPerUnit), centerY - (allVectors[i].y*pxPerUnit), colors[i])
-    }
-}
-
-function drawVectors()
-{
-    // Draw vectors
-    for (let i = 0; i < allVectors.length; i++) 
-        drawVector(centerX,centerY,centerX+allVectors[i].x*pxPerUnit,centerY-allVectors[i].y*pxPerUnit, colors[i])
 }
 
 function drawVectorSum()
@@ -89,7 +76,6 @@ function drawVectorSum()
         y = y2;
     }
 }
-
 
 function drawVector(x1,y1,x2,y2, color)
 {
