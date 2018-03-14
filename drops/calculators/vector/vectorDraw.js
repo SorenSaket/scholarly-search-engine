@@ -8,6 +8,7 @@ var isDrawingVectors = false;
 
 
 window.addEventListener('resize', resizeCanvas, false);
+
 function resizeCanvas() {
 	resizeCanvas(parent.offsetWidth,parent.offsetHeight);
     centerX = width/2;
@@ -52,7 +53,6 @@ function reDraw(points, vectors)
         drawVectors();
         if(allVectors.length > 1)
         {
-            
             var sum = calculateSum();
             drawX(centerX + sum.x*pxPerUnit,centerY - sum.y*pxPerUnit,"#343a40");
         }
@@ -65,7 +65,6 @@ function drawPoints()
     {
         drawPoint(centerX + (allVectors[i].x*pxPerUnit), centerY - (allVectors[i].y*pxPerUnit), colors[i])
     }
-
 }
 
 function drawVectors()
@@ -114,15 +113,18 @@ function drawVector(x1,y1,x2,y2, color)
         -offset, -offset/2);
     pop();
 }
-function drawPoint(x,y,color)
-{
+
+
+
+// -------- Drawers --------
+function drawPoint(x,y,color){
     var size = pxPerUnit/4;
     fill(color);
     noStroke();
     ellipse(x, y, size, size);
 }
-function drawX(x,y,color)
-{
+
+function drawX(x,y,color){
     var size = pxPerUnit/4;
     fill(color);
     strokeWeight(size/2);
@@ -131,8 +133,16 @@ function drawX(x,y,color)
     line(x+size/2, y-size/2, x-size/2, y+size/2);
 }
 
-function drawGrid()
-{
+function drawAngle(vector1, vector2){
+    print("AAA");
+    console.log(vector1.angle() + " _ " + vector2.angle());
+    strokeWeight(2);
+    stroke(colors[0]);
+    fill("#fc9c9c");
+    arc(centerX, centerY, 16, 16, vector1.angle(), vector2.angle());
+}
+
+function drawGrid(){
     
     //line(0, centerY, windowWidth, centerY);
     //line(centerX, 0, centerX, windowHeight);
@@ -174,7 +184,6 @@ function drawGrid()
     }
 }
 
-function calcualteZoom()
-{
+function calcualteZoom(){
     return 32;
 }
