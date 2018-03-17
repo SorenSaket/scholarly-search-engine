@@ -6,12 +6,12 @@ body {
   height: 100%;
   padding: 32px; }
 
+#input .vector .namecontainer {
+  padding: 0px !important; }
 #input .vector td {
   text-align: center;
   vertical-align: middle;
   padding: 8px; }
-  #input .vector td .namecontainer {
-    padding: 0px; }
   #input .vector td .vectorname {
     color: white;
     text-align: center;
@@ -20,7 +20,7 @@ body {
     -webkit-text-stroke: 1px black; }
   #input .vector td button {
     margin-bottom: 4px; }
-#input #addvector, #input #removevector {
+#input #addvector, #input #removevector, #input #removezerovectors {
   display: inline-block;
   margin: 8px !important; }
 #input #setablecontainer {

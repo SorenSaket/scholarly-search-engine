@@ -14,17 +14,16 @@ body
 {
     .vector
     {
+        .namecontainer
+        {
+            padding: 0px !important;
+        }
         td
         {
             text-align: center;
             vertical-align: middle;
             padding: 8px;
-
-            .namecontainer
-            {
-                padding: 0px;
-                
-            }
+            
             .vectorname
             {
                 color:white;
@@ -39,7 +38,7 @@ body
             }
         }
     }
-    #addvector, #removevector
+    #addvector, #removevector, #removezerovectors
     {
         display: inline-block;
         margin: 8px !important;
