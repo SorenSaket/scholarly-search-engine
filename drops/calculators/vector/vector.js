@@ -29,18 +29,15 @@ function removeVector(num){
 }
 
 function removeAllVectors(){
-    var vectors = $("#vectorcontainer").children();
-    for (let i = 0; i < vectors.length; i++) {
-        vectors[i].remove();
-    }
+    document.getElementById("vectorcontainer").innerHTML = "";
 }
 
 function reAddAllVectors(vectors){
     for (let i = 0; i < vectors.length; i++) 
         addVector(vectors[i].x,vectors[i].y);                                
 }
-function removeZeroVectors()
-{
+
+function removeZeroVectors(){
     var allVectors = [];
     var vectors = $("#vectorcontainer").children();
     for (let i = 0; i < vectors.length; i++) 
@@ -58,27 +55,33 @@ function removeZeroVectors()
     reAddAllVectors(allVectors);
 }
 
+function getVector(name)
+{
+
+}
+
 // ---------- Output UI ----------
 function removeAllOutputs(){
-    var vectors = $("#outputcontainer").children();
-    for (let i = 0; i < vectors.length; i++) {
-        vectors[i].remove();
-    }
+    document.getElementById("outputcontainer").innerHTML = "";
 }
 
-function addOutput(name, value)
-{
-    var component = 
-    '<div class="input-group">'
-        '<div class="input-group-prepend">'
-        '<div class="input-group-text" id="btnGroupAddon">@</div>'
-        '</div>'
-        '<input type="text" class="form-control" placeholder="Input group example" aria-label="Input group example" aria-describedby="btnGroupAddon">'
-    '</div>';
+function addOutput(name, value, color){
+    var component;
+    if(color != null)
+        component = 
+        '<div class="input-group">'+
+            '<span class="input-group-addon vectorname" style="background-color: ' + color + ';">' + name + '</span>'+
+            '<input type="text" class="form-control" placeholder="data" value="' + value + '">'+
+        '</div>';
+    else
+        component = 
+        '<div class="input-group">'+
+            '<span class="input-group-addon vectorname">' + name + '</span>'+
+            '<input type="text" class="form-control" placeholder="data" value="' + value + '">'+
+        '</div>';
 
+    $("#outputcontainer").append(component);
 }
-
-
 // ---------- a ----------
 
 function GetAllVectors(){
@@ -91,11 +94,6 @@ function GetAllVectors(){
         var xinput = document.getElementById("x" + vectorNum);
         var yinput = document.getElementById("y" + vectorNum);
         allVectors.push(new THREE.Vector2(parseFloat(xinput.value) ,parseFloat(yinput.value)));
-         /*   
-al        if((xinput.value == "" || xinput.value == "0") && (yinput.value == "" || yinput.value == "0")){}else
-        {
-            lVectors.push(new THREE.Vector2(parseFloat(document.getElementById("x" + vectorNum).value) ,parseFloat(document.getElementById("y" + vectorNum).value)));
-        }*/
     }
     removeAllVectors();
     reAddAllVectors(allVectors);
@@ -103,49 +101,65 @@ al        if((xinput.value == "" || xinput.value == "0") && (yinput.value == "" 
 }
 
 function calculate(drawPoints, drawVectors){
-    
     allVectors = GetAllVectors();
     if(allVectors.length > 0)
     {
         reDraw(drawPoints,drawVectors);
-        writeOutput(drawPoints,drawVectors);
+    }
+    writeOutput();
+}
+
+function searchOutput()
+{
+    //Recalculate
+    /*calculate(isDrawingPoints, isDrawingVectors);*/
+    // Removes previous outputs
+    removeAllOutputs();
+    // Gets the query from search input
+    var query = document.getElementById("searchinput").value;
+    //Splits query into names and removes spaces
+    var names = query.replace(/ /g,'').split(',');
+    // Converts all names into indexes
+    var numbers = [];
+    for (let i = 0; i < names.length; i++) {
+        numbers.push(convertNameToNumber(names[i]));
+    }
+    //Create new array of Vectors based on query
+    var vectors = [];
+    for (let i = 0; i < numbers.length; i++) {
+        vectors.push(allVectors[numbers[i]])
+    }
+    
+    if(vectors.length > 0)
+    {
+        //Magnitude
+        for (let i = 0; i < vectors.length; i++) {
+            addOutput(convertNumberToName([numbers[i]]) + " Magnitude", vectors[i].length(), colors[numbers[i]]);
+        }
+    }
+    if(vectors.length > 1)
+    {
+        //Dot product
+        addOutput("Dot Product", calculateDotProduct(vectors));
+        var sum = calculateSum(vectors);
+        //Sum 
+        addOutput("Sum", sum.x + ", " + sum.y);
+    }
+    if(vectors.length == 2)
+    {
+        //Dot product
+        addOutput("Angle", calculateAngle(vectors));
     }
 }
 
-function writeOutput(drawPoints,drawVectors){
-    /*var parent = document.getElementById("outputdata");
-    parent.innerText = "";
+function writeOutput(){
+    var query = "A";
     
-    if(drawVectors)
-    {
-        for (let i = 0; i < allVectors.length; i++) {
-            parent.innerHTML += "dist" + i+ ": " + showDistanceCaluculation(i) + "  "; 
-        }
-        parent.innerHTML +="<br>";
-        if(allVectors.length >= 2)
-        {
-            var sum = calculateSum();
-            parent.innerHTML += "Sum: " + sum.x + ", "+ sum.y + "<br>";
-            
-            var diff = calculateDifference();
-            parent.innerHTML += "Difference: " + diff.x + ", "+ diff.y + "<br>";
-
-            parent.innerHTML += "Dot Product: " + calculateDotProduct() + "<br>";
-        }
-        if(allVectors.length == 2)
-        {
-            var ang = calculateAngle();
-            parent.innerHTML += "Angle: " + ang + "<br>";
-        }
+    for (let i = 1; i < allVectors.length; i++) {
+        query += "," + convertNumberToName(i);
     }
-    if(drawPoints)
-    {
-        if(allVectors.length == 2)
-        {
-            var avg = calculateAverage();
-            parent.innerHTML += "Average: " + avg.x + ", "+ avg.y + "<br>";  
-        }
-    }*/
+    document.getElementById("searchinput").value = query;
+    searchOutput();
 }
 
 
@@ -162,11 +176,11 @@ function calculateAverage(){
     return average;
 }
 // Calculate the sum of all vectors
-function calculateSum(){
+function calculateSum(vectors){
     var sum = new THREE.Vector2();
-    for (let i = 0; i < allVectors.length; i++) {
-        sum.x += allVectors[i].x;
-        sum.y += allVectors[i].y;
+    for (let i = 0; i < vectors.length; i++) {
+        sum.x += vectors[i].x;
+        sum.y += vectors[i].y;
     }
     return sum;
 }
@@ -187,29 +201,29 @@ function calculateDistance(i){
     return distance;
 }
 // Calculate the dot product of all vectors
-function calculateDotProduct(){
+function calculateDotProduct(vectors){
     var dot;
     var xdot;
     var ydot;
-    for (let i = 0; i < allVectors.length; i++) {
+    for (let i = 0; i < vectors.length; i++) {
         if(i == 0)
         {
-            xdot = allVectors[i].x;
-            ydot = allVectors[i].y;
+            xdot = vectors[i].x;
+            ydot = vectors[i].y;
         }
         else
         {
-            xdot = xdot* allVectors[i].x;
-            ydot = ydot* allVectors[i].y;
+            xdot = xdot* vectors[i].x;
+            ydot = ydot* vectors[i].y;
         }
     }
 
     return xdot + ydot;
 }
 // Calculate the angle of vector[0] and vector[1]
-function calculateAngle(){
-    var dotp = calculateDotProduct();
-    return  toDegrees(Math.acos((dotp)/(calculateDistance(0)*calculateDistance(1))));
+function calculateAngle(vectors){
+    var dotp = calculateDotProduct(vectors);
+    return toDegrees(Math.acos((dotp)/(vectors[0].length()*vectors[1].length())));
 }
 //
 function calculateAngleRad(){
@@ -249,6 +263,20 @@ function convertNumberToName(num){
 
     return convertArrayToLetters(numbers);
 }
+
+function convertNameToNumber(name){
+    var string = "";
+
+    for (let i = 0; i < name.length; i++) {
+        string += convertLetterToNumber(name[i]);
+    }
+    return string;
+}
+
+function convertLetterToNumber(letter){
+    return alphabet.indexOf(letter);
+}
+
 // Helper function for the function above. 
 function canAdd(array){
     for (let i = 0; i < array.length; i++) {
@@ -272,3 +300,37 @@ function convertArrayToLetters(array){
 function toDegrees (angle) {
     return angle * (180 / Math.PI);
 }
+
+    /*var parent = document.getElementById("outputdata");
+    parent.innerText = "";
+    
+    if(drawVectors)
+    {
+        for (let i = 0; i < allVectors.length; i++) {
+            parent.innerHTML += "dist" + i+ ": " + showDistanceCaluculation(i) + "  "; 
+        }
+        parent.innerHTML +="<br>";
+        if(allVectors.length >= 2)
+        {
+            var sum = calculateSum();
+            parent.innerHTML += "Sum: " + sum.x + ", "+ sum.y + "<br>";
+            
+            var diff = calculateDifference();
+            parent.innerHTML += "Difference: " + diff.x + ", "+ diff.y + "<br>";
+
+            parent.innerHTML += "Dot Product: " + calculateDotProduct() + "<br>";
+        }
+        if(allVectors.length == 2)
+        {
+            var ang = calculateAngle();
+            parent.innerHTML += "Angle: " + ang + "<br>";
+        }
+    }
+    if(drawPoints)
+    {
+        if(allVectors.length == 2)
+        {
+            var avg = calculateAverage();
+            parent.innerHTML += "Average: " + avg.x + ", "+ avg.y + "<br>";  
+        }
+    }*/

@@ -10,7 +10,7 @@ var isDrawingVectors = false;
 window.addEventListener('resize', resizeCanvas, false);
 
 function resizeCanvas() {
-	resizeCanvas(parent.offsetWidth,parent.offsetHeight);
+	resizeCanvas(parent.offsetWidth-64,parent.offsetHeight-64);
     centerX = width/2;
     centerY = height/2; 
     reDraw(isDrawingPoints, isDrawingVectors);
@@ -19,7 +19,7 @@ function resizeCanvas() {
 function setup() {
     //Canvas Setup
     parent = document.getElementById("canvasparent");
-    var canvas = createCanvas(parent.offsetWidth,parent.offsetHeight);
+    var canvas = createCanvas(parent.offsetWidth-64,parent.offsetHeight-64);
     canvas.parent("canvasparent");
 
     centerX = width/2;
@@ -55,7 +55,7 @@ function reDraw(points, vectors){
                 drawVector(centerX,centerY,centerX+allVectors[i].x*pxPerUnit,centerY-allVectors[i].y*pxPerUnit, colors[i]);
         if(allVectors.length > 1)
         {
-            var sum = calculateSum();
+            var sum = calculateSum(allVectors);
             drawX(centerX + sum.x*pxPerUnit,centerY - sum.y*pxPerUnit,"#343a40");
         }
     }

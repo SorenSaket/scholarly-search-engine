@@ -52,13 +52,16 @@
 
     </div>
 
-    <div id="outputdata">
-<div class="input-group">
-    <div class="input-group-prepend">
-      <div class="input-group-text" id="btnGroupAddon">@</div>
-    </div>
-    <input type="text" class="form-control" placeholder="Input group example" aria-label="Input group example" aria-describedby="btnGroupAddon">
-  </div>
+    <div id="output">
+        <div id="searchcontainer" class="input-group">
+            <input id="searchinput" type="text" class="form-control" placeholder="Seach for values">
+            <span class="input-group-btn">
+                <button id="searchbutton" class="btn btn-primary" onclick="searchOutput()">Find</button>
+            </span>
+        </div>
+        
+        <div id="outputcontainer">
+        </div>
     </div>
 
 
