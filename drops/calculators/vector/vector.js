@@ -1,7 +1,7 @@
 var allVectors = [];
 var colors = ["#dc3545","#007bff", "#6f42c1","#e83e8c","#17a2b8","#ffc107","#28a745","#20c997","#6610f2","#fd7e14"]
 var alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
-// ---------- UI ----------
+// ---------- Vector UI ----------
 // Adds a new vector DOM element
 function addVector(x,y){
     var count = $("#vectorcontainer").children().length;
@@ -39,21 +39,62 @@ function reAddAllVectors(vectors){
     for (let i = 0; i < vectors.length; i++) 
         addVector(vectors[i].x,vectors[i].y);                                
 }
+function removeZeroVectors()
+{
+    var allVectors = [];
+    var vectors = $("#vectorcontainer").children();
+    for (let i = 0; i < vectors.length; i++) 
+    {
+        //
+        var vectorNum = vectors[i].id[6];
+        var xinput = document.getElementById("x" + vectorNum);
+        var yinput = document.getElementById("y" + vectorNum);
+        if((xinput.value == "" || xinput.value == "0") && (yinput.value == "" || yinput.value == "0")){}else
+        {
+            allVectors.push(new THREE.Vector2(parseFloat(document.getElementById("x" + vectorNum).value) ,parseFloat(document.getElementById("y" + vectorNum).value)));
+        }
+    }
+    removeAllVectors();
+    reAddAllVectors(allVectors);
+}
+
+// ---------- Output UI ----------
+function removeAllOutputs(){
+    var vectors = $("#outputcontainer").children();
+    for (let i = 0; i < vectors.length; i++) {
+        vectors[i].remove();
+    }
+}
+
+function addOutput(name, value)
+{
+    var component = 
+    '<div class="input-group">'
+        '<div class="input-group-prepend">'
+        '<div class="input-group-text" id="btnGroupAddon">@</div>'
+        '</div>'
+        '<input type="text" class="form-control" placeholder="Input group example" aria-label="Input group example" aria-describedby="btnGroupAddon">'
+    '</div>';
+
+}
+
 
 // ---------- a ----------
 
 function GetAllVectors(){
     var allVectors = [];
     var vectors = $("#vectorcontainer").children();
-    for (let i = 0; i < vectors.length; i++) { 
+    for (let i = 0; i < vectors.length; i++) 
+    {
+        //
         var vectorNum = vectors[i].id[6];
         var xinput = document.getElementById("x" + vectorNum);
         var yinput = document.getElementById("y" + vectorNum);
-        allVectors.push(new THREE.Vector2(parseFloat(document.getElementById("x" + vectorNum).value) ,parseFloat(document.getElementById("y" + vectorNum).value)));
+        allVectors.push(new THREE.Vector2(parseFloat(xinput.value) ,parseFloat(yinput.value)));
          /*   
-        if((xinput.value == "" || xinput.value == "0") && (yinput.value == "" || yinput.value == "0")){}else
+al        if((xinput.value == "" || xinput.value == "0") && (yinput.value == "" || yinput.value == "0")){}else
         {
-            allVectors.push(new THREE.Vector2(parseFloat(document.getElementById("x" + vectorNum).value) ,parseFloat(document.getElementById("y" + vectorNum).value)));
+            lVectors.push(new THREE.Vector2(parseFloat(document.getElementById("x" + vectorNum).value) ,parseFloat(document.getElementById("y" + vectorNum).value)));
         }*/
     }
     removeAllVectors();
@@ -72,7 +113,7 @@ function calculate(drawPoints, drawVectors){
 }
 
 function writeOutput(drawPoints,drawVectors){
-    var parent = document.getElementById("outputdata");
+    /*var parent = document.getElementById("outputdata");
     parent.innerText = "";
     
     if(drawVectors)
@@ -104,8 +145,10 @@ function writeOutput(drawPoints,drawVectors){
             var avg = calculateAverage();
             parent.innerHTML += "Average: " + avg.x + ", "+ avg.y + "<br>";  
         }
-    }
+    }*/
 }
+
+
 // ---------- Calculations ----------
 // Calculate the average position of vectors as points
 function calculateAverage(){
