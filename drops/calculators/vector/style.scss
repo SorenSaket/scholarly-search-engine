@@ -84,7 +84,6 @@ body
         overflow-y: auto;
     }
     
-    
     width: 25%;
     right: 0px;
     display: flex;
@@ -100,3 +99,4 @@ body
 @media (min-width: 767.98px) {#input, #canvasparent, #output {padding: 8px;}}
 @media (min-width: 991.98px) {#input, #canvasparent, #output {padding: 16px;}}
 @media (min-width: 1199.98px) {#input, #canvasparent, #output {padding: 32px;}}
+@media (max-width: 767.98px) {#input, #canvasparent, #output {padding: 8px;width:50%;} #canvasparent{display: none;}}
