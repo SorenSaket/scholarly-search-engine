@@ -46,7 +46,7 @@ body
     #setablecontainer
     {
         overflow-y: scroll;
-        height: 520px;
+        height: 480px;
         background-color: #e9ecef;
     }
     td,input
@@ -95,3 +95,8 @@ body
 @media (min-width: 767.98px) {#input{width: 40%;}#output{width: 60%;}}
 @media (min-width: 991.98px) {#input{width: 30%;}#output{width: 70%;}}
 @media (min-width: 1199.98px) {#input{width: 25%;}#output{width: 75%;}}*/
+
+@media (min-width: 575.98px) {#input, #canvasparent, #output {padding: 4px;}}
+@media (min-width: 767.98px) {#input, #canvasparent, #output {padding: 8px;}}
+@media (min-width: 991.98px) {#input, #canvasparent, #output {padding: 16px;}}
+@media (min-width: 1199.98px) {#input, #canvasparent, #output {padding: 32px;}}
