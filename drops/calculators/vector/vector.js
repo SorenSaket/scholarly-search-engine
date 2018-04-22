@@ -134,9 +134,10 @@ function searchOutput()
     {
         //Magnitude
         for (let i = 0; i < vectors.length; i++) {
-            addOutput(convertNumberToName([numbers[i]]) + " Magnitude", vectors[i].length(), colors[numbers[i]]);
+            addOutput(convertNumberToName([numbers[i]]) + " Magnitude", showDistanceCaluculation(vectors[i]), colors[numbers[i]]);
         }
     }
+
     if(vectors.length > 1)
     {
         //Dot product
@@ -144,11 +145,21 @@ function searchOutput()
         var sum = calculateSum(vectors);
         //Sum 
         addOutput("Sum", sum.x + ", " + sum.y);
+        
+        var sumMag = "";
+        for (let i = 0; i < vectors.length; i++) {
+            sumMag += showDistanceCaluculation(vectors[i]) + "+"; 
+        }
+        //Magnitude Sum
+        addOutput("Magnitude Sum", sumMag.slice(0, -1));
+
+        //Sum Magnitude
+        addOutput("Resultant Magnitude", showDistanceCaluculation(sum));
     }
     if(vectors.length == 2)
     {
-        //Dot product
-        addOutput("Angle", calculateAngle(vectors));
+        //Angle
+        addOutput("Angle", showAngleCalculation(vectors));
     }
     if(vectors.length == 3)
     {
@@ -227,6 +238,10 @@ function calculateDotProduct(vectors){
     return xdot + ydot;
 }
 // Calculate the angle of vector[0] and vector[1]
+function showAngleCalculation(vectors){
+    var dotp = calculateDotProduct(vectors);
+    return "acos(" +  dotp + "/(" + showDistanceCaluculation(vectors[0])+"*"+showDistanceCaluculation(vectors[1]) + ")";
+}
 function calculateAngle(vectors){
     var dotp = calculateDotProduct(vectors);
     return toDegrees(Math.acos((dotp)/(vectors[0].length()*vectors[1].length())));
@@ -249,8 +264,8 @@ function calculateAngleRad(){
     return  Math.acos((dotp)/(calculateDistance(0)*calculateDistance(1)));
 }
 //
-function showDistanceCaluculation(i){
-    var distance = pow(allVectors[i].x,2) +pow(allVectors[i].y,2) 
+function showDistanceCaluculation(vector){
+    var distance = pow(vector.x,2) +pow(vector.y,2) 
     return "sqrt(" + distance + ")";
 }
 // ---------- Utilities ----------
