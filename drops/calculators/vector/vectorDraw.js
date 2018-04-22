@@ -2,17 +2,15 @@ var canvas;
 var parent ;
 var centerX;
 var centerY;
-var pxPerUnit = 16;
+var pxPerUnit = 32;
 var isDrawingPoints = false;
 var isDrawingVectors = false;
-var canvasSizeX;
+
 
 window.addEventListener('resize', resizeCanvas, false);
 
 function resizeCanvas() {
-    canvasSizeX = parent.width();
-    canvasSizeY = parent.height();
-    resizeCanvas(canvasSizeX,canvasSizeY);
+	resizeCanvas(parent.offsetWidth-64,parent.offsetHeight-64);
     centerX = width/2;
     centerY = height/2; 
     reDraw(isDrawingPoints, isDrawingVectors);
@@ -20,10 +18,8 @@ function resizeCanvas() {
 
 function setup() {
     //Canvas Setup
-    parent = $("#canvasparent");
-    canvasSizeX = parent.width();
-    canvasSizeY = parent.height();
-    var canvas = createCanvas(canvasSizeX,canvasSizeY);
+    parent = document.getElementById("canvasparent");
+    var canvas = createCanvas(parent.offsetWidth-64,parent.offsetHeight-64);
     canvas.parent("canvasparent");
 
     centerX = width/2;
