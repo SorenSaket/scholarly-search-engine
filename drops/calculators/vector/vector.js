@@ -161,12 +161,6 @@ function searchOutput()
         //Angle
         addOutput("Angle", showAngleCalculation(vectors));
     }
-    if(vectors.length == 3)
-    {
-        //
-        addOutput("Resolution of B and C in A", resolutionInComponents(vectors));
-    }
-    
 }
 
 function writeOutput(){
@@ -246,18 +240,6 @@ function calculateAngle(vectors){
     var dotp = calculateDotProduct(vectors);
     return toDegrees(Math.acos((dotp)/(vectors[0].length()*vectors[1].length())));
 }
-//
-function resolutionInComponents(vectors){
-    var s = (vectors[0].y - vectors[2].y * (vectors[0].x / vectors[2].x))/
-            (vectors[1].y - ((vectors[2].y * vectors[1].x)/(vectors[2].x)));
-    var t = (vectors[0].x - vectors[1].x * s)/vectors[2].x
-    var s1 = (vectors[0].y - vectors[2].y * (vectors[0].x / vectors[2].x));
-    var s2 = (vectors[1].y - ((vectors[2].y * vectors[1].x)/(vectors[2].x)));
-    var t1 = (vectors[0].x - vectors[1].x * s);
-    var t2 = vectors[2].x;
-    return "s: " + s1 + "/" + s2 + " t: " + t1 + "/" + t2;
-}
-
 //
 function calculateAngleRad(){
     var dotp = calculateDotProduct();
