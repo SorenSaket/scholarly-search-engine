@@ -134,9 +134,10 @@ function searchOutput()
     {
         //Magnitude
         for (let i = 0; i < vectors.length; i++) {
-            addOutput(convertNumberToName([numbers[i]]) + " Magnitude", vectors[i].length(), colors[numbers[i]]);
+            addOutput(convertNumberToName([numbers[i]]) + " Magnitude", showDistanceCaluculation(vectors[i]), colors[numbers[i]]);
         }
     }
+
     if(vectors.length > 1)
     {
         //Dot product
@@ -144,12 +145,28 @@ function searchOutput()
         var sum = calculateSum(vectors);
         //Sum 
         addOutput("Sum", sum.x + ", " + sum.y);
+        
+        var sumMag = "";
+        for (let i = 0; i < vectors.length; i++) {
+            sumMag += showDistanceCaluculation(vectors[i]) + "+"; 
+        }
+        //Magnitude Sum
+        addOutput("Magnitude Sum", sumMag.slice(0, -1));
+
+        //Sum Magnitude
+        addOutput("Resultant Magnitude", showDistanceCaluculation(sum));
     }
     if(vectors.length == 2)
     {
-        //Dot product
-        addOutput("Angle", calculateAngle(vectors));
+        //Angle
+        addOutput("Angle", showAngleCalculation(vectors));
     }
+    if(vectors.length == 3)
+    {
+        //
+        addOutput("Resolution of B and C in A", resolutionInComponents(vectors));
+    }
+    
 }
 
 function writeOutput(){
@@ -221,18 +238,34 @@ function calculateDotProduct(vectors){
     return xdot + ydot;
 }
 // Calculate the angle of vector[0] and vector[1]
+function showAngleCalculation(vectors){
+    var dotp = calculateDotProduct(vectors);
+    return "acos(" +  dotp + "/(" + showDistanceCaluculation(vectors[0])+"*"+showDistanceCaluculation(vectors[1]) + ")";
+}
 function calculateAngle(vectors){
     var dotp = calculateDotProduct(vectors);
     return toDegrees(Math.acos((dotp)/(vectors[0].length()*vectors[1].length())));
 }
+//
+function resolutionInComponents(vectors){
+    var s = (vectors[0].y - vectors[2].y * (vectors[0].x / vectors[2].x))/
+            (vectors[1].y - ((vectors[2].y * vectors[1].x)/(vectors[2].x)));
+    var t = (vectors[0].x - vectors[1].x * s)/vectors[2].x
+    var s1 = (vectors[0].y - vectors[2].y * (vectors[0].x / vectors[2].x));
+    var s2 = (vectors[1].y - ((vectors[2].y * vectors[1].x)/(vectors[2].x)));
+    var t1 = (vectors[0].x - vectors[1].x * s);
+    var t2 = vectors[2].x;
+    return "s: " + s1 + "/" + s2 + " t: " + t1 + "/" + t2;
+}
+
 //
 function calculateAngleRad(){
     var dotp = calculateDotProduct();
     return  Math.acos((dotp)/(calculateDistance(0)*calculateDistance(1)));
 }
 //
-function showDistanceCaluculation(i){
-    var distance = pow(allVectors[i].x,2) +pow(allVectors[i].y,2) 
+function showDistanceCaluculation(vector){
+    var distance = pow(vector.x,2) +pow(vector.y,2) 
     return "sqrt(" + distance + ")";
 }
 // ---------- Utilities ----------
@@ -300,37 +333,3 @@ function convertArrayToLetters(array){
 function toDegrees (angle) {
     return angle * (180 / Math.PI);
 }
-
-    /*var parent = document.getElementById("outputdata");
-    parent.innerText = "";
-    
-    if(drawVectors)
-    {
-        for (let i = 0; i < allVectors.length; i++) {
-            parent.innerHTML += "dist" + i+ ": " + showDistanceCaluculation(i) + "  "; 
-        }
-        parent.innerHTML +="<br>";
-        if(allVectors.length >= 2)
-        {
-            var sum = calculateSum();
-            parent.innerHTML += "Sum: " + sum.x + ", "+ sum.y + "<br>";
-            
-            var diff = calculateDifference();
-            parent.innerHTML += "Difference: " + diff.x + ", "+ diff.y + "<br>";
-
-            parent.innerHTML += "Dot Product: " + calculateDotProduct() + "<br>";
-        }
-        if(allVectors.length == 2)
-        {
-            var ang = calculateAngle();
-            parent.innerHTML += "Angle: " + ang + "<br>";
-        }
-    }
-    if(drawPoints)
-    {
-        if(allVectors.length == 2)
-        {
-            var avg = calculateAverage();
-            parent.innerHTML += "Average: " + avg.x + ", "+ avg.y + "<br>";  
-        }
-    }*/
