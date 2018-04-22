@@ -248,14 +248,15 @@ function calculateAngle(vectors){
 }
 //
 function resolutionInComponents(vectors){
-    var s = (vectors[0].y - vectors[2].y * (vectors[0].x / vectors[2].x))/
-            (vectors[1].y - ((vectors[2].y * vectors[1].x)/(vectors[2].x)));
-    var t = (vectors[0].x - vectors[1].x * s)/vectors[2].x
+    var s = (vectors[0].y - vectors[2].y * (vectors[0].x / vectors[2].x))/(vectors[1].y - ((vectors[2].y * vectors[1].x)/(vectors[2].x)));
+    var t = (vectors[0].x - vectors[1].x * (vectors[0].y - vectors[2].y * (vectors[0].x / vectors[2].x))/(vectors[1].y - ((vectors[2].y * vectors[1].x)/(vectors[2].x))))/vectors[2].x
     var s1 = (vectors[0].y - vectors[2].y * (vectors[0].x / vectors[2].x));
     var s2 = (vectors[1].y - ((vectors[2].y * vectors[1].x)/(vectors[2].x)));
-    var t1 = (vectors[0].x - vectors[1].x * s);
+    var t1 = (vectors[0].x - vectors[1].x * ((vectors[0].y - vectors[2].y * (vectors[0].x / vectors[2].x))/(vectors[1].y - ((vectors[2].y * vectors[1].x)/(vectors[2].x)))));
     var t2 = vectors[2].x;
-    return "s: " + s1 + "/" + s2 + " t: " + t1 + "/" + t2;
+    var fracS = new Fraction(s);
+    var fracT = new Fraction(t);
+    return "s: " + fracS.n + "/" + fracS.d + " t: " + fracT.n + "/" + fracT.d;
 }
 
 //
