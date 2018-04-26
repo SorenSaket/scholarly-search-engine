@@ -164,6 +164,12 @@ function searchOutput()
         // Area
         addOutput("Area", caluculateArea(vectors));
     }
+    if(vectors.length == 3)
+    {
+        //
+        addOutput("Resolution of B and C in A", resolutionInComponents(vectors));
+    }
+    
 }
 
 function writeOutput(){
@@ -250,6 +256,19 @@ function calculateAngle(vectors){
     return toDegrees(Math.acos((dotp)/(vectors[0].length()*vectors[1].length())));
 }
 //
+function resolutionInComponents(vectors){
+    var s = (vectors[0].y - vectors[2].y * (vectors[0].x / vectors[2].x))/(vectors[1].y - ((vectors[2].y * vectors[1].x)/(vectors[2].x)));
+    var t = (vectors[0].x - vectors[1].x * (vectors[0].y - vectors[2].y * (vectors[0].x / vectors[2].x))/(vectors[1].y - ((vectors[2].y * vectors[1].x)/(vectors[2].x))))/vectors[2].x
+    var s1 = (vectors[0].y - vectors[2].y * (vectors[0].x / vectors[2].x));
+    var s2 = (vectors[1].y - ((vectors[2].y * vectors[1].x)/(vectors[2].x)));
+    var t1 = (vectors[0].x - vectors[1].x * ((vectors[0].y - vectors[2].y * (vectors[0].x / vectors[2].x))/(vectors[1].y - ((vectors[2].y * vectors[1].x)/(vectors[2].x)))));
+    var t2 = vectors[2].x;
+    var fracS = new Fraction(s);
+    var fracT = new Fraction(t);
+    return "s: " + fracS.n + "/" + fracS.d + " t: " + fracT.n + "/" + fracT.d;
+}
+
+//
 function calculateAngleRad(){
     var dotp = calculateDotProduct();
     return  Math.acos((dotp)/(calculateDistance(0)*calculateDistance(1)));
@@ -324,37 +343,3 @@ function convertArrayToLetters(array){
 function toDegrees (angle) {
     return angle * (180 / Math.PI);
 }
-
-    /*var parent = document.getElementById("outputdata");
-    parent.innerText = "";
-    
-    if(drawVectors)
-    {
-        for (let i = 0; i < allVectors.length; i++) {
-            parent.innerHTML += "dist" + i+ ": " + showDistanceCaluculation(i) + "  "; 
-        }
-        parent.innerHTML +="<br>";
-        if(allVectors.length >= 2)
-        {
-            var sum = calculateSum();
-            parent.innerHTML += "Sum: " + sum.x + ", "+ sum.y + "<br>";
-            
-            var diff = calculateDifference();
-            parent.innerHTML += "Difference: " + diff.x + ", "+ diff.y + "<br>";
-
-            parent.innerHTML += "Dot Product: " + calculateDotProduct() + "<br>";
-        }
-        if(allVectors.length == 2)
-        {
-            var ang = calculateAngle();
-            parent.innerHTML += "Angle: " + ang + "<br>";
-        }
-    }
-    if(drawPoints)
-    {
-        if(allVectors.length == 2)
-        {
-            var avg = calculateAverage();
-            parent.innerHTML += "Average: " + avg.x + ", "+ avg.y + "<br>";  
-        }
-    }*/
