@@ -160,6 +160,9 @@ function searchOutput()
     {
         //Angle
         addOutput("Angle", showAngleCalculation(vectors));
+
+        // Area
+        addOutput("Area", caluculateArea(vectors));
     }
 }
 
@@ -231,6 +234,12 @@ function calculateDotProduct(vectors){
 
     return xdot + ydot;
 }
+
+function caluculateArea(vectors)
+{
+    return Math.abs(vectors[1].x * vectors[0].y -  vectors[0].x  * vectors[1].y)/2;
+}
+
 // Calculate the angle of vector[0] and vector[1]
 function showAngleCalculation(vectors){
     var dotp = calculateDotProduct(vectors);
