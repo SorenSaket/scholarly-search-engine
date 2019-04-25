@@ -392,7 +392,7 @@ function calculateAngleCos(a, b, c, angleToCalculate) {
 			addLine
 			(
 				"\\begin{align} " +
-				"A &= {\\cos ^{ - 1}}({{{c^2} + {a^2} - {b^2}} \\over {2*c*a}}) \\\\ " +
+				"B &= {\\cos ^{ - 1}}({{{c^2} + {a^2} - {b^2}} \\over {2*c*a}}) \\\\ " +
 				"&= {\\cos ^{ - 1}}({{{" + c + "^2} + {" + a + "^2} - {" + b + "^2}} \\over {2*" + c + "*" + a + "}}) \\\\ " +
 				"&= {\\cos ^{ - 1}}({{" + one + "} \\over {" + two + "}}) \\\\ " +
 				"&= {\\cos ^{ - 1}}(" + three +") \\\\ " +
@@ -408,7 +408,7 @@ function calculateAngleCos(a, b, c, angleToCalculate) {
 			addLine
 			(
 				"\\begin{align} " +
-				"A &= {\\cos ^{ - 1}}({{{a^2} + {b^2} - {c^2}} \\over {2*a*b}}) \\\\ " +
+				"C &= {\\cos ^{ - 1}}({{{a^2} + {b^2} - {c^2}} \\over {2*a*b}}) \\\\ " +
 				"&= {\\cos ^{ - 1}}({{{" + a + "^2} + {" + b + "^2} - {" + c + "^2}} \\over {2*" + a + "*" + b + "}}) \\\\ " +
 				"&= {\\cos ^{ - 1}}({{" + one + "} \\over {" + two + "}}) \\\\ " +
 				"&= {\\cos ^{ - 1}}(" + three +") \\\\ " +

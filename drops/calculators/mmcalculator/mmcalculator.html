@@ -1,0 +1,64 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="../../../js/libs/p5/p5.min.js"></script>
+    <script type="text/javascript" src="../../../js/libs/p5/addons/p5.dom.min.js"></script>
+    <script type="text/javascript" src="../../../js/libs/fraction.min.js"></script>
+    <script type="text/javascript" src="../../../js/libs/three.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+    <!--<link rel="stylesheet" type="text/css" href="style.css">-->
+
+
+</head>
+
+<body>
+    <div id="input">
+        <h3>Mole Mass Calcualtor</h3>
+        <hr>
+        <div id="setablecontainer">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr id="element">
+                        <th scope="col">#</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="mass">
+                        <th>m (g)</th>
+
+                    </tr>
+                    <tr id="molarmass">
+                        <th>M (g/mol)</th>
+
+                    </tr>
+                    <tr id="substanceamount">
+                        <th>N (mol)</th>
+
+                    </tr>
+                </tbody>
+            </table>	
+        </div>
+
+        <hr>
+        <div>
+            <p>Calculate As:</p>
+            <button class="btn btn-primary" onclick="calculate(true,false)">Points</button>
+            <button class="btn btn-primary" onclick="calculate(false,true)">Vectors</button>
+            <p id="credits">created by @sorensaket</p>   
+        </div>
+
+        <!--<button class="btn btn-primary" onclick="calculateAverage()">Calculate Average</button>
+        <button class="btn btn-primary" onclick="calculateSum()">Calculate Sum</button>-->
+        
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
