@@ -1,75 +1,59 @@
 <html>
 
 <head>
+    <link rel="shortcut icon" type="image/png" href="icon.png"/>
+    <title>Trigonometry Calculator</title>
     <script type="text/javascript" src="../../../js/libs/p5/p5.min.js"></script>
     <script type="text/javascript" src="../../../js/libs/p5/addons/p5.dom.min.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML'>
-    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+    
     <script src="trigonometry.js"></script>
     <script src="trigonometryDraw.js"></script>
 
-    <!--<script type="text/javascript" src="../../../js/bootstrap.bundle.min.js"></script>-->
-    <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:300,400,500,600,700,900&amp;subset=latin-ext" rel="stylesheet">
 </head>
 
 <body>
-    <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-            <img src="icon.png" width="30" height="30" class="d-inline-block align-top" alt="A triangle"> Ultimate Trigonometry Calculator
-        </a>
+    <nav class="navbar">
+        <img src="icon.png" width="32" height="32" alt="A triangle"> 
+        <div class="title">Trigonometry Calculator </div>
         <span class="navbar-text">
             made by
             <a href="https://twitter.com/sorensaket" target="_blank">@sorensaket</a>
         </span>
     </nav>
-    <div class="" id="content">
-        <div class="" id="canvasparent">
 
+    <div id="content">
+        <div id="canvasparent">
+            
         </div>
 
-        <div id="inputoutputparent">
-            <div class="" id="output">
-
+        <div id="IOparent">
+            <div id="output">
+                <div id="outputcontent">
+                
+                </div>
             </div>
             <div id="inputs">
                 <div class="row">
-                    <div class="col">
-                        <input id="a" class="form-control" type="text" name="a" placeholder="a">
-                    </div>
-                    <div class="col">
-                        <input id="b" class="form-control" type="text" name="b" placeholder="b">
-                    </div>
-                    <div class="col">
-                        <input id="c" class="form-control" type="text" name="c" placeholder="c">
-                    </div>
+                    <input id="a" class="form-control" type="text" name="a" placeholder="a">
+                    <input id="b" class="form-control" type="text" name="b" placeholder="b">
+                    <input id="c" class="form-control" type="text" name="c" placeholder="c">
                 </div>
                 <div class="row">
-                    <div class="col">
-                        <input id="A" class="form-control" type="text" name="A" placeholder="A">
-                    </div>
-                    <div class="col">
-                        <input id="B" class="form-control" type="text" name="B" placeholder="B">
-                    </div>
-                    <div class="col">
-                        <input id="C" class="form-control" type="text" name="C" placeholder="C">
-                    </div>
+                    <input id="A" class="form-control" type="text" name="A" placeholder="A">
+                    <input id="B" class="form-control" type="text" name="B" placeholder="B">
+                    <input id="C" class="form-control" type="text" name="C" placeholder="C">
                 </div>
                 <div class="row">
-                    <div class="col">
-                        <input id="area" class="form-control" type="text" name="area" placeholder="Area" readonly>
-                    </div>
-                    <div class="col">
-                        <input id="circumference" class="form-control" type="text" name="cir" placeholder="Cir" readonly>
-                    </div>
+                    <input id="area" class="form-control" type="text" name="area" placeholder="Area" readonly>
+                    <input id="circumference" class="form-control" type="text" name="cir" placeholder="Circumference" readonly>
                 </div>
                 <div class="row">
-                    <div class="col-6">
-                        <button type="button" class="btn btn-primary w-100" onclick="calculate()">Calculate</button>
-                    </div>
-                    <div class="col-6">
-                        <button type="button" class="btn btn-outline-secondary w-100" onclick="clearInputOutput()">Clear</button>
-                    </div>
+                    <button class="primary" onclick="calculate()"><div class="text">Calculate</div> </button>
+                    <button class="outline" onclick="clearInputOutput()"><div class="text">Clear</div> </button>
+
                     <!--<div class="col-1" id="settingsIconContainer">
                         <a data-toggle="modal" data-target="#settingsModal">
                             <img src="settings.png" id="settingsIcon">
@@ -79,7 +63,8 @@
             </div>
         </div>
     </div>
-
+    
+    <!--
     <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -99,14 +84,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
-        crossorigin="anonymous"></script>
+    </div>-->
 </body>
-
 </html>

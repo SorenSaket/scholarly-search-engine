@@ -10,22 +10,27 @@ var lastMousePosY = 0;
 var clicked = false;
 var triangleToDraw;
 
-window.addEventListener('resize', resizeCanvas, false);
-
-function resizeCanvas() {
-	resizeCanvas($('#canvasparent').width() , $('#canvasparent').height());
+function windowResized() {
+	canvasSetup();
 }
 
 function setup(){
-	var canvas = createCanvas($('#canvasparent').width(),$('#canvasparent').height());
+	var canvas = createCanvas(100,100);
 	canvas.parent("canvasparent");
 	scale = 30;
 	canvas.mouseWheel(changeSize);
+	canvasSetup();
 }
+
+function canvasSetup(){
+	var parent = document.getElementById('canvasparent');
+	resizeCanvas(parent.offsetWidth , parent.offsetHeight);
+}
+
 
 function draw(){
 	clear();
-	background("rgba(0,0,0,0)");
+	background(color(255));
 	textSize(16);
 	if(triangleToDraw != null)
 	{
@@ -34,18 +39,23 @@ function draw(){
 	DrawGuides();
 }
 
-function mouseDragged(){
-	if(!clicked)
+function mouseDragged(e){
+	
+	if(e.srcElement == canvas)
 	{
-		lastMousePosX = mouseX;
-		lastMousePosY = mouseY;
-		lastOffsetX = offsetX;
-		lastOffsetY = offsetY;
-
-		clicked = true;
+		if(!clicked)
+		{
+			lastMousePosX = mouseX;
+			lastMousePosY = mouseY;
+			lastOffsetX = offsetX;
+			lastOffsetY = offsetY;
+	
+			clicked = true;
+		}
+		offsetX = lastOffsetX + (mouseX - lastMousePosX);
+		offsetY = lastOffsetY + (mouseY - lastMousePosY);
 	}
-	offsetX = lastOffsetX + (mouseX - lastMousePosX);
-	offsetY = lastOffsetY + (mouseY - lastMousePosY);
+
 }
 
 function mouseClicked() {
@@ -55,6 +65,8 @@ function mouseClicked() {
 function changeSize(event){
 	if (event.deltaY > 0) {
 		scale = scale - 5;
+		if(scale < 1)
+			scale = 1;
 	  } else {
 		scale = scale + 5;
 	  }
@@ -62,7 +74,7 @@ function changeSize(event){
 
 function DrawTriangle(a,b,c,A,B,C,scale){
 	var textOffset = 10;
-	var pointSize = 8;
+	var pointSize = 16;
 	
 
 	var aColor = color(220,53,69);
@@ -88,17 +100,21 @@ function DrawTriangle(a,b,c,A,B,C,scale){
 	
 	strokeWeight(1);
 	noFill();
-	stroke(color(0,0,0));
+	stroke(color(0));
 
 	if(true)
 	{
 		line(Bx, By, Bx, Ay);
-		ellipse(CenterPosX() + offsetX,CenterPosY() + offsetY,scale*2,scale*2);
+		fill(color(0));
+		//text((c*Math.cos(degToRad(A))).toFixed(2), Bx, By + (Ay-By)/2);
+		
+		noFill();
+		ellipse(CenterPosX() + offsetX,CenterPosY() + offsetY,scale,scale);
 	}
 	
 	// ---- Draw sides ---- 
 
-	strokeWeight(2);
+	strokeWeight(4);
 	
 	stroke(cColor);
 	line(Ax, Ay, Bx, By);
@@ -140,7 +156,7 @@ function DrawGuides()
 {
 	color(0, 0, 0);
 	fill(0, 0, 0);
-	text(offsetX + ", " + offsetY + ". Zoom: " + scale, width-200, height);
+	text(offsetX + ", " + offsetY + ". Zoom: " + scale, 16, 32);
 }
 
 //Helper functions

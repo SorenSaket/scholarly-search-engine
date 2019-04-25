@@ -28,7 +28,7 @@ function calculate(){
 
 	if(!isUnsolvable(tempTri))
 	{
-		document.getElementById("output").innerHTML = "";
+		document.getElementById("outputcontent").innerHTML = "";
 		//Calculates all sides and angles for the triangle
 		tempTri = caluclateTriangle(tempTri);
 
@@ -525,7 +525,12 @@ function clearInputOutput(){
 	document.getElementById("circumference").value = "";
 
 	//Clear ouputs
-	document.getElementById("output").innerHTML = "";
+	document.getElementById("outputcontent").innerHTML = "";
+
+	// resets zoom and offset	
+	scale = 30;
+	offsetX = 0;
+	offsetY = 0;
 
 	triangleToDraw = null;
 }
@@ -567,11 +572,11 @@ function setInput(triangle){
 // Displays an error (just console.logs for now)
 function displayError(error) {
 	console.log(error);
-	document.getElementById("output").innerHTML += error;
+	document.getElementById("outputcontent").innerHTML += error;
 }
 // Adds a line to the output
 function addLine(text) {
-	document.getElementById("output").innerHTML += text;
+	document.getElementById("outputcontent").innerHTML += text;
 }
 
 // ---------------- Helper Functions (Not all of these are used) ----------------

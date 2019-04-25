@@ -55,9 +55,8 @@ function removeZeroVectors(){
     reAddAllVectors(allVectors);
 }
 
-function getVector(name)
-{
-
+function getVector(name){
+    //
 }
 
 // ---------- Output UI ----------
