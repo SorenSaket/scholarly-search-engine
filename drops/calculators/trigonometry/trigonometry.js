@@ -44,10 +44,6 @@ function calculate(){
 	/*console.log("Calculated triangle in: " + milisecondsUsed + " miliseconds");
 	clearInterval(interval);*/
 }
-// The function that you can call from SSE
-function tri(a,b,c,A,B,C){
-	
-}
 
 // ---------------- Calculation Functions ---------------
 
@@ -63,7 +59,7 @@ function caluclateTriangle(triangle){
 
 	return triangle;
 }
-//WIP
+// Calculates the value for an element in a triangle
 function calculateElement(triangle, elementToCalculate){
 	console.log("Calculating: " + elementToCalculate);
 	var al = determineUsedAlgorithm(triangle, elementToCalculate)
@@ -165,7 +161,7 @@ function calculateElement(triangle, elementToCalculate){
 	
 	return triangle;
 }
-// Determine the algorithm to use based on preferences and missing elements WIP
+// Determine the algorithm to use based on preferences and missing elements
 function determineUsedAlgorithm(triangle, elementToCalculate){
 	console.log("Determining algorithm for: " + elementToCalculate);
 	
@@ -372,7 +368,7 @@ function calculateAngleCos(a, b, c, angleToCalculate) {
 			var one = b * b + c * c - a * a;
 			var two = 2 * b * c;
 			var three = one / two;
-			var A = temp = customArccos(three);
+			var A = temp = roundNumber(customArccos(three));
 			addLine
 			(
 				"\\begin{align} " +
@@ -380,7 +376,7 @@ function calculateAngleCos(a, b, c, angleToCalculate) {
 				"&= {\\cos ^{ - 1}}({{{" + b + "^2} + {" + c + "^2} - {" + a + "^2}} \\over {2*" + b + "*" + c + "}}) \\\\ " +
 				"&= {\\cos ^{ - 1}}({{" + one + "} \\over {" + two + "}}) \\\\ " +
 				"&= {\\cos ^{ - 1}}(" + three +") \\\\ " +
-				"&\\approx " + roundNumber(A) + "&deg; " +
+				"&\\approx " + A + "&deg; " +
 				"\\end{align}"
 			);
 			break;
@@ -388,7 +384,7 @@ function calculateAngleCos(a, b, c, angleToCalculate) {
 			var one = c * c + a * a - b * b;
 			var two = 2 * c * a;
 			var three = one / two;
-			var B = temp = customArccos(three);
+			var B = temp = roundNumber(customArccos(three));
 			addLine
 			(
 				"\\begin{align} " +
@@ -396,7 +392,7 @@ function calculateAngleCos(a, b, c, angleToCalculate) {
 				"&= {\\cos ^{ - 1}}({{{" + c + "^2} + {" + a + "^2} - {" + b + "^2}} \\over {2*" + c + "*" + a + "}}) \\\\ " +
 				"&= {\\cos ^{ - 1}}({{" + one + "} \\over {" + two + "}}) \\\\ " +
 				"&= {\\cos ^{ - 1}}(" + three +") \\\\ " +
-				"&= \\approx " + roundNumber(A) + "&deg; " +
+				"&= \\approx " + B + "&deg; " +
 				"\\end{align}"
 			);
 			break;
@@ -404,7 +400,7 @@ function calculateAngleCos(a, b, c, angleToCalculate) {
 			var one = a * a + b * b - c * c;
 			var two = 2 * a * b;
 			var three = one / two;
-			var B = temp = customArccos(three);
+			var C = temp = roundNumber(customArccos(three));
 			addLine
 			(
 				"\\begin{align} " +
@@ -412,7 +408,7 @@ function calculateAngleCos(a, b, c, angleToCalculate) {
 				"&= {\\cos ^{ - 1}}({{{" + a + "^2} + {" + b + "^2} - {" + c + "^2}} \\over {2*" + a + "*" + b + "}}) \\\\ " +
 				"&= {\\cos ^{ - 1}}({{" + one + "} \\over {" + two + "}}) \\\\ " +
 				"&= {\\cos ^{ - 1}}(" + three +") \\\\ " +
-				"&= \\approx " + roundNumber(A) + "&deg; " +
+				"&= \\approx " + C + "&deg; " +
 				"\\end{align}"
 			);
 			break;
@@ -420,7 +416,7 @@ function calculateAngleCos(a, b, c, angleToCalculate) {
 			break;
 	}
 	
-	return roundNumber(temp);
+	return temp;
 }
 //Returns the missing angle with the 180 rule
 function calculateAngle180(A,B,C){
@@ -433,7 +429,7 @@ function calculateAngle180(A,B,C){
 			"\\begin{align} " +
 			"A & = 180&deg; - B - C \\\\ " +
 			"& = 180&deg; - " + B + "&deg; - " + C + "&deg; \\\\ " +
-			"& = " + A + "&deg;  \\\\ " +
+			"& \\approx " + A + "&deg;  \\\\ " +
 			"\\end{align}"
 		);
 
@@ -448,7 +444,7 @@ function calculateAngle180(A,B,C){
 			"\\begin{align} " +
 			"B & = 180&deg; - A - C \\\\ " +
 			"& = 180&deg; - " + A + "&deg; - " + C + "&deg; \\\\ " +
-			"& = " + B + "&deg;  \\\\ " +
+			"& \\approx " + B + "&deg;  \\\\ " +
 			"\\end{align}"
 		);
 
@@ -463,18 +459,19 @@ function calculateAngle180(A,B,C){
 			"\\begin{align} " +
 			"C & = 180&deg; - A - B \\\\ " +
 			"& = 180&deg; - " + A + "&deg; - " + B + "&deg; \\\\ " +
-			"& = " + C + "&deg;  \\\\ " +
+			"& \\approx " + C + "&deg;  \\\\ " +
 			"\\end{align}"
 		);
 		return C;
 	}
 }
 
+// -------- Other --------
 //Returns the area of a triangle with Heron's formula
 function calculateAreaHeron(a,b,c){
 	var s = roundNumber((a + b + c)/2);
 	var t = s * (s - a) * (s - b) * (s - c)
-	var area = Math.sqrt(t);
+	var area = roundNumber(Math.sqrt(t));
 
 	addLine("// --- Calculate Area with Heron's formula ---")
 	addLine("\\begin{align}");
@@ -487,9 +484,9 @@ function calculateAreaHeron(a,b,c){
 		"\\begin{align} " +
 		"area  & = \\sqrt {s(s - a)(s - b)(s - c)} \\\\ " +
 		"& = \\sqrt {" + s + "(" + s + " - " + a + ")(" + s + " - " + b + ")(" + s + " - " + c + ")} \\\\ " +
-		"& = \\sqrt {" + s + "(" + (s - a) + ")(" + (s - b) + ")(" + (s - c) + ")}  \\\\ " +
+		"& = \\sqrt {" + s + "(" + roundNumber(s - a) + ")(" + roundNumber(s - b) + ")(" + roundNumber(s - c) + ")}  \\\\ " +
 		"& = \\sqrt {" + t + "} \\\\ " +
-		"& = " + area + " " +
+		"& \\approx " + area + " " +
 		"\\end{align}"
 	);
 
@@ -511,7 +508,6 @@ function calculateCircumference(a,b,c){
 }
 
 // ---------------- Output/Input ----------------
-
 // Clears all inputs and outputs (Resets the calculator)
 function clearInputOutput(){
 	//Clear input
@@ -528,7 +524,7 @@ function clearInputOutput(){
 	document.getElementById("outputcontent").innerHTML = "";
 
 	// resets zoom and offset	
-	scale = 30;
+	zoom = 30;
 	offsetX = 0;
 	offsetY = 0;
 
@@ -580,7 +576,6 @@ function addLine(text) {
 }
 
 // ---------------- Helper Functions (Not all of these are used) ----------------
-
 //Returns a bool depending if triangle is unsolvable
 function isUnsolvable(triangle){
 	var sides  = (triangle.a != null) + (triangle.b != null) + (triangle.c != null);  // Boolean to integer conversion
@@ -648,16 +643,15 @@ function customArccos(inputfloat){
 }
 //Rounds number to floatingPointprecision decimals
 function roundNumber(num) {
-	scale = floatingPointprecision;
 	if(!("" + num).includes("e")) {
-	  return +(Math.round(num + "e+" + scale)  + "e-" + scale);
+	  return +(Math.round(num + "e+" + floatingPointprecision)  + "e-" + floatingPointprecision);
 	} else {
 	  var arr = ("" + num).split("e");
 	  var sig = ""
-	  if(+arr[1] + scale > 0) {
+	  if(+arr[1] + floatingPointprecision > 0) {
 		sig = "+";
 	  }
-	  return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + scale)) + "e-" + scale);
+	  return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + floatingPointprecision)) + "e-" + floatingPointprecision);
 	}
 }
 
