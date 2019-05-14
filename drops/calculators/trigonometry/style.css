@@ -103,6 +103,7 @@ nav {
     #content #canvasparent {
       margin: 0;
       margin-bottom: 32px;
+      min-height: 512px;
       max-height: 1000px; }
     #content #IOparent {
       min-width: 0px; }

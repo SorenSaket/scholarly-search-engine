@@ -7,7 +7,7 @@ var sideAlgorithmPreference = ["sin", "cos"];
 //The preferred algorithm to use when calculating an angle
 var angleAlgorithmPreference = ["180", "sin", "cos"];
 //The number of decimals to calculate
-var floatingPointprecision = 2;
+var floatingPointprecision = 1;
 //The unit to use for calcualtions of angles. deg or rad
 var angleUnit = "deg";
 //The current triangle to calculate
@@ -262,7 +262,6 @@ function determineUsedAlgorithm(triangle, elementToCalculate){
 }
 
 // -------- Sides --------
-
 // Calculate a side using law of cosines. Two sides must not be null. 
 function calculateSideCos(a, b, c, angle) {
 	if(a == null)
@@ -501,7 +500,7 @@ function calculateCircumference(a,b,c){
 		"\\begin{align} " +
 		"circumference &= a + b + c \\\\ " +
 		"& = " + a + " + " + b + " + " + c + "\\\\" +
-		"& = " + circumference +
+		"& \\approx " + circumference +
 		" \\end{align}"
 	);
 	return circumference;
@@ -517,10 +516,14 @@ function clearInputOutput(){
 	document.getElementById("A").value = "";
 	document.getElementById("B").value = "";
 	document.getElementById("C").value = "";
+	
+	clearOutput();
+}
+// Clear outputs
+function clearOutput(){
+	//Clear ouputs
 	document.getElementById("area").value = "";
 	document.getElementById("circumference").value = "";
-
-	//Clear ouputs
 	document.getElementById("outputcontent").innerHTML = "";
 
 	// resets zoom and offset	
@@ -582,11 +585,13 @@ function isUnsolvable(triangle){
 	var angles = (triangle.A != null) + (triangle.B != null) + (triangle.C != null);  // Boolean to integer conversion
 	if (sides + angles < 3)
 	{
+		clearOutput();
 		displayError("Give at least 3 pieces of information");
 		return true;
 	}
 	else if (sides == 0)
 	{
+		clearOutput();
 		displayError("Give at least one side length");
 		return true;
 	}
@@ -643,16 +648,7 @@ function customArccos(inputfloat){
 }
 //Rounds number to floatingPointprecision decimals
 function roundNumber(num) {
-	if(!("" + num).includes("e")) {
-	  return +(Math.round(num + "e+" + floatingPointprecision)  + "e-" + floatingPointprecision);
-	} else {
-	  var arr = ("" + num).split("e");
-	  var sig = ""
-	  if(+arr[1] + floatingPointprecision > 0) {
-		sig = "+";
-	  }
-	  return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + floatingPointprecision)) + "e-" + floatingPointprecision);
-	}
+	return parseFloat(num.toFixed(floatingPointprecision));
 }
 
 // -------- Get functions --------
@@ -720,7 +716,7 @@ function getUnknownAngle(A,B,C){
 		return null;
 	}
 }
-//
+//Returns the unknown sides from 3 sides as string array
 function getUnknownSides(a,b,c){
 	var unknownSides = [];
 	if(!a)
@@ -731,7 +727,7 @@ function getUnknownSides(a,b,c){
 		unknownSides.push("c");
 	return unknownSides;
 }
-//
+//Returns the unknown angles from 3 angles as string array
 function getUnknownAngles(A,B,C){
 	var unknownAngles = [];
 	if(!A)
@@ -742,7 +738,7 @@ function getUnknownAngles(A,B,C){
 		unknownAngles.push("C");
 	return unknownAngles;
 }
-//
+//Returns an unknown angle from 3 angles and an angle to exclude as string array 
 function getUnknownAnglesWithE(A,B,C, angleToExclude){
 	var unknownAngles = [];
 	if(!A && angleToExclude != "A")
@@ -804,7 +800,7 @@ function getKnownAngles(A,B,C){
 		angles.push("C");
 	return sides;
 }
-//
+//Return the known pairs from a triangle as string array
 function getKnownPairs(triangle){
 	var knownPairs = [];
 	if(triangle.a && triangle.A)
@@ -815,7 +811,7 @@ function getKnownPairs(triangle){
 		knownPairs.push("C");
 	return knownPairs;
 }
-//
+//Returns an unknown pair from triangle and a pair to exclude as string
 function getPairWithE(triangle, pairToExclude){
 	if((triangle.a && triangle.A) && (pairToExclude != "a" || pairToExclude != "A"))
 		return "a";
@@ -824,7 +820,6 @@ function getPairWithE(triangle, pairToExclude){
 	if((triangle.c && triangle.C) && (pairToExclude != "c" || pairToExclude != "C"))
 		return "c";
 }
-
 //Return elements to calculate to find a pair
 function getPairsToCalculate(triangle, elementToExclude){
 	var neededElements = [];
@@ -857,9 +852,8 @@ function getPairsToCalculate(triangle, elementToExclude){
 	}
 	return neededElements;
 }
-
 // -------- Is functions --------
-
+// Check if a pair is known
 function isAPairKnown(triangle){
 	if(triangle.a && triangle.A)
 		return true;
@@ -870,7 +864,7 @@ function isAPairKnown(triangle){
 	else
 		return false;
 }
-//Returns
+//
 function isOtherSidesKnown(a,b,c, side){
 	var sides = getKnownSides(a,b,c);
 	if(side == "a")
